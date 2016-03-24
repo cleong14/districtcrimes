@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/cleong14/extortion/issues"
   },
-  "homepage": "https://github.com/cleong14/extortion#readme"
+  "homepage": "https://github.com/cleong14/extortion#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
 }
