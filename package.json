@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/cleong14/extortion/issues"
   },
-  "homepage": "https://github.com/cleong14/extortion#readme"
+  "homepage": "https://github.com/cleong14/extortion#readme",
+  "dependencies": {
+    "angular-ui-bootstrap": "^1.2.5"
+  }
 }
