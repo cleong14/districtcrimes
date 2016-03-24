@@ -1,0 +1,19 @@
+{
+  "name": "extortion",
+  "version": "1.0.0",
+  "description": "## Team: Kevin, Theo, Fred, & Chaz ##",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cleong14/extortion.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cleong14/extortion/issues"
+  },
+  "homepage": "https://github.com/cleong14/extortion#readme"
+}
