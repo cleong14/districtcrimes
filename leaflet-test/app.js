@@ -9,13 +9,46 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
     accessToken: 'pk.eyJ1Ijoia3doaXRlanIiLCJhIjoiY2ltNXdqdGFwMDFzanRzbTRwOW52N2syZCJ9.8tgIWcf7d9ZyJ3gjtOssaQ'
 }).addTo(mymap);
 
-var marker = L.marker([21.264, -157.804])
-  .addTo(mymap)
-  .bindPopup("<b>Hello Diamond Head!</b><br>I am pop.")
-  .openPopup();
+// var marker = L.marker([21.264, -157.804])
+//   .addTo(mymap)
+//   .bindPopup("<b>Hello Diamond Head!</b><br>I am pop.")
+//   .openPopup();
 
-function onMapClick(e) {
-  alert("You clicked the map at "+ e.latlng);
-}
+// var popup = L.popup();
 
-mymap.on('click', onMapClick);
+// function onMapClick(e) {
+//   popup
+//     .setLatLng(e.latlng)
+//     .setContent("You clicked the map at "+ e.latlng.toString())
+//     .openOn(mymap);
+// }
+
+// mymap.on('click', onMapClick);
+
+// var geojsonFeature = {
+//   "type": "Feature",
+//     "properties": {
+//       "name": "Diamond Head",
+//       "amenity": "Crater",
+//       "popupContent": "A robust hike!"
+//     },
+//     "geometry": {
+//         "type": "Polygon",
+//         "coordinates": [[21.264, -157.804], [22, -158], [21.5, -159]]
+//     }
+// };
+
+var geojsonFeature = [{
+    "type": "LineString",
+    "coordinates": [[21.264, -157.804], [-105, 40], [21.5, -159]]
+}];
+
+var myStyle = {
+    "color": "#ff7800",
+    "weight": 5,
+    "opacity": 0.65
+};
+
+L.geoJson(geojsonFeature, {
+  style: myStyle
+}).addTo(mymap);
