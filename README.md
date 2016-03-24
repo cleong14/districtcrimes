@@ -1,3 +1,3 @@
-** Cohort 8 Final Project **
+# Cohort 8 Final Project #
 
-** Team: Kevin, Theo, Fred, & Chaz **
+## Team: Kevin, Theo, Fred, & Chaz ##
