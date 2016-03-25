@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/cleong14/extortion#readme",
   "dependencies": {
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "angular-ui-bootstrap": "^1.2.5"
   }
 }
