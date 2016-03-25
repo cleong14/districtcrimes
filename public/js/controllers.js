@@ -8,9 +8,9 @@ myApp.controller('MyController', [
     // define some random object and button values
     $scope.bigData = {};
 
-    $scope.bigData.breakfast = false;
-    $scope.bigData.lunch = false;
-    $scope.bigData.dinner = false;
+    $scope.bigData.politician1 = false;
+    $scope.bigData.politician2 = false;
+    $scope.bigData.politician3 = false;
 
     // COLLAPSE
     $scope.isCollapsed = false;
