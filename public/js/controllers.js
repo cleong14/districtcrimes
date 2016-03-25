@@ -2,7 +2,8 @@ var myApp = angular.module('myApp', ['ui.bootstrap']);
 
 myApp.controller('MyController', [
   '$scope',
-  function ($scope) {
+  'CrimeService',
+  function ($scope, CrimeService) {
     //BUTTONS
     
     // define some random object and button values
@@ -14,5 +15,18 @@ myApp.controller('MyController', [
 
     // COLLAPSE
     $scope.isCollapsed = false;
+
+
+    $scope.CrimeService = CrimeService;
+    $scope.crimes = [];
+
+    $scope.politicians = [];
+
+    //getting our crimes from the database
+    CrimeService.getCrimes().then(function (response) {
+      $scope.crimes = response.data;//then set the value 
+    });
+
+    
   }
 ]);
