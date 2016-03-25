@@ -25,23 +25,26 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
     accessToken: config.CONSTANTS.MAPBOXKEY
 }).addTo(mymap);
 
-// function clickFeature(e) {
-//    var layer = e.target;
-//    layer.setIcon();
-// }
 
-// function onEachFeature (feature, layer) {
-//   layer.on({
-//     click: clickFeature
-//   });
-// }
+function clickFeature(e) {
+   var district = e;
+   console.log(e.target.feature.properties.objectid);
+}
+
+function onEachFeature (feature, layer) {
+  layer.on({
+    click: clickFeature
+  });
+}
 
 var senateLayer = L.geoJson(hssd, {
-  style: hssdStyle
+  style: hssdStyle,
+  onEachFeature: onEachFeature
 });
 
 var houseLayer = L.geoJson(hshd, {
-  style: hshdStyle
+  style: hshdStyle,
+  onEachFeature: onEachFeature
 });
 
 $('#senate').click(function () {
