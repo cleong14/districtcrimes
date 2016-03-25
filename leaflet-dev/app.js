@@ -25,29 +25,31 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
     accessToken: config.CONSTANTS.MAPBOXKEY
 }).addTo(mymap);
 
-// $('#senate').click(function () {
-//   $.ajax({
-//     dataType: "json",
-//     url: 'http://hawaiistatewidegisopendataportal.histategis.opendata.arcgis.com/datasets/1f335d0805294adf8f3c1260ab86355a_12.geojson',
-//     // data: data,
-//     success: function (data) {
-      L.geoJson(hssd, {
-        style: hssdStyle
-      }).addTo(mymap);
-    // }
-//   });
-// });
+// function clickFeature(e) {
+//    var layer = e.target;
+//    layer.setIcon();
+// }
 
-$('#house').click(function () {
-  $.ajax({
-    dataType: "json",
-    url: 'http://hawaiistatewidegisopendataportal.histategis.opendata.arcgis.com/datasets/32b91230f14043249c2cdb498a99a446_11.geojson',
-    // data: data,
-    success: function (data) {
-      L.clearLayers().geoJson(data, {
-        style: hshdStyle
-      }).addTo(mymap);
-    }
-  });
+// function onEachFeature (feature, layer) {
+//   layer.on({
+//     click: clickFeature
+//   });
+// }
+
+var senateLayer = L.geoJson(hssd, {
+  style: hssdStyle
 });
 
+var houseLayer = L.geoJson(hshd, {
+  style: hshdStyle
+});
+
+$('#senate').click(function () {
+  mymap.removeLayer(houseLayer);
+  senateLayer.addTo(mymap);
+});
+
+$('#house').click(function () {
+  mymap.removeLayer(senateLayer);
+  houseLayer.addTo(mymap);
+});
