@@ -23,7 +23,7 @@ myApp.controller('MyController', [
     
     // //getting our crimes from the database
     CrimeService.getCrimes().then(function (response) {
-      
+      console.log(response.data[0]);
       $scope.crimes = response.data;//then set the value 
     });
   }

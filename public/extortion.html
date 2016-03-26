@@ -45,7 +45,11 @@
     <h2>Crimes</h2>
     <div class="crimeData">
       <ul>
-        <li ng-model="crimes">{{ crimes }}</li>
+        <li class="crimePosts" ng-model="crimes" ng-repeat="crime in crimes">
+          <h4>Date: {{ crime.date }}</h4>
+          <h5>Type: {{ crime.type }}</h5>
+          <h5>Location: {{ crime.location }}</h5>
+        </li>
       </ul>
     </div>
 
@@ -68,7 +72,7 @@
       <div uib-collapse="isCollapsed">
         <div class="panel-body">
           <img src="https://inst.eecs.berkeley.edu/~cs194-26/fa14/upload/files/proj3/cs194-fv/results/part1/obama.jpg" height="150" width="150"></img>
-          <p>This guy is not doing so well at stopping the aliens...
+          <p>This guy is not doing so well at stopping the crimes...
           </p>
         </div>
       </div>
