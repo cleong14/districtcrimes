@@ -1,6 +1,6 @@
 // var stateSenateDistrictsGeoJSON = require('Hawaii_State_Senate_Districts.geojson');
 
-var mymap = L.map('mapid').setView([19.78706, 204.52698], 1);
+var mymap = L.map('mapid').setView([21.289373, -157.917480], 9);
 
 var hssdStyle = {
   "color": "#7D26CD",
