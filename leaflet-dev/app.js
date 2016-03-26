@@ -1,5 +1,3 @@
-// var stateSenateDistrictsGeoJSON = require('Hawaii_State_Senate_Districts.geojson');
-
 var mymap = L.map('mapid').setView([21.289373, -157.917480], 9);
 
 var hssdStyle = {
@@ -29,23 +27,40 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 
 
 function clickFeature(e) {
-  var district = e;
+  var district = e.target;
   mymap.removeLayer(popup);
   popup
     .setLatLng(district.latlng)
-    .setContent("District " + district.target.feature.properties.objectid.toString())
+    .setContent("District " + district.feature.properties.objectid.toString())
     .openOn(mymap);
 }
 
 function hoverFeature (e) {
-  var district = e;
-  console.log(district.target.feature.properties.objectid);
+  var district = e.target;
+  console.log(district.feature.properties.objectid);
+
+  district.setStyle({
+      weight: 5,
+      color: '#ffc966',
+      dashArray: '',
+      fillOpacity: 0.7
+  });
+
+  if (!L.Browser.ie && !L.Browser.opera) {
+    district.bringToFront();
+  }
+}
+
+function resetHighlight(e) {
+  var district = e.target;
+  houseLayer.resetStyle(district);
 }
 
 function onEachFeature (feature, layer) {
   layer.on({
     click: clickFeature,
-    mouseover: hoverFeature
+    mouseover: hoverFeature,
+    mouseout: resetHighlight
   });
 }
 
