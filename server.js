@@ -96,9 +96,9 @@ app.route('/politicians/:id')
 	});
 
 
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {
+var mongo = mongoose.connection;
+mongo.on('error', console.error.bind(console, 'connection error:'));
+mongo.once('open', function () {
 	var server = app.listen(CONFIG.PORT, function () {
 		console.log('Listening on port', CONFIG.PORT);
 	});
