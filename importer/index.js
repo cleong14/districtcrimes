@@ -40,17 +40,25 @@ for (var i = 0; i < containerArr.length; i++) {
 
 console.log(crimeObjArr);
 
-db.crime.bulkCreate(crimeObjArr)
-.then(function() {
-  return db.crime.findAll();
-}).then(function(crimes) {
-  console.log(crimes);
-});
+// db.crime.bulkCreate(crimeObjArr)
+// .then(function() {
+//   return db.crime.findAll();
+// }).then(function(crimes) {
+//   console.log(crimes);
+// });
 
 
-// for (var j = 0; j < crimeObjArr.length; j++) {
-//   console.log(crimeObjArr[j]);
-// }
+for (var j = 0; j < crimeObjArr.length; j++) {
+  // console.log(crimeObjArr[j]);
+  if (crimeObjArr[j].type === 'MOTOR VEHICLE THEFT') {
+    crimeObjArr[j].typeCount++;
+  }
+
+  if (crimeObjArr[j].location === 'HOLOMOANA ST&KAHANAMOKU ST') {
+    crimeObjArr[j].locationCount++;
+  }
+  console.log(crimeObjArr[j]);
+}
 
 // TODO:
 // 1. create crime obj to pass through create
