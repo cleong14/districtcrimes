@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/cleong14/extortion/issues"
   },
-  "homepage": "https://github.com/cleong14/extortion#readme"
+  "homepage": "https://github.com/cleong14/extortion#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "method-override": "^2.3.5",
+    "mongoose": "^4.4.10"
+  }
 }
