@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <link rel="stylesheet" type="text/css" href="/styles/libs/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="/styles/libs/bootstrap-theme.css">
+  <link rel="stylesheet" type="text/css" href="/styles/libs/ui-bootstrap-csp.css">
+  <link rel="stylesheet" type="text/css" href="/styles/styles.css">
+  <meta charset="UTF-8">
+  
+  <title>Document</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-route.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.5/ui-bootstrap.js"></script>
+</head>
+<body ng-app="myApp">
+  
+  <div id="wrap" ng-controller="MyController">
+    
+    <div id="map">
+      <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Map_of_Oahu.png"></img> -->
+    </div>
+    
+    <div class="slider">
+    </div>
+
+    <h2>Buttons</h2>
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-primary" ng-model="bigData.politician1" uib-btn-checkbox>
+        Politician 1
+      </label>
+      <label class="btn btn-primary" ng-model="bigData.politician2" uib-btn-checkbox>
+        Politician 2
+      </label>
+      <label class="btn btn-primary" ng-model="bigData.politician3" uib-btn-checkbox>
+        Politician 3
+      </label>
+    </div>
+
+    <pre><code>{{ bigData | json }}</code></pre>
+
+    <h2>Collapse</h2>
+
+     <a href="#" class="btn btn-primary" ng-click="isCollapsed = !isCollapsed">
+    Toggle Panel
+    </a>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a href="#" ng-click="isCollapsed = !isCollapsed">
+            Collapsible Group Item #1 (District 9: Crime rates have soared ever since aliens took over!!!)
+          </a>
+        </h4>
+      </div>
+      <div uib-collapse="isCollapsed">
+        <div class="panel-body">Ad Vegan vice lomo lorem ipsum 
+        </div>
+      </div>
+    </div>
+
+    <pre><code>{{ isCollapsed }}</code></pre>
+    
+
+  </div>
+
+ 
+  <script src="/js/myApp.js"></script>
+  <script src="/js/controllers.js"></script>
+  <script src="/js/services.js"></script>
+</body>
+</html>
