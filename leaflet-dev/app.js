@@ -3,20 +3,22 @@
 var mymap = L.map('mapid').setView([19.78706, 204.52698], 1);
 
 var hssdStyle = {
-  "color": "#FFC0CB",
-  "opacity": 0.55,
-  "weight": 2,
-  // "fillColor": "#0000ff",
-  // "fillOpacity": 0.35
+  "color": "#7D26CD",
+  "opacity": 1,
+  "weight": 1,
+  "fillColor": null,
+  "fillOpacity": 0.01
 };
 
 var hshdStyle = {
-  "color": "#00FF00",
-  "opacity": 0.55,
-  "weight": 2,
-  // "fillColor": "#0000ff",
-  // "fillOpacity": 0.35
+  "color": "#BF5FFF",
+  "opacity": 1,
+  "weight": 1,
+  "fillColor": null,
+  "fillOpacity": 0.01
 };
+
+var popup = L.popup();
 
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -27,13 +29,23 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 
 
 function clickFeature(e) {
-   var district = e;
-   console.log(e.target.feature.properties.objectid);
+  var district = e;
+  mymap.removeLayer(popup);
+  popup
+    .setLatLng(district.latlng)
+    .setContent("District " + district.target.feature.properties.objectid.toString())
+    .openOn(mymap);
+}
+
+function hoverFeature (e) {
+  var district = e;
+  console.log(district.target.feature.properties.objectid);
 }
 
 function onEachFeature (feature, layer) {
   layer.on({
-    click: clickFeature
+    click: clickFeature,
+    mouseover: hoverFeature
   });
 }
 
