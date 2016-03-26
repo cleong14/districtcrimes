@@ -2,9 +2,10 @@ var express = require('express');
 var app = express();
 var db = require('./models');
 var bodyParser = require('body-parser');
+var path = require('path');
 
 
-
+app.use(express.static(__dirname + '/public'));
 
 //posting a new crime to our database
 app.post('/api', function (req, res) {
@@ -22,8 +23,7 @@ app.post('/api', function (req, res) {
 
 //render main page
 app.get('/', function (req, res) {
-  res.send('Working');
-  res.sendFile(path.resolve('./public/app.html'));
+  res.sendFile(path.resolve('./public/extortion.html'));
 });
 
 
