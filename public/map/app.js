@@ -22,7 +22,7 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
     id: 'mapbox.light',
-    accessToken: config.CONSTANTS.MAPBOXKEY
+    accessToken: 'pk.eyJ1Ijoia3doaXRlanIiLCJhIjoiY2ltNXdqdGFwMDFzanRzbTRwOW52N2syZCJ9.8tgIWcf7d9ZyJ3gjtOssaQ'
 }).addTo(mymap);
 
 var selectedChamber = "";
@@ -76,13 +76,13 @@ var houseLayer = L.geoJson(hshd, {
 });
 
 $('#senate').click(function () {
-  selectedChamber = config.CONSTANTS.SENATE;
+  selectedChamber = "Senate";
   mymap.removeLayer(houseLayer);
   senateLayer.addTo(mymap);
 });
 
 $('#house').click(function () {
-  selectedChamber = config.CONSTANTS.HOUSE;
+  selectedChamber = "House";
   mymap.removeLayer(senateLayer);
   houseLayer.addTo(mymap);
 });

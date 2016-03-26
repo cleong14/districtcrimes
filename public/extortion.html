@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
+
   <link rel="stylesheet" type="text/css" href="/styles/libs/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="/styles/libs/bootstrap-theme.css">
   <link rel="stylesheet" type="text/css" href="/styles/libs/ui-bootstrap-csp.css">
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
   <link rel="stylesheet" type="text/css" href="/styles/styles.css">
   <meta charset="UTF-8">
-  
+
   <title>Document</title>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
@@ -16,13 +18,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.5/ui-bootstrap.js"></script>
 </head>
 <body ng-app="myApp">
-  
+
   <div id="wrap" ng-controller="MyController">
-    
-    <div id="map">
-      <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Map_of_Oahu.png"></img> -->
-    </div>
-    
+
+    <h1>The Map</h1>
+    <div id="mapid"></div>
+    <button id="senate">Senate Districts</button>
+    <button id="house">House Districts</button>
+
     <div class="slider">
     </div>
 
@@ -41,7 +44,7 @@
 
     <pre><code>{{ bigData | json }}</code></pre>
 
-    
+
     <h2>Crimes</h2>
     <div class="crimeData">
       <ul>
@@ -79,12 +82,15 @@
     </div>
 
     <pre><code>{{ isCollapsed }}</code></pre>
-    
+
 
   </div>
 
- 
+  <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
   <script src="/js/myApp.js"></script>
+  <script src="/map/hssd.js"></script>
+  <script src="/map/hshd.js"></script>
+  <script src="/map/app.js"></script>
   <script src="/js/controllers.js"></script>
   <script src="/js/services.js"></script>
 </body>
