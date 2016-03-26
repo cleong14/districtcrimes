@@ -1,8 +1,13 @@
 var express = require('express');
+var crime = require('./crime-dataset');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var CONFIG = require('./config');
 var methodOverride = require('method-override');
+var path = require('path');
+var db = require('./models');
+var app = express();
+
 
 mongoose.connect('mongodb://localhost/mongoose-demo');
 
@@ -31,14 +36,27 @@ var poliSchema = mongoose.Schema({
 	author: String
 
 });
+
 // collection name will get pluralized by mongoose
 var Politician = mongoose.model('Politician', poliSchema);
 
-
-var app = express();
-
+app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(methodOverride('_method'));
+
+
+//render main page
+app.get('/', function (req, res) {
+  res.sendFile(path.resolve('./public/extortion.html'));
+});
+
+//finding all from our 'crime' database
+app.get('/api', function (req, res) {
+  db.crime.findAll()
+    .then(function (crimes) {
+      res.json(crimes);
+    });
+});
 
 
 app.route('/politicians')
@@ -84,4 +102,5 @@ db.once('open', function () {
 	var server = app.listen(CONFIG.PORT, function () {
 		console.log('Listening on port', CONFIG.PORT);
 	});
+
 });

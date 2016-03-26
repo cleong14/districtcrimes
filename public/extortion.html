@@ -41,22 +41,35 @@
 
     <pre><code>{{ bigData | json }}</code></pre>
 
+    
+    <h2>Crimes</h2>
+    <div class="crimeData">
+      <ul>
+        <li ng-model="crimes">{{ crimes }}</li>
+      </ul>
+    </div>
+
+
+
     <h2>Collapse</h2>
 
      <a href="#" class="btn btn-primary" ng-click="isCollapsed = !isCollapsed">
-    Toggle Panel
+    Politician 4
     </a>
 
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
           <a href="#" ng-click="isCollapsed = !isCollapsed">
-            Collapsible Group Item #1 (District 9: Crime rates have soared ever since aliens took over!!!)
+            Collapsible Group Item #1
           </a>
         </h4>
       </div>
       <div uib-collapse="isCollapsed">
-        <div class="panel-body">Ad Vegan vice lomo lorem ipsum 
+        <div class="panel-body">
+          <img src="https://inst.eecs.berkeley.edu/~cs194-26/fa14/upload/files/proj3/cs194-fv/results/part1/obama.jpg" height="150" width="150"></img>
+          <p>This guy is not doing so well at stopping the aliens...
+          </p>
         </div>
       </div>
     </div>
