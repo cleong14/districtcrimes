@@ -30,7 +30,7 @@ function clickFeature(e) {
   var district = e.target;
   mymap.removeLayer(popup);
   popup
-    .setLatLng(district.latlng)
+    .setLatLng(e.latlng)
     .setContent("District " + district.feature.properties.objectid.toString())
     .openOn(mymap);
 }
