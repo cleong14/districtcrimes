@@ -25,13 +25,14 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
     accessToken: config.CONSTANTS.MAPBOXKEY
 }).addTo(mymap);
 
+var selectedChamber = "";
 
 function clickFeature(e) {
   var district = e.target;
   mymap.removeLayer(popup);
   popup
     .setLatLng(e.latlng)
-    .setContent("District " + district.feature.properties.objectid.toString())
+    .setContent(selectedChamber + " District " + district.feature.properties.objectid.toString())
     .openOn(mymap);
 }
 
@@ -75,11 +76,13 @@ var houseLayer = L.geoJson(hshd, {
 });
 
 $('#senate').click(function () {
+  selectedChamber = config.CONSTANTS.SENATE;
   mymap.removeLayer(houseLayer);
   senateLayer.addTo(mymap);
 });
 
 $('#house').click(function () {
+  selectedChamber = config.CONSTANTS.HOUSE;
   mymap.removeLayer(senateLayer);
   houseLayer.addTo(mymap);
 });
