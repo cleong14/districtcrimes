@@ -1,3 +1,7 @@
 node_modules
 .DS_Store
+<<<<<<< HEAD
 config
+=======
+config
+>>>>>>> development

@@ -1,11 +1,14 @@
 var express = require('express');
-var app = express();
-var db = require('./models');
+var crime = require('crime-dataset');
 var bodyParser = require('body-parser');
 var path = require('path');
+var db = require('./models');
+var app = express();
 
 
 app.use(express.static(__dirname + '/public'));
+
+
 
 //posting a new crime to our database
 app.post('/api', function (req, res) {
@@ -26,7 +29,6 @@ app.get('/', function (req, res) {
   res.sendFile(path.resolve('./public/extortion.html'));
 });
 
-
 //finding all from our 'crime' database
 app.get('/api', function (req, res) {
   db.crime.findAll()
@@ -34,7 +36,6 @@ app.get('/api', function (req, res) {
       res.json(crimes);
     });
 });
-
 
 var server = app.listen(3000, function() {
   console.log('Listening to port', server.address().port);
