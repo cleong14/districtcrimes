@@ -22,7 +22,7 @@ module.exports = {
       location: {
         type: Sequelize.STRING
       },
-      latiude: {
+      latitude: {
         type: Sequelize.DOUBLE
       },
       longitude: {
