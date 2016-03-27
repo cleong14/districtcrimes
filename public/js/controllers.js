@@ -65,31 +65,32 @@ myApp
         },
       });
 
-    // $http.get('/map/hshd.geo.json').success(function(data, status) {
-      angular.extend($scope.layers.overlays, {
-        house: {
-          name: 'Hawaii State House Districts',
-          type: 'geoJSONShape',
-          data: hshd,
-          visible: true,
-          layerOptions: {
-            style: {
-              "color": "#BF5FFF",
-              "opacity": 1,
-              "weight": 1,
-              "fillColor": null,
-              "fillOpacity": 0.01
+      $http.get('/map/hshd.topo.json').success(function(data, status) {
+        angular.extend($scope.layers.overlays, {
+          house: {
+            name: 'Hawaii State House Districts',
+            type: 'geoJSONShape',
+            data: topojson.feature(data),
+            visible: true,
+            layerOptions: {
+              style: {
+                "color": "#BF5FFF",
+                "opacity": 1,
+                "weight": 1,
+                "fillColor": null,
+                "fillOpacity": 0.01
+              }
             }
           }
-        }
+        });
       });
 
-      // $http.get('/map/hssd.geo.json').success(function(data, status) {
+      $http.get('/map/hssd.topo.json').success(function(data, status) {
         angular.extend($scope.layers.overlays, {
           senate: {
             name: 'Hawaii State Senate Districts',
             type: 'geoJSONShape',
-            data: hssd,
+            data: topojson.feature(data),
             visible: false,
             layerOptions: {
               style: {
@@ -102,7 +103,7 @@ myApp
             }
           }
         });
-      // });
+      });
 
       $scope.eventDetected = "No events yet...";
       var mapEvents = leafletMapEvents.getAvailableMapEvents();
@@ -112,6 +113,5 @@ myApp
             $scope.eventDetected = event.name;
         });
       }
-
     }
   ]);
