@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['ui.bootstrap']);
+var myApp = angular.module('myApp', ['ui.bootstrap', 'nemLogging', 'ui-leaflet']);
 
 myApp
   .controller('MyController', [
@@ -24,29 +24,38 @@ myApp
 
       // //getting our crimes from the database
       CrimeService.getCrimes().then(function (response) {
-        console.log(response.data[0]);
         $scope.crimes = response.data;//then set the value
       });
     }
-  ])
-  .directive('mapDirective', function () {
-    return {
-      restrict: 'E',
-      controller: [
-        '$scope',
-        function ($scope) {
-          angular.extend($scope, {
-            defaults: {
-              tileLayer: 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
-              maxZoom: 14,
-              path: {
-                weight: 10,
-                color: '#800000',
-                opacity: 1
+  ]);
+
+myApp
+  .controller('mapController', [
+    '$scope',
+    function ($scope) {
+      angular.extend($scope, {
+        center: {
+          lat: 21.289373,
+          lng: -157.917480,
+          zoom: 9
+        },
+        default: {
+          scrollWheelZoom: false
+        },
+        layers: {
+          baselayers: {
+            mapboxGlLayer: {
+              name: 'Sample',
+              type: 'mapboxGL',
+              layerOptions: {
+                accessToken: 'pk.eyJ1Ijoia3doaXRlanIiLCJhIjoiY2ltNXdqdGFwMDFzanRzbTRwOW52N2syZCJ9.8tgIWcf7d9ZyJ3gjtOssaQ',
+                style: 'mapbox://styles/mapbox/streets-v8'
               }
             }
-          });
-        }
-      ]
+          },
+          overlays: {}
+        },
+
+      });
     }
-  });
+  ]);
