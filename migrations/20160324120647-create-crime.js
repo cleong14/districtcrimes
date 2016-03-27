@@ -8,6 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      objectID: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        unique: true
+      },
       date: {
         type: Sequelize.DATE
       },
@@ -16,6 +21,12 @@ module.exports = {
       },
       location: {
         type: Sequelize.STRING
+      },
+      latiude: {
+        type: Sequelize.DOUBLE
+      },
+      longitude: {
+        type: Sequelize.DOUBLE
       },
       createdAt: {
         allowNull: false,
