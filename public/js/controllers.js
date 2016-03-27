@@ -32,20 +32,23 @@ myApp
 myApp
   .controller('mapController', [
     '$scope',
-    function ($scope) {
+    '$http',
+    'leafletData',
+    'leafletMapEvents',
+    function ($scope, $http, leafletData, leafletMapEvents) {
       angular.extend($scope, {
         center: {
-          lat: 21.289373,
-          lng: -157.917480,
-          zoom: 9
+          lat: 21.4513,
+          lng: -158.0153,
+          zoom: 10
         },
         // center: {
         //   autoDiscover: true,
         //   zoom: 11
         // },
-        // default: {
-        //   scrollWheelZoom: false
-        // },
+        defaults: {
+          scrollWheelZoom: false
+        },
         layers: {
           baselayers: {
             mapbox_light: {
@@ -60,7 +63,55 @@ myApp
           },
           overlays: {}
         },
-
       });
+
+    // $http.get('/map/hshd.geo.json').success(function(data, status) {
+      angular.extend($scope.layers.overlays, {
+        house: {
+          name: 'Hawaii State House Districts',
+          type: 'geoJSONShape',
+          data: hshd,
+          visible: true,
+          layerOptions: {
+            style: {
+              "color": "#BF5FFF",
+              "opacity": 1,
+              "weight": 1,
+              "fillColor": null,
+              "fillOpacity": 0.01
+            }
+          }
+        }
+      });
+
+      // $http.get('/map/hssd.geo.json').success(function(data, status) {
+        angular.extend($scope.layers.overlays, {
+          senate: {
+            name: 'Hawaii State Senate Districts',
+            type: 'geoJSONShape',
+            data: hssd,
+            visible: false,
+            layerOptions: {
+              style: {
+                "color": "#7D26CD",
+                "opacity": 1,
+                "weight": 1,
+                "fillColor": null,
+                "fillOpacity": 0.01
+              }
+            }
+          }
+        });
+      // });
+
+      $scope.eventDetected = "No events yet...";
+      var mapEvents = leafletMapEvents.getAvailableMapEvents();
+      for (var k in mapEvents) {
+        var eventName = 'leafletDirectiveMap.' + mapEvents[k];
+        $scope.$on(eventName, function(event) {
+            $scope.eventDetected = event.name;
+        });
+      }
+
     }
   ]);
