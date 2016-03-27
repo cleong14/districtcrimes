@@ -39,17 +39,22 @@ myApp
           lng: -157.917480,
           zoom: 9
         },
-        default: {
-          scrollWheelZoom: false
-        },
+        // center: {
+        //   autoDiscover: true,
+        //   zoom: 11
+        // },
+        // default: {
+        //   scrollWheelZoom: false
+        // },
         layers: {
           baselayers: {
-            mapboxGlLayer: {
-              name: 'Sample',
-              type: 'mapboxGL',
+            mapbox_light: {
+              name: 'Mapbox Light',
+              url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+              type: 'xyz',
               layerOptions: {
-                accessToken: 'pk.eyJ1Ijoia3doaXRlanIiLCJhIjoiY2ltNXdqdGFwMDFzanRzbTRwOW52N2syZCJ9.8tgIWcf7d9ZyJ3gjtOssaQ',
-                style: 'mapbox://styles/mapbox/streets-v8'
+                apikey: 'pk.eyJ1Ijoia3doaXRlanIiLCJhIjoiY2ltNXdqdGFwMDFzanRzbTRwOW52N2syZCJ9.8tgIWcf7d9ZyJ3gjtOssaQ',
+                mapid: 'mapbox.light'
               }
             }
           },
