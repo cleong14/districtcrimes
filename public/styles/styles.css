@@ -1,8 +1,11 @@
-body { 
-  padding-top:50px; 
+body {
+  padding-top:50px;
 }
 
-.btn { 
-  margin-bottom:20px; 
+.btn {
+  margin-bottom:20px;
 }
 
+#mapid {
+  height: 480px;
+}
