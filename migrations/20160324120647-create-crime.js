@@ -23,10 +23,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       latitude: {
-        type: Sequelize.DOUBLE
+        type: Sequelize.DECIMAL(10, 6)
       },
       longitude: {
-        type: Sequelize.DOUBLE
+        type: Sequelize.DECIMAL(10, 6)
       },
       createdAt: {
         allowNull: false,

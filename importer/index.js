@@ -1,6 +1,16 @@
 var db = require('../models');
 var crime = require('../mini-crime-dataset');
 
+var geocoderProvider = 'google';
+var httpsAdapter = 'https';
+// optional
+var extra = {
+    apiKey: 'AIzaSyA8OlYXiaHEu_2K2_hYiUZ6l2DZNtgDTYU', // for Mapquest, OpenCage, Google Premier
+    formatter: null         // 'gpx', 'string', ...
+};
+
+var geocoder = require('node-geocoder')(geocoderProvider, httpsAdapter, extra);
+
 var containerArr = crime.data;
 var singleCrime;
 var crimeObjId;
@@ -18,16 +28,13 @@ for (var i = 0; i < containerArr.length; i++) {
     crimeDate = singleCrime[13];
     crimeType = singleCrime[14];
     crimeLocation = singleCrime[10];
-    // console.log(crimeObjId);
 
     if (crimeDate.toString().length !== 13) {
       crimeDate = crimeDate * 1000;
     }
-    // console.log(crimeDate, crimeType, crimeLocation);
   }
+  // console.log(crimeLocation);
   // build obj here
-  // console.log(crimeDate);
-  console.log(crimeObjId);
   crimeObj = {
     objectID: crimeObjId,
     date: new Date(crimeDate),
@@ -38,8 +45,35 @@ for (var i = 0; i < containerArr.length; i++) {
     createdAt: new Date(),
     updatedAt: new Date ()
   };
+
   crimeObjArr.push(crimeObj);
 }
+
+for (var m = 0; m < crimeObjArr.length; m++) {
+  var currentCrimeObj = crimeObjArr[m];
+  console.log(currentCrimeObj.location);
+  // Using callback
+  geocoder.geocode(currentCrimeObj.location + ' Hawaii', function(err, res) {
+      if (err) {
+        throw new Error('Sum Ting Wong');
+      }
+      // console.log(res);
+      for (var p = 0; p < res.length; p++) {
+        var currentGeo = res[p];
+        // console.log(currentGeo.longitude); // currentGeo.latitude/currentGeo.longitude
+        if (currentGeo.administrativeLevels.level1short !== 'HI') {
+          crimeObj.latitude = null;
+          crimeObj.longitude = null;
+          // console.log('didnt work');
+        }
+        crimeObj.latitude = currentGeo.latitude;
+        crimeObj.longitude = currentGeo.longitude;
+        // console.log(crimeObj.latitude, crimeObj.longitude);
+        console.log(crimeObj);
+      }
+  });
+}
+console.log(1111111111111);
 
 console.log(crimeObjArr);
 
