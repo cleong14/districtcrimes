@@ -18,39 +18,42 @@ var crimeObjId;
 var crimeDate;
 var crimeType;
 var crimeLocation;
-var crimeObj;
 var crimeObjArr = [];
 
 for (var i = 0; i < containerArr.length; i++) {
   singleCrime = containerArr[i];
-  // console.log('=============');
+  console.log(singleCrime.length);
   for (var k = 0; k < singleCrime.length; k++) {
     crimeObjId = parseInt(singleCrime[8]);
     crimeDate = singleCrime[13];
     crimeType = singleCrime[14];
     crimeLocation = singleCrime[10];
+    // console.log(crimeObjId);
 
     if (crimeDate.toString().length !== 13) {
       crimeDate = crimeDate * 1000;
     }
   }
-
-  console.log(crimeLocation);
-  crimeObjArr.push(fetchGeoCodeLocation(crimeObjId, crimeDate, crimeType, crimeLocation)); // 
+  // console.log(crimeLocation);
+  crimeObjArr.push(fetchGeoCodeLocation(crimeObjId, crimeDate, crimeType, crimeLocation));
 }
 
-console.log(crimeObjArr);
 Promise.all(crimeObjArr) // bluebird docs
 .then(function (crimes) {
-  console.log(crimes); // bulk create goes here
+  console.log(crimes);
+  db.crime.bulkCreate(crimes)
+  .then(function() {  
+    return db.crime.findAll();
+  }).then(function(crimes) {
+    console.log(crimes);
+  });
+  // console.log(crimes);
 }); 
 
 function fetchGeoCodeLocation (crimeObjId, crimeDate, crimeType, crimeLocation) {
   return geocoder.geocode(crimeLocation + ' Hawaii')
   .then(function(res) {
-    // console.log(res);
-    // console.log(crimeLocation);
-    // console.log(res[0].administrativeLevels.level1short);
+    var crimeObj;
 
     if (res[0].administrativeLevels.level1short !== 'HI') {
       crimeObj = {
@@ -74,14 +77,7 @@ function fetchGeoCodeLocation (crimeObjId, crimeDate, crimeType, crimeLocation) 
         createdAt: new Date(),
         updatedAt: new Date ()
       };
-      return crimeObj;
     }
-  })
+    return crimeObj;
+  });
 }
-
-// db.crime.bulkCreate(crimeObjArr)
-// .then(function() {  
-//   return db.crime.findAll();
-// }).then(function(crimes) {
-//   console.log(crimes);
-// });
