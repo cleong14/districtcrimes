@@ -1,18 +1,52 @@
 var myApp = angular.module('myApp', ['ui.bootstrap']);
 
-myApp.controller('MyController', [
-  '$scope',
-  function ($scope) {
-    //BUTTONS
-    
-    // define some random object and button values
-    $scope.bigData = {};
+myApp
+  .controller('MyController', [
+    '$scope',
+    'CrimeService',
+    function ($scope, CrimeService) {//need to add CrimeService as param
+      //BUTTONS
 
-    $scope.bigData.breakfast = false;
-    $scope.bigData.lunch = false;
-    $scope.bigData.dinner = false;
+      // define some random object and button values
+      $scope.bigData = {};
 
-    // COLLAPSE
-    $scope.isCollapsed = false;
-  }
-]);
+      $scope.bigData.politician1 = false;
+      $scope.bigData.politician2 = false;
+      $scope.bigData.politician3 = false;
+
+      // COLLAPSE
+      $scope.isCollapsed = false;
+
+
+      $scope.CrimeService = CrimeService;
+      $scope.crimes = [];
+
+
+      // //getting our crimes from the database
+      CrimeService.getCrimes().then(function (response) {
+        console.log(response.data[0]);
+        $scope.crimes = response.data;//then set the value
+      });
+    }
+  ])
+  .directive('mapDirective', function () {
+    return {
+      restrict: 'E',
+      controller: [
+        '$scope',
+        function ($scope) {
+          angular.extend($scope, {
+            defaults: {
+              tileLayer: 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
+              maxZoom: 14,
+              path: {
+                weight: 10,
+                color: '#800000',
+                opacity: 1
+              }
+            }
+          });
+        }
+      ]
+    }
+  });

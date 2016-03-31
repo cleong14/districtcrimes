@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <link rel="stylesheet" type="text/css" href="/styles/libs/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="/styles/libs/bootstrap-theme.css">
+  <link rel="stylesheet" type="text/css" href="/styles/libs/ui-bootstrap-csp.css">
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+  <link rel="stylesheet" type="text/css" href="/styles/styles.css">
+  <link rel="stylesheet" type="text/css" href="/styles/react-styles.css">
+  <meta charset="UTF-8">
+
+  <title>Document</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-route.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.5/ui-bootstrap.js"></script>
+</head>
+<body ng-app="myApp">
+
+  <div id="wrap" ng-controller="MyController">
+
+    <h1>The Map</h1>
+    <div id="mapid"></div>
+    <button id="senate">Senate Districts</button>
+    <button id="house">House Districts</button>
+
+    <div class="slider">
+    </div>
+
+    <h2>Buttons</h2>
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-primary" ng-model="bigData.politician1" uib-btn-checkbox>
+        Politician 1
+      </label>
+      <label class="btn btn-primary" ng-model="bigData.politician2" uib-btn-checkbox>
+        Politician 2
+      </label>
+      <label class="btn btn-primary" ng-model="bigData.politician3" uib-btn-checkbox>
+        Politician 3
+      </label>
+    </div>
+
+    <pre><code>{{ bigData | json }}</code></pre>
+
+
+    <h2>Crimes</h2>
+    <div class="crimeData">
+      <ul>
+        <li class="crimePosts" ng-model="crimes" ng-repeat="crime in crimes">
+          <h4>Date: {{ crime.date }}</h4>
+          <h5>Type: {{ crime.type }}</h5>
+          <h5>Location: {{ crime.location }}</h5>
+        </li>
+      </ul>
+    </div>
+
+
+
+<!--     <h2>Collapse</h2>
+     <a href="#" class="btn btn-primary" ng-click="isCollapsed = !isCollapsed">
+    Politician 4
+    </a>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a href="#" ng-click="isCollapsed = !isCollapsed">
+            Collapsible Group Item #1
+          </a>
+        </h4>
+      </div>
+      <div uib-collapse="isCollapsed">
+        <div class="panel-body">
+          <img src="https://inst.eecs.berkeley.edu/~cs194-26/fa14/upload/files/proj3/cs194-fv/results/part1/obama.jpg" height="150" width="150"></img>
+          <p>This guy is not doing so well at stopping the crimes...
+          </p>
+        </div>
+      </div>
+    </div>
+    <pre><code>{{ isCollapsed }}</code></pre> -->
+
+
+  <div class="container"></div>
+
+
+
+
+  </div>
+
+
+  <!-- React Stuff -->
+  <script type="text/babel" src="/js/react-tabs.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
+
+
+  <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+  <script src="/js/myApp.js"></script>
+  <script src="/map/hssd.js"></script>
+  <script src="/map/hshd.js"></script>
+  <script src="/map/app.js"></script>
+  <script src="/js/controllers.js"></script>
+  <script src="/js/services.js"></script>
+</body>
+</html>
