@@ -1,5 +1,6 @@
 var db = require('../models');
 var crime = require('../mini-crime-dataset');
+var Promise = require('bluebird');
 
 var geocoderProvider = 'google';
 var httpsAdapter = 'https';
@@ -35,54 +36,48 @@ for (var i = 0; i < containerArr.length; i++) {
   }
 
   console.log(crimeLocation);
-  geocoder.geocode(crimeLocation + ' Hawaii', function(err, res) {
-    console.log(res[0]);
-
-  });
-  // build obj here
-  crimeObj = {
-    objectID: crimeObjId,
-    date: new Date(crimeDate),
-    type: crimeType,
-    location: crimeLocation,
-    latitude: null,
-    longitude: null,
-    createdAt: new Date(),
-    updatedAt: new Date ()
-  };
-
-  crimeObjArr.push(crimeObj);
+  crimeObjArr.push(fetchGeoCodeLocation(crimeObjId, crimeDate, crimeType, crimeLocation)); // 
 }
 
-for (var m = 0; m < crimeObjArr.length; m++) {
-  var currentCrimeObj = crimeObjArr[m];
-  // console.log(currentCrimeObj.location);
-  // Using callback
-  geocoder.geocode(currentCrimeObj.location + ' Hawaii', function(err, res) {
-      // if (err) {
-      //   throw new Error('Sum Ting Wong');
-      // }
-      // console.log(res);
-      for (var p = 0; p < res.length; p++) {
-        var currentGeo = res[p];
-        // console.log(currentGeo); // currentGeo.latitude/currentGeo.longitude
-        if (currentGeo.administrativeLevels.level1short !== 'HI') {
-          currentCrimeObj.latitude = null;
-          currentCrimeObj.longitude = null;
-          // console.log('didnt work');
-        } else {
-          currentCrimeObj.latitude = currentGeo.latitude;
-          currentCrimeObj.longitude = currentGeo.longitude;
-          // console.log(crimeObj.latitude, crimeObj.longitude);
-          // console.log(currentCrimeObj);
-          crimeObjArr.push(currentCrimeObj);
-        }
-      }
-  });
-}
-// console.log(1111111111111);
+console.log(crimeObjArr);
+Promise.all(crimeObjArr) // bluebird docs
+.then(function (crimes) {
+  console.log(crimes); // bulk create goes here
+}); 
 
-// console.log(crimeObjArr);
+function fetchGeoCodeLocation (crimeObjId, crimeDate, crimeType, crimeLocation) {
+  return geocoder.geocode(crimeLocation + ' Hawaii')
+  .then(function(res) {
+    // console.log(res);
+    // console.log(crimeLocation);
+    // console.log(res[0].administrativeLevels.level1short);
+
+    if (res[0].administrativeLevels.level1short !== 'HI') {
+      crimeObj = {
+        objectID: crimeObjId,
+        date: new Date(crimeDate),
+        type: crimeType,
+        location: crimeLocation,
+        latitude: null,
+        longitude: null,
+        createdAt: new Date(),
+        updatedAt: new Date ()
+      };
+    } else {
+      crimeObj = {
+        objectID: crimeObjId,
+        date: new Date(crimeDate),
+        type: crimeType,
+        location: crimeLocation,
+        latitude: res[0].latitude,
+        longitude: res[0].longitude,
+        createdAt: new Date(),
+        updatedAt: new Date ()
+      };
+      return crimeObj;
+    }
+  })
+}
 
 // db.crime.bulkCreate(crimeObjArr)
 // .then(function() {  
@@ -90,8 +85,3 @@ for (var m = 0; m < crimeObjArr.length; m++) {
 // }).then(function(crimes) {
 //   console.log(crimes);
 // });
-
-// TODO:
-// 1. create crime obj to pass through create
-// 2. look up bulk insert so you can insert many at once instead of one at a time
-// 3. if same type of crime in same location, just increase count?
