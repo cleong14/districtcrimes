@@ -28,13 +28,9 @@ var poliSchema = mongoose.Schema({
 	contact_email: String,
 	contact_links: String,
 	district_name: String,
-	district_area: String,
-	politician_committee: String,
-	politician_measures: String,
-	politician_experience: String,
-	politician_accomplishments: String,
-	author: String
-
+	district_area: [String],
+	politician_committee: [String],
+	politician_measures: [String]
 });
 
 // collection name will get pluralized by mongoose
