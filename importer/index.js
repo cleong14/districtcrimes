@@ -5,7 +5,7 @@ var geocoderProvider = 'google';
 var httpsAdapter = 'https';
 // optional
 var extra = {
-    apiKey: 'AIzaSyA8OlYXiaHEu_2K2_hYiUZ6l2DZNtgDTYU', // for Mapquest, OpenCage, Google Premier
+    apiKey: 'AIzaSyDlkDom_yp5DBKwhvov41CsLmNcfG7Hulw', // for Mapquest, OpenCage, Google Premier
     formatter: null         // 'gpx', 'string', ...
 };
 
@@ -22,7 +22,7 @@ var crimeObjArr = [];
 
 for (var i = 0; i < containerArr.length; i++) {
   singleCrime = containerArr[i];
-  console.log('=============');
+  // console.log('=============');
   for (var k = 0; k < singleCrime.length; k++) {
     crimeObjId = parseInt(singleCrime[8]);
     crimeDate = singleCrime[13];
@@ -33,7 +33,12 @@ for (var i = 0; i < containerArr.length; i++) {
       crimeDate = crimeDate * 1000;
     }
   }
-  // console.log(crimeLocation);
+
+  console.log(crimeLocation);
+  geocoder.geocode(crimeLocation + ' Hawaii', function(err, res) {
+    console.log(res[0]);
+
+  });
   // build obj here
   crimeObj = {
     objectID: crimeObjId,
@@ -51,38 +56,40 @@ for (var i = 0; i < containerArr.length; i++) {
 
 for (var m = 0; m < crimeObjArr.length; m++) {
   var currentCrimeObj = crimeObjArr[m];
-  console.log(currentCrimeObj.location);
+  // console.log(currentCrimeObj.location);
   // Using callback
   geocoder.geocode(currentCrimeObj.location + ' Hawaii', function(err, res) {
-      if (err) {
-        throw new Error('Sum Ting Wong');
-      }
+      // if (err) {
+      //   throw new Error('Sum Ting Wong');
+      // }
       // console.log(res);
       for (var p = 0; p < res.length; p++) {
         var currentGeo = res[p];
-        // console.log(currentGeo.longitude); // currentGeo.latitude/currentGeo.longitude
+        // console.log(currentGeo); // currentGeo.latitude/currentGeo.longitude
         if (currentGeo.administrativeLevels.level1short !== 'HI') {
-          crimeObj.latitude = null;
-          crimeObj.longitude = null;
+          currentCrimeObj.latitude = null;
+          currentCrimeObj.longitude = null;
           // console.log('didnt work');
+        } else {
+          currentCrimeObj.latitude = currentGeo.latitude;
+          currentCrimeObj.longitude = currentGeo.longitude;
+          // console.log(crimeObj.latitude, crimeObj.longitude);
+          // console.log(currentCrimeObj);
+          crimeObjArr.push(currentCrimeObj);
         }
-        crimeObj.latitude = currentGeo.latitude;
-        crimeObj.longitude = currentGeo.longitude;
-        // console.log(crimeObj.latitude, crimeObj.longitude);
-        console.log(crimeObj);
       }
   });
 }
-console.log(1111111111111);
+// console.log(1111111111111);
 
-console.log(crimeObjArr);
+// console.log(crimeObjArr);
 
-db.crime.bulkCreate(crimeObjArr)
-.then(function() {  
-  return db.crime.findAll();
-}).then(function(crimes) {
-  console.log(crimes);
-});
+// db.crime.bulkCreate(crimeObjArr)
+// .then(function() {  
+//   return db.crime.findAll();
+// }).then(function(crimes) {
+//   console.log(crimes);
+// });
 
 // TODO:
 // 1. create crime obj to pass through create

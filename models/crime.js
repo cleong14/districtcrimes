@@ -5,8 +5,8 @@ module.exports = function(sequelize, DataTypes) {
     date: DataTypes.DATE,
     type: DataTypes.STRING,
     location: DataTypes.STRING,
-    latitude: DataTypes.DOUBLE,
-    longitude: DataTypes.DOUBLE
+    latitude: DataTypes.FLOAT,
+    longitude: DataTypes.FLOAT
   }, {
     classMethods: {
       associate: function(models) {
