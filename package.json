@@ -17,15 +17,21 @@
   },
   "homepage": "https://github.com/cleong14/extortion#readme",
   "dependencies": {
-
+    "angular-ui-bootstrap": "^1.2.5",
+    "leaflet": "^0.7.7",
+    "qwest": "^4.3.2",
+    "react-leaflet": "^0.10.2",
     "body-parser": "^1.15.0",
     "express": "^4.13.4",
     "method-override": "^2.3.5",
     "mongoose": "^4.4.10",
-    "angular-ui-bootstrap": "^1.2.5",
     "path": "^0.12.7",
     "pg": "^4.5.1",
     "pg-hstore": "^2.3.2",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-simpletabs": "^0.7.0",
+    "react-tabs": "^0.5.3",
     "sequelize": "^3.20.0"
   }
 }
