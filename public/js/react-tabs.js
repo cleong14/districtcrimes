@@ -203,23 +203,6 @@ var Tabs = React.createClass({
       </div>
     );
   },
-  loadCrimesFromServer: function () {//added
-    var _this = this;
-    $.ajax({
-      url: this.props.url,
-      method: "GET",
-      dataType: "json",
-      success: function (data) {
-        console.log("testing");
-        _this.setState({data: data});
-      }
-    });
-    // _this.setState({data: crimes});
-  },
-  componentDidMount: function () {//added
-    this.loadCrimesFromServer();
-    setInterval(this.loadCrimesFromServer, 5000);
-  },
   render: function () {
     return (
       <div className="tabs">
@@ -246,8 +229,29 @@ var Pane = React.createClass({
 });
 
 var App = React.createClass({//added
+  getInitialState: function () {//we set it to state because its subject to change
+    return {crimes: []}
+  },
+  loadCrimesFromServer: function () {//added
+    var _this = this;
+    $.ajax({
+      url: this.props.url,
+      method: "GET",
+      dataType: "json",
+      success: function (data) {
+        _this.setState({crimes: data});//setting state of app to have crimes as data
+      }
+      ,
+      failure: function (err) {
+        // console.log(err);
+      }
+    });
+  },
+  componentDidMount: function () {//added
+    this.loadCrimesFromServer();
+    // setInterval(this.loadCrimesFromServer, 5000);
+  },
   render: function () {
-    console.log(this.state);
     return (
       <div>
         <Tabs selected={0}>
@@ -255,7 +259,7 @@ var App = React.createClass({//added
             <div>Info Tab
               <HelloWorld date={new Date()} />
               <Dropdown list={colours} selected={colours[2]} />
-              <CrimeList data={this.props.data} />
+              <CrimeList data={this.state.crimes} />
             </div>
           </Pane>
           <Pane label="Address">
@@ -274,7 +278,7 @@ var App = React.createClass({//added
 
 setInterval(function() {
   ReactDOM.render(
-    <App url="http://localhost:3000/api" />,  document.querySelector('.container')
+    <App url="http://localhost:3000/api" data={crimes}/>,  document.querySelector('.container')
   );
 }, 2000);
 
