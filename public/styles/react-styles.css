@@ -35,3 +35,11 @@ body {
 .tabs__content {
   padding: 25px;
 }
+
+.dropdown-list {
+  display: none;
+}
+
+.dropdown-container.show .dropdown-list {
+  display: block;
+}
