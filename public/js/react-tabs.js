@@ -1,3 +1,64 @@
+var crimes = [
+    {
+    "id": 6,
+    "objectID": 584275,
+    "date": "2015-11-18T21:12:00.000Z",
+    "type": "VEHICLE BREAK-IN/THEFT",
+    "location": "911100 BLOCK KEAUNUI DR",
+    "latitude": null,
+    "longitude": null,
+    "createdAt": "2016-03-31T04:13:57.207Z",
+    "updatedAt": "2016-03-31T04:13:57.207Z"
+  }
+];
+
+
+
+var CrimeList = React.createClass({//added
+  render: function () {
+  var crimeNodes = this.props.data.map(function (crime, index) {//map is making a new array, this.props.data is flowing from commentBox 
+    return (
+      <Crime 
+        key={index}
+        type={crime.type}
+      >
+        {crime.location}
+      </Crime>
+    )
+  })
+    return (
+      <div className="crimeList">
+        {crimeNodes.reverse()}
+      </div>
+    )
+  }
+});
+
+
+
+var Crime = React.createClass({//added
+  rawMarkup: function () {
+    var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
+    return {__html: rawMarkup};
+  },
+  render: function () {
+    return (
+      <div className="crime">
+        <h2 className="crimeType">
+          {this.props.type}
+        </h2>
+        <span dangerouslySetInnerHTML={this.rawMarkup()} />
+      </div>
+    )
+  }
+})
+
+
+
+
+
+
+
 
 
 var colours = [{
@@ -37,7 +98,7 @@ var Dropdown = React.createClass({
       document.addEventListener("click", this.hide);
     },
     render: function () {
-      return <div className={"dropdown-container" + (this.state.listVisible ? " show": " ")}>
+    return  <div className={"dropdown-container" + (this.state.listVisible ? " show": " ")}>
                 <div className={"dropdown-display" + (this.state.listVisible ? " clicked": "")} onClick={this.show}>
                   <span style={{ color: this.state.selected.hex }}>{this.state.selected.name}</span>
                   <i className="fa fa-angle-down"></i>
@@ -64,8 +125,31 @@ var Dropdown = React.createClass({
 
 
 
+var HelloWorld = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <h4>Crimes</h4>
 
+        <p>
+          Hello, <input type="text" placeholder="Your name here" />!
+          It is {this.props.date.toTimeString()} In your District.
+        </p>
+      </div>
+    );
+  }
+});
+
+
+
+
+
+
+//TABS
 var Tabs = React.createClass({
+  getInitialState: function () {
+    return { data: [] };//setting the state to an array
+  },
   displayName: 'Tabs',
   propTypes: {
     selected: React.PropTypes.number,
@@ -119,6 +203,23 @@ var Tabs = React.createClass({
       </div>
     );
   },
+  loadCrimesFromServer: function () {//added
+    var _this = this;
+    $.ajax({
+      url: this.props.url,
+      method: "GET",
+      dataType: "json",
+      success: function (data) {
+        console.log("testing");
+        _this.setState({data: data});
+      }
+    });
+    // _this.setState({data: crimes});
+  },
+  componentDidMount: function () {//added
+    this.loadCrimesFromServer();
+    setInterval(this.loadCrimesFromServer, 5000);
+  },
   render: function () {
     return (
       <div className="tabs">
@@ -144,14 +245,17 @@ var Pane = React.createClass({
   }
 });
 
-var App = React.createClass({
+var App = React.createClass({//added
   render: function () {
+    console.log(this.state);
     return (
       <div>
         <Tabs selected={0}>
           <Pane label="Poltical">
-            <div>This is my tab 1 contents!
+            <div>Info Tab
+              <HelloWorld date={new Date()} />
               <Dropdown list={colours} selected={colours[2]} />
+              <CrimeList data={this.props.data} />
             </div>
           </Pane>
           <Pane label="Address">
@@ -168,11 +272,15 @@ var App = React.createClass({
 
 
 
-
+setInterval(function() {
+  ReactDOM.render(
+    <App url="http://localhost:3000/api" />,  document.querySelector('.container')
+  );
+}, 2000);
 
 
  
-ReactDOM.render(<App />,  document.querySelector('.container'));
+
 
 
 
