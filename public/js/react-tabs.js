@@ -13,10 +13,54 @@ var crimes = [
 ];
 
 
+// var filtered = React.createClass({
+//   render: function () {
+//   var crimeNodes = this.props.data.map(function (crime, index) {//map is making a new array, this.props.data is flowing from commentBox 
+//     return (
+//       <Crime 
+//         key={index}
+//         type={crime.type}
+//       >
+//         {crime.location}
+//       </Crime>
+//     )
+// });
+
+
+
+// The search input
+var SearchBar = React.createClass({
+  handleChange: function() {
+      this.props.onUserInput(
+          this.refs.filterTextInput.getDOMNode().value
+      );
+  },
+  render: function() {
+      return (
+          <form>
+              <input
+                  type="text"
+                  placeholder="Search..."
+                  value={this.props.filterText}
+                  ref="filterTextInput"
+                  onChange={this.handleChange}
+              />
+          </form>
+      );
+  }
+});
+
+
+    // if(crime.type === this.props.filterText) {
+
+    //   }
+
 
 var CrimeList = React.createClass({//added
   render: function () {
   var crimeNodes = this.props.data.map(function (crime, index) {//map is making a new array, this.props.data is flowing from commentBox 
+    console.log(crime);
+    if (crime.type === "MOTOR VEHICLE THEFT") {
     return (
       <Crime 
         key={index}
@@ -25,6 +69,7 @@ var CrimeList = React.createClass({//added
         {crime.location}
       </Crime>
     )
+    }
   })
     return (
       <div className="crimeList">
@@ -44,9 +89,9 @@ var Crime = React.createClass({//added
   render: function () {
     return (
       <div className="crime">
-        <h2 className="crimeType">
+        <h4 className="crimeType">
           {this.props.type}
-        </h2>
+        </h4>
         <span dangerouslySetInnerHTML={this.rawMarkup()} />
       </div>
     )
@@ -259,6 +304,9 @@ var App = React.createClass({//added
             <div>Info Tab
               <HelloWorld date={new Date()} />
               <Dropdown list={colours} selected={colours[2]} />
+              <SearchBar filterText={this.state.filterText}
+                      onUserInput={this.handleUserInput}
+                    />
               <CrimeList data={this.state.crimes} />
             </div>
           </Pane>
@@ -284,7 +332,6 @@ setInterval(function() {
 
 
  
-
 
 
 
