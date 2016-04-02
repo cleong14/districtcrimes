@@ -54,10 +54,10 @@ var filterCrimeList = React.createClass({//added
         </Crime>
       )
     }
-  })
+  });
     return (
       <div>
-        {filterCrimeNodes.reverse()}
+        {filterCrimeNodes}
       </div>
     )
   }
@@ -326,7 +326,7 @@ var App = React.createClass({//added
           </Pane>
           <Pane label="Crimes">
             <div>This is my tab 3 contents!</div>
-              <filterCrimeList data={this.state.crimes} />
+              
           </Pane>
         </Tabs>
       </div>
