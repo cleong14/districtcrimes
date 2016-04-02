@@ -67,33 +67,19 @@ var filterCrimeList = React.createClass({//added
 
 
 
-
-
 var CrimeList = React.createClass({//added
   render: function () {
   var crimeNodes = this.props.data.map(function (crime, index) {//map is making a new array, this.props.data is flowing from commentBox 
     if (crime.type === "MOTOR VEHICLE THEFT") {
       return (
-          <Crime 
-            key={index}
-            type={crime.type}
-          >
-            {crime.location}
-          </Crime>
+        <Crime 
+          key={index}
+          type={crime.type}
+        >
+          {crime.location}
+        </Crime>
       )
-}
-
-var CrimeList = React.createClass({//added
-  render: function () {
-  var crimeNodes = this.props.data.map(function (crime, index) {//map is making a new array, this.props.data is flowing from commentBox 
-    return (
-      <Crime 
-        key={index}
-        type={crime.type}
-      >
-        {crime.location}
-      </Crime>
-    )
+    }
   })
     return (
       <div className="crimeList">
