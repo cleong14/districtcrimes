@@ -22,16 +22,16 @@ var rimraf = require('rimraf');
 
 // object containing file names and paths for output
 var path = {
-  HTML: 'src/index.html',
-  JSON: 'data/*.geojson',
-  MINIFIED_OUT: 'build.min.js',
-  OUT: 'build.js',
-  DEST: 'dist',
-  DEST_BUILD: 'dist/build',
-  DEST_SRC: 'dist/src',
-  CSS_SRC: 'src/**/*.css',
-  ENTRY_POINT: './src/js/App.js',
-  DEPENDENCIES: 'node_modules/'
+  HTML:           'client/src/index.html',
+  JSON:           'client/data/*.geojson',
+  MINIFIED_OUT:   'client/build.min.js',
+  OUT:            'client/build.js',
+  DEST:           'client/dist',
+  DEST_BUILD:     'client/dist/build',
+  DEST_SRC:       'client/dist/src',
+  CSS_SRC:        'client/src/**/*.css',
+  ENTRY_POINT:    'client/src/js/App.js',
+  DEPENDENCIES:   'node_modules/'
 };
 
 gulp.task('clean', function () {
