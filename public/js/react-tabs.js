@@ -67,32 +67,21 @@ var filterCrimeList = React.createClass({//added
 
 
 
-var CrimeList = React.createClass({//added
-  render: function () {
-  var crimeNodes = this.props.data.map(function (crime, index) {//map is making a new array, this.props.data is flowing from commentBox 
-    console.log(crime);
-    if (crime.type === "MOTOR VEHICLE THEFT") {
-      return (
-        <Crime 
-          key={index}
-          type={crime.type}
-        >
-          {crime.location}
-        </Crime>
-      )
-}
+
 
 var CrimeList = React.createClass({//added
   render: function () {
   var crimeNodes = this.props.data.map(function (crime, index) {//map is making a new array, this.props.data is flowing from commentBox 
-    return (
-      <Crime 
-        key={index}
-        type={crime.type}
-      >
-        {crime.location}
-      </Crime>
-    )
+    if (crime.type === "MOTOR VEHICLE THEFT") {
+      return (
+          <Crime 
+            key={index}
+            type={crime.type}
+          >
+            {crime.location}
+          </Crime>
+      )
+    }
   })
     return (
       <div className="crimeList">
@@ -337,7 +326,6 @@ var App = React.createClass({//added
     // setInterval(this.loadCrimesFromServer, 5000);
   },
   render: function () {
-    console.log(this.state);
     return (
       <div>
         <Tabs selected={0}>
