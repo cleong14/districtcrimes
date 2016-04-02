@@ -11,7 +11,7 @@ module.exports = {
       objectID: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true
+        unique: false
       },
       date: {
         type: Sequelize.DATE
