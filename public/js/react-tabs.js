@@ -80,7 +80,19 @@ var CrimeList = React.createClass({//added
           {crime.location}
         </Crime>
       )
-    }
+}
+
+var CrimeList = React.createClass({//added
+  render: function () {
+  var crimeNodes = this.props.data.map(function (crime, index) {//map is making a new array, this.props.data is flowing from commentBox 
+    return (
+      <Crime 
+        key={index}
+        type={crime.type}
+      >
+        {crime.location}
+      </Crime>
+    )
   })
     return (
       <div className="crimeList">
@@ -259,6 +271,23 @@ var Tabs = React.createClass({
       </div>
     );
   },
+  loadCrimesFromServer: function () {//added
+    var _this = this;
+    $.ajax({
+      url: this.props.url,
+      method: "GET",
+      dataType: "json",
+      success: function (data) {
+        console.log("testing");
+        _this.setState({data: data});
+      }
+    });
+    // _this.setState({data: crimes});
+  },
+  componentDidMount: function () {//added
+    this.loadCrimesFromServer();
+    setInterval(this.loadCrimesFromServer, 5000);
+  },
   render: function () {
     return (
       <div className="tabs">
@@ -308,6 +337,7 @@ var App = React.createClass({//added
     // setInterval(this.loadCrimesFromServer, 5000);
   },
   render: function () {
+    console.log(this.state);
     return (
       <div>
         <Tabs selected={0}>
@@ -344,7 +374,6 @@ setInterval(function() {
 
 
  
-
 
 
 

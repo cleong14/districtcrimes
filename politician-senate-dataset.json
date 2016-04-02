@@ -1,3 +1,6 @@
+{
+"senatedata": 
+[
 { "legislator_number" : "28", 
 "legislator_year" : "2016", 
 "legislator_type" : "State", 
@@ -793,16 +796,16 @@
 [
 "SB2567",
 "SB517",
-"SB750	",
+"SB750",
 "SB2649",
 "SB2491",
 "SCR72",
 "SB2326",
 "SB2186",
-"SB698	",
-"SB941	",
+"SB698",
+"SB941",
 "SB1282",
-"SB309	",
+"SB309",
 "SB2513",
 "SB2966",
 "SB2496",
@@ -1894,7 +1897,7 @@
 "SB2550",
 "SCR144",
 "SB2537",
-"SR76	W",
+"SR76",
 "SB1287",
 "SB877",
 "SR126",
@@ -4556,4 +4559,6 @@
 "Ways and Means"], 
 "politician_measures" : 
 []
+}
+]
 }
