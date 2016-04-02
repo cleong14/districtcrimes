@@ -13,18 +13,7 @@ var crimes = [
 ];
 
 
-// var filtered = React.createClass({
-//   render: function () {
-//   var crimeNodes = this.props.data.map(function (crime, index) {//map is making a new array, this.props.data is flowing from commentBox 
-//     return (
-//       <Crime 
-//         key={index}
-//         type={crime.type}
-//       >
-//         {crime.location}
-//       </Crime>
-//     )
-// });
+
 
 
 
@@ -51,9 +40,31 @@ var SearchBar = React.createClass({
 });
 
 
-    // if(crime.type === this.props.filterText) {
+var filterCrimeList = React.createClass({//added
+  render: function () {
+  var filterCrimeNodes = this.props.data.map(function (crime, index) {//map is making a new array, this.props.data is flowing from commentBox 
+    console.log(crime);
+    if (crime.type === "MOTOR VEHICLE THEFT") {
+      return (
+        <Crime 
+          key={index}
+          type={crime.type}
+        >
+        {crime.location}
+        </Crime>
+      )
+    }
+  })
+    return (
+      <div>
+        {filterCrimeNodes.reverse()}
+      </div>
+    )
+  }
+});
 
-    //   }
+
+
 
 
 var CrimeList = React.createClass({//added
@@ -61,14 +72,14 @@ var CrimeList = React.createClass({//added
   var crimeNodes = this.props.data.map(function (crime, index) {//map is making a new array, this.props.data is flowing from commentBox 
     console.log(crime);
     if (crime.type === "MOTOR VEHICLE THEFT") {
-    return (
-      <Crime 
-        key={index}
-        type={crime.type}
-      >
-        {crime.location}
-      </Crime>
-    )
+      return (
+        <Crime 
+          key={index}
+          type={crime.type}
+        >
+          {crime.location}
+        </Crime>
+      )
     }
   })
     return (
@@ -306,7 +317,7 @@ var App = React.createClass({//added
               <Dropdown list={colours} selected={colours[2]} />
               <SearchBar filterText={this.state.filterText}
                       onUserInput={this.handleUserInput}
-                    />
+              />
               <CrimeList data={this.state.crimes} />
             </div>
           </Pane>
@@ -315,6 +326,7 @@ var App = React.createClass({//added
           </Pane>
           <Pane label="Crimes">
             <div>This is my tab 3 contents!</div>
+              <filterCrimeList data={this.state.crimes} />
           </Pane>
         </Tabs>
       </div>
