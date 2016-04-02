@@ -54,10 +54,10 @@ var filterCrimeList = React.createClass({//added
         </Crime>
       )
     }
-  })
+  });
     return (
       <div>
-        {filterCrimeNodes.reverse()}
+        {filterCrimeNodes}
       </div>
     )
   }
@@ -70,7 +70,6 @@ var filterCrimeList = React.createClass({//added
 var CrimeList = React.createClass({//added
   render: function () {
   var crimeNodes = this.props.data.map(function (crime, index) {//map is making a new array, this.props.data is flowing from commentBox 
-    console.log(crime);
     if (crime.type === "MOTOR VEHICLE THEFT") {
       return (
         <Crime 
@@ -80,19 +79,7 @@ var CrimeList = React.createClass({//added
           {crime.location}
         </Crime>
       )
-}
-
-var CrimeList = React.createClass({//added
-  render: function () {
-  var crimeNodes = this.props.data.map(function (crime, index) {//map is making a new array, this.props.data is flowing from commentBox 
-    return (
-      <Crime 
-        key={index}
-        type={crime.type}
-      >
-        {crime.location}
-      </Crime>
-    )
+    }
   })
     return (
       <div className="crimeList">
@@ -356,7 +343,7 @@ var App = React.createClass({//added
           </Pane>
           <Pane label="Crimes">
             <div>This is my tab 3 contents!</div>
-              <filterCrimeList data={this.state.crimes} />
+              
           </Pane>
         </Tabs>
       </div>
