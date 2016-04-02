@@ -26,9 +26,9 @@ var path = {
   JSON:           'client/data/*.geojson',
   MINIFIED_OUT:   'client/build.min.js',
   OUT:            'client/build.js',
-  DEST:           'client/dist',
-  DEST_BUILD:     'client/dist/build',
-  DEST_SRC:       'client/dist/src',
+  DEST:           'public/',
+  DEST_BUILD:     'public/js/',
+  DEST_SRC:       'public/src/',
   CSS_SRC:        'client/src/**/*.css',
   ENTRY_POINT:    'client/src/js/App.js',
   DEPENDENCIES:   'node_modules/'
@@ -69,7 +69,7 @@ gulp.task('watch', function() {
   return watcher.on('update', function () {
     watcher.bundle()
       .pipe(source(path.OUT))
-      .pipe(gulp.dest(path.DEST_SRC))
+      .pipe(gulp.dest(path.DEST_SRC));
       console.log('Updated');
   })
     .bundle()
