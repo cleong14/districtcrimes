@@ -54,7 +54,7 @@ config.colors = {
     level5: '#de2d26',
     level6: '#a50f15'
   }
-}
+};
 
 
 // here's the actual component
@@ -149,36 +149,37 @@ var Map = React.createClass({
       chamber: chamber
     }, () => {
       if (geojsonLayer && data){
+
         // remove the data from the geojson layer
         geojsonLayer.clearLayers();
         geojsonLayer.addData(data);
       } else if (!geojsonLayer) {
+
         // add our GeoJSON to the component's state and the Leaflet map
         geojsonLayer = L.geoJson(data, {
           onEachFeature: this.onEachFeature,
           style: this.style
-          // pointToLayer: this.pointToLayer,
-          // filter: this.filter
+
         }).addTo(map);
       }
 
       // bottom right legend panel
-      var legend = L.control({position: 'bottomright'});
-      var _this = this;
-      legend.onAdd = function (map) {
-        console.log(_this.state.chamber);
-        var div = L.DomUtil.create('div', 'info legend'),
-          grades = [0, 7, 14, 21, 28, 35],
-          labels = [];
-        // loop through our density intervals and generate a label with a colored square for each interval
-        for (var i = 0; i < grades.length; i++) {
-          div.innerHTML +=
-            '<i style="background:' + _this.getColor(grades[i] + 1) + '"></i> ' +
-            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-        }
-        return div;
-      };
-      legend.addTo(map);
+      // var legend = L.control({position: 'bottomright'});
+      // var _this = this;
+      // legend.onAdd = function (map) {
+      //   console.log(_this.state.chamber);
+      //   var div = L.DomUtil.create('div', 'info legend'),
+      //     grades = [0, 7, 14, 21, 28, 35],
+      //     labels = [];
+      //   // loop through our density intervals and generate a label with a colored square for each interval
+      //   for (var i = 0; i < grades.length; i++) {
+      //     div.innerHTML +=
+      //       '<i style="background:' + _this.getColor(grades[i] + 1) + '"></i> ' +
+      //       grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+      //   }
+      //   return div;
+      // };
+      // legend.addTo(map);
 
       // set our component's state with the GeoJSON data and L.geoJson layer
       this.setState({
@@ -277,15 +278,10 @@ var Map = React.createClass({
             : 'Hover over a district!');
     };
     info.addTo(map);
-
-
-
-
   },
 
   render : function() {
     // return our JSX that is rendered to the DOM
-    // we pass our Filter component props such as subwayLines array, filter & updateMap methods
     return (
       <div id="mapUI">
         <div id="map"></div>

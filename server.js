@@ -43,7 +43,7 @@ app.use(methodOverride('_method'));
 
 //render main page
 app.get('/', function (req, res) {
-  res.sendFile(path.resolve('./public/extortion.html'));
+  res.render('index');
 });
 
 //finding all from our 'crime' database
@@ -63,7 +63,7 @@ app.route('/politicians')
 			}
 			res.json(politicians);
 		});
-		
+
 
 	})
 	.post(function (req, res) {

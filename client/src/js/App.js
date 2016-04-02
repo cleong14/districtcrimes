@@ -2,6 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 // require our Map React component
 var Map = require('./Map');
+var Filter = require('./Filter');
 
 // where in the actual DOM to mount our App
 var mountNode = document.getElementById('app');
@@ -10,7 +11,8 @@ var mountNode = document.getElementById('app');
 var App = React.createClass({
   render: function() {
     return (
-      <Map />
+      <Map />,
+      <Filter />
     );
   }
 });

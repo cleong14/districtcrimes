@@ -24,8 +24,8 @@ var rimraf = require('rimraf');
 var path = {
   HTML:           'client/src/index.html',
   JSON:           'client/data/*.geojson',
-  MINIFIED_OUT:   'client/build.min.js',
-  OUT:            'client/build.js',
+  MINIFIED_OUT:   'js/build.min.js',
+  OUT:            'js/build.js',
   DEST:           'public/',
   DEST_BUILD:     'public/js/',
   DEST_SRC:       'public/src/',
