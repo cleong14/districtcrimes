@@ -11,8 +11,10 @@ var mountNode = document.getElementById('app');
 var App = React.createClass({
   render: function() {
     return (
-      <Map />,
-      <Filter />
+      <div>
+        <Map />
+        <Filter />
+      </div>
     );
   }
 });

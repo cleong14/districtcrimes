@@ -296,7 +296,5 @@ var Map = React.createClass({
 });
 
 
-
-
 // export our Map component so that Browserify can include it with other components that require it
 module.exports = Map;

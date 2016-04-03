@@ -10,6 +10,7 @@ var $ = require('gulp-load-plugins')({
   pattern: ['gulp-*', 'gulp.*'],
   replaceString: /\bgulp[\-.]/
 });
+
 var source = require('vinyl-source-stream');
 var browserify = require('browserify');
 var watchify = require('watchify');
@@ -69,12 +70,12 @@ gulp.task('watch', function() {
   return watcher.on('update', function () {
     watcher.bundle()
       .pipe(source(path.OUT))
-      .pipe(gulp.dest(path.DEST_SRC));
+      .pipe(gulp.dest(path.DEST));
       console.log('Updated');
   })
     .bundle()
     .pipe(source(path.OUT))
-    .pipe(gulp.dest(path.DEST_SRC));
+    .pipe(gulp.dest(path.DEST));
 });
 
 // build: convert our JSX, bundle, minify, and uglify our code for production
