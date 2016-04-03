@@ -3,6 +3,8 @@ var ReactDOM = require('react-dom');
 // require our Map React component
 var Map = require('./Map');
 var Filter = require('./Filter');
+var Summary = require('./Summary');
+var Dashboard = require('./Dashboard');
 
 // where in the actual DOM to mount our App
 var mountNode = document.getElementById('app');
@@ -14,6 +16,8 @@ var App = React.createClass({
       <div>
         <Map />
         <Filter />
+        <Summary />
+        <Dashboard />
       </div>
     );
   }
