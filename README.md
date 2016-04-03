@@ -37,3 +37,13 @@ connecting to: test
 > use mongoose-demo
 switched to db mongoose-demo
 > db.politicians.find()
+
+# How to run project: #
+## 1. 3 terminal windows open ##
+    a. run 'gulp' in first window 
+    b. run 'nodemon server.js' in second window 
+    c. third window is for your git commands (git status, etc) 
+## 2. Work in client/src/ directory ##
+    - js/App.js never needs to change 
+    - you can work in your files and see your changes as you go using gulp 
+## 3. gulp will take files and deposit them into public directory as a single bundle (build.js)## 
