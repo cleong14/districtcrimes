@@ -4,6 +4,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var L = require('leaflet');
 var qwest = require('qwest');
+var districtData = require('../../../district-data.json');
 
 
 // let's store the map configuration properties,
@@ -211,8 +212,27 @@ var Map = React.createClass({
                      config.colors[chamber].level1;
   },
 
+  getNeighborhoods: function (districtNumber) {
+    for (var i in districtData[this.state.chamber]) {
+      if (districtData[this.state.chamber][i].district_name === districtNumber) {
+        return this.normalizeNeighborhoods(districtData[this.state.chamber][i].district_area);
+      }
+    }
+  },
+
+  normalizeNeighborhoods: function (neighborhoodList) {
+    var str = "";
+    for (var i = 0; i < neighborhoodList.length-1; i++) {
+      str+= neighborhoodList[i] + ", ";
+    }
+    str+= neighborhoodList[neighborhoodList.length-1] +".";
+    return str;
+  },
+
   highlightFeature: function (e) {
     var layer = e.target;
+    var distNumber = layer.feature.properties.objectid;
+    var neighborhoodStr = this.getNeighborhoods(distNumber);
 
     layer.setStyle({
         weight: 5,
@@ -258,8 +278,8 @@ var Map = React.createClass({
   init: function(mapElement) {
     // this function creates the Leaflet map object and is called after the Map component mounts
     map = L.map(mapElement, config.params);
-    L.control.zoom({ position: "bottomleft" }).addTo(map);
-    L.control.scale({ position: "bottomleft" }).addTo(map);
+    // L.control.zoom({ position: "bottomleft" }).addTo(map);
+    // L.control.scale({ position: "bottomleft" }).addTo(map);
 
     // set our state to include the tile layer
     this.state.tileLayer = L.tileLayer(config.tileLayer.url, config.tileLayer.params).addTo(map);
@@ -274,7 +294,8 @@ var Map = React.createClass({
     // method that we will use to update the control based on feature properties passed
     info.update = function (props) {
         this._div.innerHTML = '<h4>Hawaii House Districts</h4>' +  (props ?
-            '<b>House District ' + props.objectid + '</b>'
+            '<b>House District ' + props.objectid + '</b>' //+
+            // '<p>Neighborhoods: ' + districtData.senate[props.objectid].district_area
             : 'Hover over a district!');
     };
     info.addTo(map);
