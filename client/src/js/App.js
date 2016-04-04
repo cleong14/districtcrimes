@@ -12,11 +12,11 @@ var mountNode = document.getElementById('app');
 // App component
 var App = React.createClass({
   getInitialState: function () {//we set it to state because its subject to change
-    return {crimes: [], types: ['theft', 'robbery'], filter: []};
+    return {crimes: [], types: ['theft', 'robbery'], filter: [], chamber: 'house'};
 
   },
   loadCrimesFromServer: function () {//added
-    
+
     $.ajax({
       url: this.props.url,
       method: "GET",
@@ -30,26 +30,31 @@ var App = React.createClass({
     });
   },
   componentDidMount: function () {//added
-    console.log('testing');
     this.loadCrimesFromServer();
   },
   toggleFilter: function (type) {//triggers a render for this component, passing toggleFilter down to CheckBoxes
     this.setState({filter: this.state.filter.concat(type)});//concat state filter with 7
-    //main thing is you can change filter in this function 
+    //main thing is you can change filter in this function
 
     //if youre given an array with the "types", given a new type , if its in the array then remove from array then setState
     //but if its not in array then you want to concat into array, then setState
 
     //write some logic to add into the array, and remove, should only have about 2 things in array
     console.log('toggling', type);
-  }, 
+  },
+
+  updateChamber: function (val) {
+    this.setState({
+      chamber: val
+    });
+  },
+
   render: function() {
-    console.log(this.state);
     return (
       <div>
         {this.state.filter}
-        <Map />
-        <Filter crimes={this.state.crimes} types={this.state.types} onChange={this.toggleFilter} />
+        <Map chamber={this.state.chamber} />
+        <Filter crimes={this.state.crimes} types={this.state.types} onChange={this.toggleFilter} updateChamber={this.updateChamber} />
         <Summary />
         <Dashboard />
       </div>

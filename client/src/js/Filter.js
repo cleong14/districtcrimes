@@ -276,19 +276,19 @@ var Tabs = React.createClass({
       </div>
     );
   },
-  loadCrimesFromServer: function () {//added
-    var _this = this;
-    $.ajax({
-      url: this.props.url,
-      method: "GET",
-      dataType: "json",
-      success: function (data) {
-        console.log("testing");
-        _this.setState({data: data});
-      }
-    });
-    // _this.setState({data: crimes});
-  },
+  // loadCrimesFromServer: function () {//added
+  //   var _this = this;
+  //   $.ajax({
+  //     url: this.props.url,
+  //     method: "GET",
+  //     dataType: "json",
+  //     success: function (data) {
+  //       console.log("testing");
+  //       _this.setState({data: data});
+  //     }
+  //   });
+  //   // _this.setState({data: crimes});
+  // },
   componentDidMount: function () {//added
     this.loadCrimesFromServer();
     setInterval(this.loadCrimesFromServer, 5000);
@@ -318,22 +318,32 @@ var Pane = React.createClass({
   }
 });
 
+
 //parents have state, children have props
 //props never change and always need to be passed from parent to child
 var Filter = React.createClass({
+  update: function(event) {
+    var value = event.target.getAttribute('value');
+    this.props.updateChamber(value);
+  },
+
   render: function () {
     console.log(this.props);//our parent tells us what types exist
     var typeNodes = this.props.types.map((type, index) => {//by doing es6 it automatically binds this
       return (
         <CheckBox type={type} key={index} onChange={this.props.onChange} />
       )
-    }) 
+    })
     return (
       <div>
         <Tabs selected={0}>
           <Pane label="Poltical">
             <div>Info Tab
               {typeNodes}
+              <div>
+                <button onClick={this.update} value="house">House</button>
+                <button onClick={this.update} value="senate">Senate</button>
+              </div>
               <CrimeList data={this.props.crimes} />
 
             </div>

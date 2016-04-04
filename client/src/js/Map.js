@@ -303,6 +303,7 @@ var Map = React.createClass({
 
   render : function() {
     // return our JSX that is rendered to the DOM
+    console.log(this.props);
     return (
       <div id="mapUI">
         <div id="map"></div>
