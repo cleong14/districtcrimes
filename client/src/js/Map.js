@@ -82,13 +82,14 @@ var Map = React.createClass({
     // code to run just after adding the map to the DOM
     // instantiate the Leaflet map object
     this.init(this.getID());
+    this.addGeoJSON(this.props.chamber);
     // make the Ajax request for the GeoJSON data
     this.getData();
   },
 
   componentWillReceiveProps: function() {
 
-    // code to run just before updating the map
+    this.addGeoJSON(this.props.chamber);
 
   },
 
@@ -117,8 +118,6 @@ var Map = React.createClass({
           _this.setState({
             geo1: res
           });
-          // use the component's addGeoJSON method to add the GeoJSON data to the map
-          _this.addGeoJSON(res, 'house');
         }
       })
       .catch(function(xhr, res, e) {
@@ -138,56 +137,43 @@ var Map = React.createClass({
       .catch(function(xhr, res, e) {
         console.log('qwest catch: ', xhr, res, e);
       });
+
+
   },
 
-  addGeoJSON: function(data, chamber) {
+  addGeoJSON: function(chamber) {
     var geojsonLayer = this.state.geojsonLayer;
+    var data = this.state.geojson;
+
+    if (this.props.chamber === 'house') {
+      data = this.state.geo1;
+    } else {
+      data = this.state.geo2;
+    }
+    console.log(data);
 
     // zoom to center
-    this.zoomToCenter();
+    // this.zoomToCenter();
 
+    if (geojsonLayer && data){
+
+      // remove the data from the geojson layer
+      geojsonLayer.clearLayers();
+      geojsonLayer.addData(data);
+    } else if (!geojsonLayer) {
+
+      // add our GeoJSON to the component's state and the Leaflet map
+      geojsonLayer = L.geoJson(data, {
+        onEachFeature: this.onEachFeature,
+        style: this.style
+
+      }).addTo(map);
+    }
+
+    // set our component's state with the GeoJSON data and L.geoJson layer
     this.setState({
-      chamber: chamber
-    }, () => {
-      if (geojsonLayer && data){
-
-        // remove the data from the geojson layer
-        geojsonLayer.clearLayers();
-        geojsonLayer.addData(data);
-      } else if (!geojsonLayer) {
-
-        // add our GeoJSON to the component's state and the Leaflet map
-        geojsonLayer = L.geoJson(data, {
-          onEachFeature: this.onEachFeature,
-          style: this.style
-
-        }).addTo(map);
-      }
-
-      // bottom right legend panel
-      // var legend = L.control({position: 'bottomright'});
-      // var _this = this;
-      // legend.onAdd = function (map) {
-      //   console.log(_this.state.chamber);
-      //   var div = L.DomUtil.create('div', 'info legend'),
-      //     grades = [0, 7, 14, 21, 28, 35],
-      //     labels = [];
-      //   // loop through our density intervals and generate a label with a colored square for each interval
-      //   for (var i = 0; i < grades.length; i++) {
-      //     div.innerHTML +=
-      //       '<i style="background:' + _this.getColor(grades[i] + 1) + '"></i> ' +
-      //       grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-      //   }
-      //   return div;
-      // };
-      // legend.addTo(map);
-
-      // set our component's state with the GeoJSON data and L.geoJson layer
-      this.setState({
-        geojson: data,
-        geojsonLayer: geojsonLayer
-      });
-
+      geojson: data,
+      geojsonLayer: geojsonLayer
     });
 
   },
@@ -203,7 +189,7 @@ var Map = React.createClass({
   },
 
   getColor: function (d) {
-    var chamber = this.state.chamber;
+    var chamber = this.props.chamber;
     return d > 35  ? config.colors[chamber].level6 :
            d > 28  ? config.colors[chamber].level5 :
            d > 21  ? config.colors[chamber].level4 :
@@ -276,6 +262,7 @@ var Map = React.createClass({
   },
 
   init: function(mapElement) {
+
     // this function creates the Leaflet map object and is called after the Map component mounts
     map = L.map(mapElement, config.params);
     // L.control.zoom({ position: "bottomleft" }).addTo(map);
@@ -283,6 +270,8 @@ var Map = React.createClass({
 
     // set our state to include the tile layer
     this.state.tileLayer = L.tileLayer(config.tileLayer.url, config.tileLayer.params).addTo(map);
+
+    this.addGeoJSON(this.props.chamber);
 
     // Top right info panel
     var info = this.info = L.control();
@@ -302,21 +291,37 @@ var Map = React.createClass({
   },
 
   render : function() {
+
     // return our JSX that is rendered to the DOM
     console.log(this.props);
     return (
       <div id="mapUI">
         <div id="map"></div>
         <button onClick={this.zoomToCenter}>Image-Hawaii Islands</button>
-
-        <button onClick={this.addGeoJSON.bind(this, this.state.geo1, 'house')}>H - House Districts</button>
-
-        <button onClick={this.addGeoJSON.bind(this, this.state.geo2, 'senate')}>S - Senate Districts</button>
       </div>
     );
+
   }
 });
 
 
 // export our Map component so that Browserify can include it with other components that require it
 module.exports = Map;
+
+// bottom right legend panel
+      // var legend = L.control({position: 'bottomright'});
+      // var _this = this;
+      // legend.onAdd = function (map) {
+      //   console.log(_this.state.chamber);
+      //   var div = L.DomUtil.create('div', 'info legend'),
+      //     grades = [0, 7, 14, 21, 28, 35],
+      //     labels = [];
+      //   // loop through our density intervals and generate a label with a colored square for each interval
+      //   for (var i = 0; i < grades.length; i++) {
+      //     div.innerHTML +=
+      //       '<i style="background:' + _this.getColor(grades[i] + 1) + '"></i> ' +
+      //       grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+      //   }
+      //   return div;
+      // };
+      // legend.addTo(map);
