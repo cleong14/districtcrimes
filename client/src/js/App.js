@@ -36,12 +36,14 @@ var App = React.createClass({
   toggleFilter: function (type) {//triggers a render for this component, passing toggleFilter down to CheckBoxes
     this.setState({filter: this.state.filter.concat(type)});//concat state filter with 7
     //main thing is you can change filter in this function 
+    
 
     //if youre given an array with the "types", given a new type , if its in the array then remove from array then setState
     //but if its not in array then you want to concat into array, then setState
 
     //write some logic to add into the array, and remove, should only have about 2 things in array
     console.log('toggling', type);
+
   }, 
   render: function() {
     console.log(this.state);
