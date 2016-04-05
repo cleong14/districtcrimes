@@ -83,8 +83,7 @@ var Map = React.createClass({
     // instantiate the Leaflet map object
     this.init(this.getID());
     this.addGeoJSON(this.props.chamber);
-    // make the Ajax request for the GeoJSON data
-    this.getData();
+    console.log(this.props);
   },
 
   componentWillReceiveProps: function() {
@@ -150,10 +149,9 @@ var Map = React.createClass({
     } else {
       data = this.state.geo2;
     }
-    console.log(data);
 
     // zoom to center
-    // this.zoomToCenter();
+    this.zoomToCenter();
 
     if (geojsonLayer && data){
 
@@ -256,13 +254,17 @@ var Map = React.createClass({
     });
   },
 
+  capitalizeFirstLetter: function (str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  },
+
   getID: function() {
     // get the "id" attribute of our component's DOM node
     return ReactDOM.findDOMNode(this).querySelectorAll('#map')[0];
   },
 
   init: function(mapElement) {
-
+    var _this = this;
     // this function creates the Leaflet map object and is called after the Map component mounts
     map = L.map(mapElement, config.params);
     // L.control.zoom({ position: "bottomleft" }).addTo(map);
@@ -282,8 +284,8 @@ var Map = React.createClass({
     };
     // method that we will use to update the control based on feature properties passed
     info.update = function (props) {
-        this._div.innerHTML = '<h4>Hawaii House Districts</h4>' +  (props ?
-            '<b>House District ' + props.objectid + '</b>' //+
+        this._div.innerHTML = '<h4>Hawaii '+ _this.capitalizeFirstLetter(_this.props.chamber) +' Districts</h4>' +  (props ?
+            '<b>'+ _this.capitalizeFirstLetter(_this.props.chamber) + ' District ' + props.objectid + '</b>' //+
             // '<p>Neighborhoods: ' + districtData.senate[props.objectid].district_area
             : 'Hover over a district!');
     };

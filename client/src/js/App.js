@@ -12,7 +12,13 @@ var mountNode = document.getElementById('app');
 // App component
 var App = React.createClass({
   getInitialState: function () {//we set it to state because its subject to change
-    return {crimes: [], types: ['theft', 'robbery'], filter: [], chamber: 'house'};
+    return {
+      crimes: [],
+      types: ['theft', 'robbery'],
+      filter: [],
+      chamber: 'house',
+      dataFiles: []
+    };
 
   },
   loadCrimesFromServer: function () {//added
@@ -29,8 +35,27 @@ var App = React.createClass({
       }
     });
   },
+  loadFile: function (name) {
+    var newState = {};
+    $.ajax({
+      url: 'http://localhost:3000/file/' +name,
+      method: "GET",
+      dataType: "json",
+      success: (data) => {
+        newState[name] = data;
+        this.setState({dataFiles: this.state.dataFiles.concat([newState])});
+        console.log(this.state);
+        // this.setState(newState);//setting state of app to have crimes as data
+      },
+      failure: function (err) {
+        // console.log(err);
+      }
+    });
+  },
   componentDidMount: function () {//added
     this.loadCrimesFromServer();
+    this.loadFile('hshd.geo.json');
+    this.loadFile('hssd.geo.json');
   },
   toggleFilter: function (type) {//triggers a render for this component, passing toggleFilter down to CheckBoxes
     this.setState({filter: this.state.filter.concat(type)});//concat state filter with 7
@@ -53,8 +78,16 @@ var App = React.createClass({
     return (
       <div>
         {this.state.filter}
-        <Map chamber={this.state.chamber} />
-        <Filter crimes={this.state.crimes} types={this.state.types} onChange={this.toggleFilter} updateChamber={this.updateChamber} />
+        <Map
+          chamber={this.state.chamber}
+          dataFiles={this.state.dataFiles}
+        />
+        <Filter
+          crimes={this.state.crimes}
+          types={this.state.types}
+          onChange={this.toggleFilter}
+          updateChamber={this.updateChamber}
+        />
         <Summary />
         <Dashboard />
       </div>

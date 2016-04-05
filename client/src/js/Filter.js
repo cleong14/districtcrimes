@@ -290,7 +290,7 @@ var Tabs = React.createClass({
   //   // _this.setState({data: crimes});
   // },
   componentDidMount: function () {//added
-    this.loadCrimesFromServer();
+    // this.loadCrimesFromServer();
     setInterval(this.loadCrimesFromServer, 5000);
   },
   render: function () {
