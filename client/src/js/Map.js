@@ -3,7 +3,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var L = require('leaflet');
-var qwest = require('qwest');
 var districtData = require('../../../district-data.json');
 
 
@@ -64,10 +63,9 @@ var Map = React.createClass({
   getInitialState: function() {
     // TODO: if we wanted an initial "state" for our map component we could add it here
     return {
-      tileLayer : null,
-      geojsonLayer: null,
-      geojson: null,
-      chamber: 'house'
+      // tileLayer : null,
+      // geojsonLayer: null,
+      // geojson: null,
     };
   },
 
@@ -78,101 +76,94 @@ var Map = React.createClass({
   },
 
   componentDidMount: function() {
-
     // code to run just after adding the map to the DOM
     // instantiate the Leaflet map object
-    this.init(this.getID());
-    this.addGeoJSON(this.props.chamber);
-    console.log(this.props);
+    this.createMap(this.getID());
   },
 
   componentWillReceiveProps: function() {
-
+    console.log(this.props);
     this.addGeoJSON(this.props.chamber);
-
   },
 
   componentWillUnmount: function() {
-
     // code to run just before removing the map
-
   },
 
-  updateMap: function() {
-    // change the subway line filter
+
+  // getData: function() {
+  //   var _this = this;
+
+  //   // qwest is a library for making Ajax requests, we use it here to load GeoJSON data
+  //   qwest.get('hshd.geojson', null, { responseType : 'json' })
+  //     .then(function(xhr, res) {
+
+  //       if (_this.isMounted()) {
+  //         // count the number of features and store it in the component's state for use later
+  //         _this.setState({
+  //           geo1: res
+  //         });
+  //       }
+  //     })
+  //     .catch(function(xhr, res, e) {
+  //       console.log('qwest catch: ', xhr, res, e);
+  //     });
+
+  //     qwest.get('hssd.geojson', null, { responseType : 'json' })
+  //     .then(function(xhr, res) {
+
+  //       if (_this.isMounted()) {
+  //         // count the number of features and store it in the component's state for use later
+  //         _this.setState({
+  //           geo2: res
+  //         });
+  //       }
+  //     })
+  //     .catch(function(xhr, res, e) {
+  //       console.log('qwest catch: ', xhr, res, e);
+  //     });
 
 
-    this.getData();
-  },
-
-  getData: function() {
-    var _this = this;
-
-    // qwest is a library for making Ajax requests, we use it here to load GeoJSON data
-    qwest.get('hshd.geojson', null, { responseType : 'json' })
-      .then(function(xhr, res) {
-
-        if (_this.isMounted()) {
-          // count the number of features and store it in the component's state for use later
-          _this.setState({
-            geo1: res
-          });
-        }
-      })
-      .catch(function(xhr, res, e) {
-        console.log('qwest catch: ', xhr, res, e);
-      });
-
-      qwest.get('hssd.geojson', null, { responseType : 'json' })
-      .then(function(xhr, res) {
-
-        if (_this.isMounted()) {
-          // count the number of features and store it in the component's state for use later
-          _this.setState({
-            geo2: res
-          });
-        }
-      })
-      .catch(function(xhr, res, e) {
-        console.log('qwest catch: ', xhr, res, e);
-      });
-
-
-  },
+  // },
 
   addGeoJSON: function(chamber) {
-    var geojsonLayer = this.state.geojsonLayer;
-    var data = this.state.geojson;
-
-    if (this.props.chamber === 'house') {
-      data = this.state.geo1;
-    } else {
-      data = this.state.geo2;
-    }
-
-    // zoom to center
     this.zoomToCenter();
 
-    if (geojsonLayer && data){
+    console.log(this.props);
 
-      // remove the data from the geojson layer
-      geojsonLayer.clearLayers();
-      geojsonLayer.addData(data);
-    } else if (!geojsonLayer) {
+    var geojsonLayer;
+    var data;
 
-      // add our GeoJSON to the component's state and the Leaflet map
-      geojsonLayer = L.geoJson(data, {
-        onEachFeature: this.onEachFeature,
-        style: this.style
-
-      }).addTo(map);
+    if (this.props.dataFiles.length > 0) {
+      data = this.props.dataFiles[0][chamber];
     }
 
-    // set our component's state with the GeoJSON data and L.geoJson layer
+
+    geojsonLayer = L
+      .geoJson(data, {
+        onEachFeature: this.onEachFeature,
+        style: this.style
+      })
+      .addTo(map);
+
     this.setState({
-      geojson: data,
       geojsonLayer: geojsonLayer
     });
+
+    console.log(this.state.geojsonLayer);
+
+    // if (geojsonLayer && data){
+
+    //   // remove the data from the geojson layer
+    //   geojsonLayer.clearLayers();
+    //   geojsonLayer.addData(data);
+    // } else {
+    //   console.log(data);
+    //   // add our GeoJSON to the component's state and the Leaflet map
+
+    // }
+
+    // set our component's state with the GeoJSON data and L.geoJson layer
 
   },
 
@@ -263,39 +254,36 @@ var Map = React.createClass({
     return ReactDOM.findDOMNode(this).querySelectorAll('#map')[0];
   },
 
-  init: function(mapElement) {
+  createMap: function(mapElement) {
     var _this = this;
     // this function creates the Leaflet map object and is called after the Map component mounts
     map = L.map(mapElement, config.params);
-    // L.control.zoom({ position: "bottomleft" }).addTo(map);
-    // L.control.scale({ position: "bottomleft" }).addTo(map);
 
     // set our state to include the tile layer
     this.state.tileLayer = L.tileLayer(config.tileLayer.url, config.tileLayer.params).addTo(map);
 
-    this.addGeoJSON(this.props.chamber);
+    // this.addGeoJSON(this.props.chamber);
 
     // Top right info panel
-    var info = this.info = L.control();
-    info.onAdd = function (map) {
-        this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-        this.update();
-        return this._div;
-    };
-    // method that we will use to update the control based on feature properties passed
-    info.update = function (props) {
-        this._div.innerHTML = '<h4>Hawaii '+ _this.capitalizeFirstLetter(_this.props.chamber) +' Districts</h4>' +  (props ?
-            '<b>'+ _this.capitalizeFirstLetter(_this.props.chamber) + ' District ' + props.objectid + '</b>' //+
-            // '<p>Neighborhoods: ' + districtData.senate[props.objectid].district_area
-            : 'Hover over a district!');
-    };
-    info.addTo(map);
+    // var info = this.info = L.control();
+    // info.onAdd = function (map) {
+    //     this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    //     this.update();
+    //     return this._div;
+    // };
+    // // method that we will use to update the control based on feature properties passed
+    // info.update = function (props) {
+    //     this._div.innerHTML = '<h4>Hawaii '+ _this.capitalizeFirstLetter(_this.props.chamber) +' Districts</h4>' +  (props ?
+    //         '<b>'+ _this.capitalizeFirstLetter(_this.props.chamber) + ' District ' + props.objectid + '</b>' //+
+    //         // '<p>Neighborhoods: ' + districtData.senate[props.objectid].district_area
+    //         : 'Hover over a district!');
+    // };
+    // info.addTo(map);
   },
 
   render : function() {
 
     // return our JSX that is rendered to the DOM
-    console.log(this.props);
     return (
       <div id="mapUI">
         <div id="map"></div>

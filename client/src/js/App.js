@@ -35,14 +35,14 @@ var App = React.createClass({
       }
     });
   },
-  loadFile: function (name) {
+  loadFile: function (fileName, label) {
     var newState = {};
     $.ajax({
-      url: 'http://localhost:3000/file/' +name,
+      url: 'http://localhost:3000/file/'+fileName,
       method: "GET",
       dataType: "json",
       success: (data) => {
-        newState[name] = data;
+        newState[label] = data;
         this.setState({dataFiles: this.state.dataFiles.concat([newState])});
         console.log(this.state);
         // this.setState(newState);//setting state of app to have crimes as data
@@ -54,8 +54,8 @@ var App = React.createClass({
   },
   componentDidMount: function () {//added
     this.loadCrimesFromServer();
-    this.loadFile('hshd.geo.json');
-    this.loadFile('hssd.geo.json');
+    this.loadFile('hshd.geo.json', 'house');
+    this.loadFile('hssd.geo.json', 'senate');
   },
   toggleFilter: function (type) {//triggers a render for this component, passing toggleFilter down to CheckBoxes
     this.setState({filter: this.state.filter.concat(type)});//concat state filter with 7
