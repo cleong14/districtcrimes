@@ -16,8 +16,7 @@ var App = React.createClass({
       crimes: [],
       types: ['theft', 'robbery'],
       filter: [],
-      chamber: 'house',
-      dataFiles: []
+      chamber: 'senate'
     };
 
   },
@@ -51,9 +50,10 @@ var App = React.createClass({
     });
   },
   componentDidMount: function () {//added
-    this.loadCrimesFromServer();
-    this.loadFile('hshd.geo.json', 'house');
     this.loadFile('hssd.geo.json', 'senate');
+    this.loadFile('district-data.json', 'districtData');
+    this.loadFile('hshd.geo.json', 'house');
+    this.loadCrimesFromServer();
   },
   toggleFilter: function (type) {//triggers a render for this component, passing toggleFilter down to CheckBoxes
     this.setState({filter: this.state.filter.concat(type)});//concat state filter with 7

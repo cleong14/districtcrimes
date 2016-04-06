@@ -3,7 +3,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var L = require('leaflet');
-var districtData = require('../../../district-data.json');
+// var districtData = require('../../../district-data.json');
 
 
 // let's store the map configuration properties,
@@ -150,8 +150,9 @@ var Map = React.createClass({
     // method that we will use to update the control based on feature properties passed
     info.update = function (props) {
         this._div.innerHTML = '<h4>Hawaii '+ _this.capitalizeFirstLetter(_this.props.chamber) +' Districts</h4>' +  (props ?
-            '<b>'+ _this.capitalizeFirstLetter(_this.props.chamber) + ' District ' + props.objectid + '</b>' //+
-            // '<p>Neighborhoods: ' + districtData.senate[props.objectid].district_area
+            '<b>'+ _this.capitalizeFirstLetter(_this.props.chamber) + ' District ' + props.objectid + '</b><br>' +
+            '<b>' + _this.getLegislator(props.objectid) + '</b>' +
+            '<p>Neighborhoods: ' + _this.getNeighborhoods(props.objectid) + '</p>'
             : 'Hover over a district!');
     };
     info.addTo(map);
@@ -172,9 +173,9 @@ var Map = React.createClass({
   },
 
   getNeighborhoods: function (districtNumber) {
-    for (var i in districtData[this.state.chamber]) {
-      if (districtData[this.state.chamber][i].district_name === districtNumber) {
-        return this.normalizeNeighborhoods(districtData[this.state.chamber][i].district_area);
+    for (var i in this.props.districtData[this.props.chamber]) {
+      if (this.props.districtData[this.props.chamber][i].district_name === districtNumber) {
+        return this.normalizeNeighborhoods(this.props.districtData[this.props.chamber][i].district_area);
       }
     }
   },
@@ -188,10 +189,19 @@ var Map = React.createClass({
     return str;
   },
 
+  getLegislator: function (districtNumber) {
+    var politician = "";
+    for (var i in this.props.districtData[this.props.chamber]) {
+      if (this.props.districtData[this.props.chamber][i].district_name === districtNumber) {
+        politician += this.props.districtData[this.props.chamber][i].politician_firstname + " " + this.props.districtData[this.props.chamber][i].politician_lastname;
+        break;
+      }
+    }
+    return politician;
+  },
+
   highlightFeature: function (e) {
     var layer = e.target;
-    var distNumber = layer.feature.properties.objectid;
-    var neighborhoodStr = this.getNeighborhoods(distNumber);
 
     layer.setStyle({
         weight: 5,
