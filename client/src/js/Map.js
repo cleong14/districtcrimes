@@ -85,6 +85,7 @@ var Map = React.createClass({
     console.log(this.props);
     this.addGeoJSON(this.props.chamber);
     this.addInfoToMap();
+    this.addLegendToMap();
   },
 
   componentWillUnmount: function() {
@@ -159,6 +160,32 @@ var Map = React.createClass({
 
     this.setState({
       info: info
+    });
+  },
+
+  addLegendToMap: function () {
+    // bottom right legend panel
+    if (this.state.legend){
+      // remove the data from the geojson layer
+      map.removeControl(this.state.legend);
+    }
+    var _this = this;
+    var legend = L.control({position: 'bottomright'});
+    legend.onAdd = function (map) {
+      var div = L.DomUtil.create('div', 'legend'),
+        grades = [0, 7, 14, 21, 28, 35],
+        labels = [];
+      // loop through our density intervals and generate a label with a colored square for each interval
+      for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+          '<i style="background:' + _this.getColor(grades[i] + 1) + '"></i> ' +
+          grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+      }
+      return div;
+    };
+    legend.addTo(map);
+    this.setState({
+      legend: legend
     });
   },
 
@@ -276,20 +303,3 @@ var Map = React.createClass({
 // export our Map component so that Browserify can include it with other components that require it
 module.exports = Map;
 
-// bottom right legend panel
-      // var legend = L.control({position: 'bottomright'});
-      // var _this = this;
-      // legend.onAdd = function (map) {
-      //   console.log(_this.state.chamber);
-      //   var div = L.DomUtil.create('div', 'info legend'),
-      //     grades = [0, 7, 14, 21, 28, 35],
-      //     labels = [];
-      //   // loop through our density intervals and generate a label with a colored square for each interval
-      //   for (var i = 0; i < grades.length; i++) {
-      //     div.innerHTML +=
-      //       '<i style="background:' + _this.getColor(grades[i] + 1) + '"></i> ' +
-      //       grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-      //   }
-      //   return div;
-      // };
-      // legend.addTo(map);
