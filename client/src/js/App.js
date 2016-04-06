@@ -43,9 +43,7 @@ var App = React.createClass({
       dataType: "json",
       success: (data) => {
         newState[label] = data;
-        this.setState({dataFiles: this.state.dataFiles.concat([newState])});
-        console.log(this.state);
-        // this.setState(newState);//setting state of app to have crimes as data
+        this.setState(newState);//setting state of app to have crimes as data
       },
       failure: function (err) {
         // console.log(err);
@@ -80,7 +78,9 @@ var App = React.createClass({
         {this.state.filter}
         <Map
           chamber={this.state.chamber}
-          dataFiles={this.state.dataFiles}
+          house={this.state.house}
+          senate={this.state.senate}
+          districtData={this.state.districtData}
         />
         <Filter
           crimes={this.state.crimes}

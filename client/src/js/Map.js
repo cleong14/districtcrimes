@@ -84,62 +84,34 @@ var Map = React.createClass({
   componentWillReceiveProps: function() {
     console.log(this.props);
     this.addGeoJSON(this.props.chamber);
+    this.addInfoToMap();
   },
 
   componentWillUnmount: function() {
     // code to run just before removing the map
   },
 
-
-  // getData: function() {
-  //   var _this = this;
-
-  //   // qwest is a library for making Ajax requests, we use it here to load GeoJSON data
-  //   qwest.get('hshd.geojson', null, { responseType : 'json' })
-  //     .then(function(xhr, res) {
-
-  //       if (_this.isMounted()) {
-  //         // count the number of features and store it in the component's state for use later
-  //         _this.setState({
-  //           geo1: res
-  //         });
-  //       }
-  //     })
-  //     .catch(function(xhr, res, e) {
-  //       console.log('qwest catch: ', xhr, res, e);
-  //     });
-
-  //     qwest.get('hssd.geojson', null, { responseType : 'json' })
-  //     .then(function(xhr, res) {
-
-  //       if (_this.isMounted()) {
-  //         // count the number of features and store it in the component's state for use later
-  //         _this.setState({
-  //           geo2: res
-  //         });
-  //       }
-  //     })
-  //     .catch(function(xhr, res, e) {
-  //       console.log('qwest catch: ', xhr, res, e);
-  //     });
-
-
-  // },
-
   addGeoJSON: function(chamber) {
-    this.zoomToCenter();
-
-    console.log(this.props);
-
-    var geojsonLayer;
-    var data;
-
-    if (this.props.dataFiles.length > 0) {
-      data = this.props.dataFiles[0][chamber];
+    if (this.state.geojsonLayer){
+      // remove the data from the geojson layer
+      this.state.geojsonLayer.clearLayers();
     }
 
+    this.zoomToCenter();
 
-    geojsonLayer = L
+
+    var data;
+
+    switch (chamber) {
+      case 'house':
+        data = this.props.house;
+        break;
+      case 'senate':
+        data = this.props.senate;
+        break;
+    }
+
+    var geojsonLayer = L
       .geoJson(data, {
         onEachFeature: this.onEachFeature,
         style: this.style
@@ -149,22 +121,6 @@ var Map = React.createClass({
     this.setState({
       geojsonLayer: geojsonLayer
     });
-
-    console.log(this.state.geojsonLayer);
-
-    // if (geojsonLayer && data){
-
-    //   // remove the data from the geojson layer
-    //   geojsonLayer.clearLayers();
-    //   geojsonLayer.addData(data);
-    // } else {
-    //   console.log(data);
-    //   // add our GeoJSON to the component's state and the Leaflet map
-
-    // }
-
-    // set our component's state with the GeoJSON data and L.geoJson layer
-
   },
 
   style: function (feature) {
@@ -175,6 +131,34 @@ var Map = React.createClass({
       "weight": 1,
       "fillOpacity": 0.7
     };
+  },
+
+  addInfoToMap: function () {
+    if (this.state.info){
+      // remove the data from the geojson layer
+      map.removeControl(this.state.info);
+    }
+
+    var _this = this;
+    // Top right info panel
+    var info = this.info = L.control();
+    info.onAdd = function (map) {
+        this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+        this.update();
+        return this._div;
+    };
+    // method that we will use to update the control based on feature properties passed
+    info.update = function (props) {
+        this._div.innerHTML = '<h4>Hawaii '+ _this.capitalizeFirstLetter(_this.props.chamber) +' Districts</h4>' +  (props ?
+            '<b>'+ _this.capitalizeFirstLetter(_this.props.chamber) + ' District ' + props.objectid + '</b>' //+
+            // '<p>Neighborhoods: ' + districtData.senate[props.objectid].district_area
+            : 'Hover over a district!');
+    };
+    info.addTo(map);
+
+    this.setState({
+      info: info
+    });
   },
 
   getColor: function (d) {
@@ -262,23 +246,7 @@ var Map = React.createClass({
     // set our state to include the tile layer
     this.state.tileLayer = L.tileLayer(config.tileLayer.url, config.tileLayer.params).addTo(map);
 
-    // this.addGeoJSON(this.props.chamber);
 
-    // Top right info panel
-    // var info = this.info = L.control();
-    // info.onAdd = function (map) {
-    //     this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-    //     this.update();
-    //     return this._div;
-    // };
-    // // method that we will use to update the control based on feature properties passed
-    // info.update = function (props) {
-    //     this._div.innerHTML = '<h4>Hawaii '+ _this.capitalizeFirstLetter(_this.props.chamber) +' Districts</h4>' +  (props ?
-    //         '<b>'+ _this.capitalizeFirstLetter(_this.props.chamber) + ' District ' + props.objectid + '</b>' //+
-    //         // '<p>Neighborhoods: ' + districtData.senate[props.objectid].district_area
-    //         : 'Hover over a district!');
-    // };
-    // info.addTo(map);
   },
 
   render : function() {
