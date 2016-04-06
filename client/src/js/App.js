@@ -53,7 +53,7 @@ var App = React.createClass({
     this.loadFile('hssd.geo.json', 'senate');
     this.loadFile('district-data.json', 'districtData');
     this.loadFile('hshd.geo.json', 'house');
-    this.loadCrimesFromServer();
+    // this.loadCrimesFromServer();
   },
   toggleFilter: function (type) {//triggers a render for this component, passing toggleFilter down to CheckBoxes
     this.setState({filter: this.state.filter.concat(type)});//concat state filter with 7
@@ -75,18 +75,17 @@ var App = React.createClass({
   render: function() {
     return (
       <div>
-        {this.state.filter}
-        <Map
-          chamber={this.state.chamber}
-          house={this.state.house}
-          senate={this.state.senate}
-          districtData={this.state.districtData}
-        />
         <Filter
           crimes={this.state.crimes}
           types={this.state.types}
           onChange={this.toggleFilter}
           updateChamber={this.updateChamber}
+        />
+        <Map
+          chamber={this.state.chamber}
+          house={this.state.house}
+          senate={this.state.senate}
+          districtData={this.state.districtData}
         />
         <Summary />
         <Dashboard />

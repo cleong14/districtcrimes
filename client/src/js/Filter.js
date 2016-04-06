@@ -332,7 +332,7 @@ var Filter = React.createClass({
       )
     })
     return (
-      <div>
+      <div id="filter">
         <Tabs selected={0}>
           <Pane label="Poltical">
             <div>Info Tab

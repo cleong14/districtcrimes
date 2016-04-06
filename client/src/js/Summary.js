@@ -7,6 +7,7 @@ var Summary = React.createClass({
     // return our JSX that is rendered to the DOM
     return (
       <div id="summary">
+        <h1>I AM THE Summary</h1>
       </div>
     );
   }
