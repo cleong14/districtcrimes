@@ -54,6 +54,18 @@ app.get('/api', function (req, res) {
     });
 });
 
+
+app.route('/barchart')
+	.get(function (req, res) {
+		db.crime.findAll({attributes:[
+			[Sequelize.fn('COUNT',Sequelize.col('crime.type')),'count']
+		],
+		group:['type'],
+		.then(function crimes) {
+			res.json(politicians);
+		});
+});
+
 app.route('/politicians')
 	.get(function (req, res) {
 		Politician.find({}, function(err,politicians) {
@@ -89,6 +101,11 @@ app.route('/politicians/:id')
   			res.json(politicians);
 			});
 	});
+
+
+
+
+
 
 app.get('/file/:name', function (req, res, next) {
 

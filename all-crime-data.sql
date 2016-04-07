@@ -34,7 +34,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: SequelizeMeta; Type: TABLE; Schema: public; Owner: chazl
+-- Name: SequelizeMeta; Type: TABLE; Schema: public; Owner: fim
 --
 
 CREATE TABLE "SequelizeMeta" (
@@ -42,10 +42,10 @@ CREATE TABLE "SequelizeMeta" (
 );
 
 
-ALTER TABLE "SequelizeMeta" OWNER TO chazl;
+ALTER TABLE "SequelizeMeta" OWNER TO fim;
 
 --
--- Name: crimes; Type: TABLE; Schema: public; Owner: chazl
+-- Name: crimes; Type: TABLE; Schema: public; Owner: fim
 --
 
 CREATE TABLE crimes (
@@ -63,10 +63,10 @@ CREATE TABLE crimes (
 );
 
 
-ALTER TABLE crimes OWNER TO chazl;
+ALTER TABLE crimes OWNER TO fim;
 
 --
--- Name: crimes_id_seq; Type: SEQUENCE; Schema: public; Owner: chazl
+-- Name: crimes_id_seq; Type: SEQUENCE; Schema: public; Owner: fim
 --
 
 CREATE SEQUENCE crimes_id_seq
@@ -77,24 +77,24 @@ CREATE SEQUENCE crimes_id_seq
     CACHE 1;
 
 
-ALTER TABLE crimes_id_seq OWNER TO chazl;
+ALTER TABLE crimes_id_seq OWNER TO fim;
 
 --
--- Name: crimes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chazl
+-- Name: crimes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: fim
 --
 
 ALTER SEQUENCE crimes_id_seq OWNED BY crimes.id;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: chazl
+-- Name: id; Type: DEFAULT; Schema: public; Owner: fim
 --
 
 ALTER TABLE ONLY crimes ALTER COLUMN id SET DEFAULT nextval('crimes_id_seq'::regclass);
 
 
 --
--- Data for Name: SequelizeMeta; Type: TABLE DATA; Schema: public; Owner: chazl
+-- Data for Name: SequelizeMeta; Type: TABLE DATA; Schema: public; Owner: fim
 --
 
 COPY "SequelizeMeta" (name) FROM stdin;
@@ -105,7 +105,7 @@ COPY "SequelizeMeta" (name) FROM stdin;
 
 
 --
--- Data for Name: crimes; Type: TABLE DATA; Schema: public; Owner: chazl
+-- Data for Name: crimes; Type: TABLE DATA; Schema: public; Owner: fim
 --
 
 COPY crimes (id, "objectID", date, type, location, latitude, longitude, "createdAt", "updatedAt", "houseDistrict", "senateDistrict") FROM stdin;
@@ -18277,14 +18277,14 @@ COPY crimes (id, "objectID", date, type, location, latitude, longitude, "created
 
 
 --
--- Name: crimes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: chazl
+-- Name: crimes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: fim
 --
 
 SELECT pg_catalog.setval('crimes_id_seq', 18164, true);
 
 
 --
--- Name: SequelizeMeta_pkey; Type: CONSTRAINT; Schema: public; Owner: chazl
+-- Name: SequelizeMeta_pkey; Type: CONSTRAINT; Schema: public; Owner: fim
 --
 
 ALTER TABLE ONLY "SequelizeMeta"
@@ -18292,7 +18292,7 @@ ALTER TABLE ONLY "SequelizeMeta"
 
 
 --
--- Name: crimes_pkey; Type: CONSTRAINT; Schema: public; Owner: chazl
+-- Name: crimes_pkey; Type: CONSTRAINT; Schema: public; Owner: fim
 --
 
 ALTER TABLE ONLY crimes
@@ -18300,12 +18300,12 @@ ALTER TABLE ONLY crimes
 
 
 --
--- Name: public; Type: ACL; Schema: -; Owner: chazl
+-- Name: public; Type: ACL; Schema: -; Owner: fim
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM chazl;
-GRANT ALL ON SCHEMA public TO chazl;
+REVOKE ALL ON SCHEMA public FROM fim;
+GRANT ALL ON SCHEMA public TO fim;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 

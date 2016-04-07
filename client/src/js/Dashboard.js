@@ -7,6 +7,8 @@ var Dashboard = React.createClass({
     // return our JSX that is rendered to the DOM
     return (
       <div id="dashboard">
+
+      
       </div>
     );
   }
