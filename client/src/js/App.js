@@ -63,29 +63,19 @@ var App = React.createClass({
   componentWillReceiveProps: function() {
   },
 
-  toggleFilter: function (type) {//triggers a render for this component, passing toggleFilter down to CheckBoxes
-    //main thing is you can change filter in this function
-
-    //if youre given an array with the "types", given a new type , if its in the array then remove from array then setState
-    //but if its not in array then you want to concat into array, then setState
-
-    //write some logic to add into the array, and remove, should only have about 2 things in array
-    
-      // if (this.state.filter[i] == type) {
-      //   this.setState({filter: []});
-      // }
-    this.setState({filter: this.state.filter.concat(type)});//concat state filter with type
-
-    var newArr = this.state.filter.slice();//copy array
-    for (var i = 0; i < this.state.filter.length; i++) {
-      if (this.state.filter[i] == type) {
-        newArr.splice(this.state.filter[i], 1);
+  toggleFilter: function (type) {
+    if (this.state.filter.indexOf(type) === -1) {
+      this.setState({filter: this.state.filter.concat(type)});//concat state filter with types
+    } else {
+      var newArr = this.state.filter.slice();//copy array
+      for (var i = 0; i < newArr.length; i++) {
+        if (newArr[i] == type) {
+          newArr.splice(i, 1);
+        }
       }
+      this.setState({filter: newArr});//update state
     }
-    this.setState({filter: newArr});//update state
-    console.log('toggling', type, this.state.filter);
   }, 
-    //this.setState({filter: this.state.filter.splice(this.state.filter[i], 1)}); this works differently
   updateChamber: function (val) {
     this.setState({
       chamber: val
@@ -139,8 +129,8 @@ var App = React.createClass({
   }
 });
 
-// render the app using ReactDOM!
+// render the app using ReactDOM! url="http://localhost:3000/api"
 ReactDOM.render(
-  <App url="http://localhost:3000/api" />,
+  <App  />,
   mountNode
 );

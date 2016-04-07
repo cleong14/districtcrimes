@@ -325,7 +325,6 @@ var Filter = React.createClass({
   },
 
   render: function () {
-    console.log(this.props.crimes);
     var typeNodes = this.props.types.map((type, index) => {//by doing es6 it automatically binds this
       return (
         <CheckBox type={type} key={index} onChange={this.props.onChange} />
