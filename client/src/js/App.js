@@ -54,7 +54,14 @@ var App = React.createClass({
     this.loadFile('district-data.json', 'districtData');
     this.loadFile('hshd.geo.json', 'house');
     // this.loadCrimesFromServer();
+    console.log('get picture?');
+    this.getPolitician();
+
   },
+
+  componentWillReceiveProps: function() {
+  },
+
   toggleFilter: function (type) {//triggers a render for this component, passing toggleFilter down to CheckBoxes
     this.setState({filter: this.state.filter.concat(type)});//concat state filter with 7
     //main thing is you can change filter in this function
@@ -72,6 +79,29 @@ var App = React.createClass({
     });
   },
 
+  getPolitician: function () {
+    // var pictureURL = '';
+
+    // for (var i=0; i < this.state.districtData[this.state.chamber].length; i++) {
+    //   if this.state.districtData[this.state.chamber]
+    // }
+    if (this.state.districtData) {
+      console.log('running ajax...');
+      $.ajax({
+        url: this.state.districtData.senate[0].politician_picture,
+        method: "GET",
+        dataType: "json",
+        success: (data) => {
+          $('#photo').append(data);
+        },
+        failure: function (err) {
+          // console.log(err);
+        }
+      });
+
+    }
+  },
+
   render: function() {
     return (
       <div>
@@ -87,7 +117,10 @@ var App = React.createClass({
           senate={this.state.senate}
           districtData={this.state.districtData}
         />
-        <Summary />
+        <Summary
+          chamber={this.state.chamber}
+          districtData={this.state.districtData}
+        />
         <Dashboard />
       </div>
     );

@@ -3,8 +3,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var L = require('leaflet');
-// var districtData = require('../../../district-data.json');
-
 
 // let's store the map configuration properties,
 // we could also move this to a separate file & require it
@@ -37,6 +35,7 @@ config.tileLayer = {
   }
 };
 
+// Map gradient colors alternate for House and Senate
 config.colors = {
   house: {
     level1: '#eff3ff',
@@ -56,16 +55,13 @@ config.colors = {
   }
 };
 
-
 // here's the actual component
 var Map = React.createClass({
 
   getInitialState: function() {
     // TODO: if we wanted an initial "state" for our map component we could add it here
     return {
-      // tileLayer : null,
-      // geojsonLayer: null,
-      // geojson: null,
+
     };
   },
 
@@ -81,8 +77,8 @@ var Map = React.createClass({
     this.createMap(this.getID());
   },
 
+  // After App loads jsons, they are passed to Map as props; then we can run functions based upon those loaded props
   componentWillReceiveProps: function() {
-    console.log(this.props);
     this.addGeoJSON(this.props.chamber);
     this.addInfoToMap();
     this.addLegendToMap();
@@ -92,17 +88,18 @@ var Map = React.createClass({
     // code to run just before removing the map
   },
 
+  // Adds a geojson overlay to map; default is Senate
   addGeoJSON: function(chamber) {
+    // if there is a current layer, remove it
     if (this.state.geojsonLayer){
-      // remove the data from the geojson layer
       this.state.geojsonLayer.clearLayers();
     }
 
+    //return map to center
     this.zoomToCenter();
 
-
+    //pick new layer
     var data;
-
     switch (chamber) {
       case 'house':
         data = this.props.house;
@@ -112,6 +109,7 @@ var Map = React.createClass({
         break;
     }
 
+    // add new layer
     var geojsonLayer = L
       .geoJson(data, {
         onEachFeature: this.onEachFeature,
@@ -124,6 +122,7 @@ var Map = React.createClass({
     });
   },
 
+  // style object for Leaflet map
   style: function (feature) {
     return {
       fillColor: this.getColor(feature.properties.objectid),
@@ -134,9 +133,10 @@ var Map = React.createClass({
     };
   },
 
+  // Leaflet Control object - District Information
   addInfoToMap: function () {
+    // remove the data from the geojson layer
     if (this.state.info){
-      // remove the data from the geojson layer
       map.removeControl(this.state.info);
     }
 
@@ -163,6 +163,7 @@ var Map = React.createClass({
     });
   },
 
+  // Leaflet Control object - Map legend
   addLegendToMap: function () {
     // bottom right legend panel
     if (this.state.legend){
@@ -282,13 +283,9 @@ var Map = React.createClass({
 
     // set our state to include the tile layer
     this.state.tileLayer = L.tileLayer(config.tileLayer.url, config.tileLayer.params).addTo(map);
-
-
   },
 
   render : function() {
-
-    // return our JSX that is rendered to the DOM
     return (
       <div id="mapUI">
         <div id="map"></div>
@@ -298,7 +295,6 @@ var Map = React.createClass({
 
   }
 });
-
 
 // export our Map component so that Browserify can include it with other components that require it
 module.exports = Map;
