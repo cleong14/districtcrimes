@@ -15,7 +15,7 @@ var App = React.createClass({
   getInitialState: function () {//we set it to state because its subject to change
     return {
       crimes: [],
-      types: ['theft', 'robbery'],
+      types: ['theft/larceny', 'vehicle-break-in/theft', 'vandalism', 'motor-vehicle-theft', 'burglary', ],
       filter: [],
       chamber: 'senate'
     };
