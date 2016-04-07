@@ -13,7 +13,12 @@ var mountNode = document.getElementById('app');
 // App component
 var App = React.createClass({
   getInitialState: function () {//we set it to state because its subject to change
-    return {crimes: [], types: ['theft', 'robbery'], filter: [], chamber: 'house'};
+    return {
+      crimes: [],
+      types: ['theft', 'robbery'],
+      filter: [],
+      chamber: 'senate'
+    };
 
   },
   loadCrimesFromServer: function () {//added
@@ -30,9 +35,34 @@ var App = React.createClass({
       }
     });
   },
-  componentDidMount: function () {//added
-    this.loadCrimesFromServer();
+  loadFile: function (fileName, label) {
+    var newState = {};
+    $.ajax({
+      url: 'http://localhost:3000/file/'+fileName,
+      method: "GET",
+      dataType: "json",
+      success: (data) => {
+        newState[label] = data;
+        this.setState(newState);//setting state of app to have crimes as data
+      },
+      failure: function (err) {
+        // console.log(err);
+      }
+    });
   },
+  componentDidMount: function () {//added
+    this.loadFile('hssd.geo.json', 'senate');
+    this.loadFile('district-data.json', 'districtData');
+    this.loadFile('hshd.geo.json', 'house');
+    this.loadCrimesFromServer();
+    console.log('get picture?');
+    this.getPolitician();
+
+  },
+
+  componentWillReceiveProps: function() {
+  },
+
   toggleFilter: function (type) {//triggers a render for this component, passing toggleFilter down to CheckBoxes
     //main thing is you can change filter in this function
 
@@ -61,13 +91,48 @@ var App = React.createClass({
       chamber: val
     });
   },
+  getPolitician: function () {
+    // var pictureURL = '';
+
+    // for (var i=0; i < this.state.districtData[this.state.chamber].length; i++) {
+    //   if this.state.districtData[this.state.chamber]
+    // }
+    if (this.state.districtData) {
+      console.log('running ajax...');
+      $.ajax({
+        url: this.state.districtData.senate[0].politician_picture,
+        method: "GET",
+        dataType: "json",
+        success: (data) => {
+          $('#photo').append(data);
+        },
+        failure: function (err) {
+          // console.log(err);
+        }
+      });
+
+    }
+  },
+
   render: function() {
     return (
       <div>
-        {this.state.filter}
-        <Map chamber={this.state.chamber} />
-        <Filter crimes={this.state.crimes} types={this.state.types} onChange={this.toggleFilter} updateChamber={this.updateChamber} />
-        <Summary />
+        <Filter
+          crimes={this.state.crimes}
+          types={this.state.types}
+          onChange={this.toggleFilter}
+          updateChamber={this.updateChamber}
+        />
+        <Map
+          chamber={this.state.chamber}
+          house={this.state.house}
+          senate={this.state.senate}
+          districtData={this.state.districtData}
+        />
+        <Summary
+          chamber={this.state.chamber}
+          districtData={this.state.districtData}
+        />
         <Dashboard />
       </div>
     );

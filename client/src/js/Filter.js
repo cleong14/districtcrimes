@@ -75,7 +75,6 @@ const CheckBox = React.createClass({
 var filterCrimeList = React.createClass({//added
   render: function () {
   var filterCrimeNodes = this.props.data.map(function (crime, index) {//map is making a new array, this.props.data is flowing from commentBox
-    console.log(crime);
     if (crime.type === "MOTOR VEHICLE THEFT") {
       return (
         <Crime
@@ -156,7 +155,6 @@ var Dropdown = React.createClass({
       };
     },
     select: function (item) {//when clicked
-      console.log(item);
       this.setState({
         selected: item,
         listVisible: true
@@ -289,7 +287,7 @@ var Tabs = React.createClass({
     });
   },
   componentDidMount: function () {//added
-    this.loadCrimesFromServer();
+    // this.loadCrimesFromServer();
     setInterval(this.loadCrimesFromServer, 5000);
   },
   render: function () {
@@ -327,14 +325,14 @@ var Filter = React.createClass({
   },
 
   render: function () {
-    console.log(this.props);//our parent tells us what types exist
+    console.log(this.props.crimes);
     var typeNodes = this.props.types.map((type, index) => {//by doing es6 it automatically binds this
       return (
         <CheckBox type={type} key={index} onChange={this.props.onChange} />
       )
     })
     return (
-      <div>
+      <div id="filter">
         <Tabs selected={0}>
           <Pane label="Poltical">
             <div>Info Tab

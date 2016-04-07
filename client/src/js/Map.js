@@ -3,9 +3,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var L = require('leaflet');
-var qwest = require('qwest');
-var districtData = require('../../../district-data.json');
-
 
 // let's store the map configuration properties,
 // we could also move this to a separate file & require it
@@ -38,6 +35,7 @@ config.tileLayer = {
   }
 };
 
+// Map gradient colors alternate for House and Senate
 config.colors = {
   house: {
     level1: '#eff3ff',
@@ -57,17 +55,13 @@ config.colors = {
   }
 };
 
-
 // here's the actual component
 var Map = React.createClass({
 
   getInitialState: function() {
     // TODO: if we wanted an initial "state" for our map component we could add it here
     return {
-      tileLayer : null,
-      geojsonLayer: null,
-      geojson: null,
-      chamber: 'house'
+
     };
   },
 
@@ -78,106 +72,57 @@ var Map = React.createClass({
   },
 
   componentDidMount: function() {
-
     // code to run just after adding the map to the DOM
     // instantiate the Leaflet map object
-    this.init(this.getID());
-    this.addGeoJSON(this.props.chamber);
-    // make the Ajax request for the GeoJSON data
-    this.getData();
+    this.createMap(this.getID());
   },
 
+  // After App loads jsons, they are passed to Map as props; then we can run functions based upon those loaded props
   componentWillReceiveProps: function() {
-
     this.addGeoJSON(this.props.chamber);
-
+    this.addInfoToMap();
+    this.addLegendToMap();
   },
 
   componentWillUnmount: function() {
-
     // code to run just before removing the map
-
   },
 
-  updateMap: function() {
-    // change the subway line filter
-
-
-    this.getData();
-  },
-
-  getData: function() {
-    var _this = this;
-
-    // qwest is a library for making Ajax requests, we use it here to load GeoJSON data
-    qwest.get('hshd.geojson', null, { responseType : 'json' })
-      .then(function(xhr, res) {
-
-        if (_this.isMounted()) {
-          // count the number of features and store it in the component's state for use later
-          _this.setState({
-            geo1: res
-          });
-        }
-      })
-      .catch(function(xhr, res, e) {
-        console.log('qwest catch: ', xhr, res, e);
-      });
-
-      qwest.get('hssd.geojson', null, { responseType : 'json' })
-      .then(function(xhr, res) {
-
-        if (_this.isMounted()) {
-          // count the number of features and store it in the component's state for use later
-          _this.setState({
-            geo2: res
-          });
-        }
-      })
-      .catch(function(xhr, res, e) {
-        console.log('qwest catch: ', xhr, res, e);
-      });
-
-
-  },
-
+  // Adds a geojson overlay to map; default is Senate
   addGeoJSON: function(chamber) {
-    var geojsonLayer = this.state.geojsonLayer;
-    var data = this.state.geojson;
-
-    if (this.props.chamber === 'house') {
-      data = this.state.geo1;
-    } else {
-      data = this.state.geo2;
+    // if there is a current layer, remove it
+    if (this.state.geojsonLayer){
+      this.state.geojsonLayer.clearLayers();
     }
-    console.log(data);
 
-    // zoom to center
-    // this.zoomToCenter();
+    //return map to center
+    this.zoomToCenter();
 
-    if (geojsonLayer && data){
+    //pick new layer
+    var data;
+    switch (chamber) {
+      case 'house':
+        data = this.props.house;
+        break;
+      case 'senate':
+        data = this.props.senate;
+        break;
+    }
 
-      // remove the data from the geojson layer
-      geojsonLayer.clearLayers();
-      geojsonLayer.addData(data);
-    } else if (!geojsonLayer) {
-
-      // add our GeoJSON to the component's state and the Leaflet map
-      geojsonLayer = L.geoJson(data, {
+    // add new layer
+    var geojsonLayer = L
+      .geoJson(data, {
         onEachFeature: this.onEachFeature,
         style: this.style
+      })
+      .addTo(map);
 
-      }).addTo(map);
-    }
-
-    // set our component's state with the GeoJSON data and L.geoJson layer
     this.setState({
-      geojson: data,
       geojsonLayer: geojsonLayer
     });
-
   },
 
+  // style object for Leaflet map
   style: function (feature) {
     return {
       fillColor: this.getColor(feature.properties.objectid),
@@ -186,6 +131,63 @@ var Map = React.createClass({
       "weight": 1,
       "fillOpacity": 0.7
     };
+  },
+
+  // Leaflet Control object - District Information
+  addInfoToMap: function () {
+    // remove the data from the geojson layer
+    if (this.state.info){
+      map.removeControl(this.state.info);
+    }
+
+    var _this = this;
+    // Top right info panel
+    var info = this.info = L.control();
+    info.onAdd = function (map) {
+        this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+        this.update();
+        return this._div;
+    };
+    // method that we will use to update the control based on feature properties passed
+    info.update = function (props) {
+        this._div.innerHTML = '<h4>Hawaii '+ _this.capitalizeFirstLetter(_this.props.chamber) +' Districts</h4>' +  (props ?
+            '<b>'+ _this.capitalizeFirstLetter(_this.props.chamber) + ' District ' + props.objectid + '</b><br>' +
+            '<b>' + _this.getLegislator(props.objectid) + '</b>' +
+            '<p>Neighborhoods: ' + _this.getNeighborhoods(props.objectid) + '</p>'
+            : 'Hover over a district!');
+    };
+    info.addTo(map);
+
+    this.setState({
+      info: info
+    });
+  },
+
+  // Leaflet Control object - Map legend
+  addLegendToMap: function () {
+    // bottom right legend panel
+    if (this.state.legend){
+      // remove the data from the geojson layer
+      map.removeControl(this.state.legend);
+    }
+    var _this = this;
+    var legend = L.control({position: 'bottomright'});
+    legend.onAdd = function (map) {
+      var div = L.DomUtil.create('div', 'legend'),
+        grades = [0, 7, 14, 21, 28, 35],
+        labels = [];
+      // loop through our density intervals and generate a label with a colored square for each interval
+      for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+          '<i style="background:' + _this.getColor(grades[i] + 1) + '"></i> ' +
+          grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+      }
+      return div;
+    };
+    legend.addTo(map);
+    this.setState({
+      legend: legend
+    });
   },
 
   getColor: function (d) {
@@ -199,9 +201,9 @@ var Map = React.createClass({
   },
 
   getNeighborhoods: function (districtNumber) {
-    for (var i in districtData[this.state.chamber]) {
-      if (districtData[this.state.chamber][i].district_name === districtNumber) {
-        return this.normalizeNeighborhoods(districtData[this.state.chamber][i].district_area);
+    for (var i in this.props.districtData[this.props.chamber]) {
+      if (this.props.districtData[this.props.chamber][i].district_name === districtNumber) {
+        return this.normalizeNeighborhoods(this.props.districtData[this.props.chamber][i].district_area);
       }
     }
   },
@@ -215,10 +217,19 @@ var Map = React.createClass({
     return str;
   },
 
+  getLegislator: function (districtNumber) {
+    var politician = "";
+    for (var i in this.props.districtData[this.props.chamber]) {
+      if (this.props.districtData[this.props.chamber][i].district_name === districtNumber) {
+        politician += this.props.districtData[this.props.chamber][i].politician_firstname + " " + this.props.districtData[this.props.chamber][i].politician_lastname;
+        break;
+      }
+    }
+    return politician;
+  },
+
   highlightFeature: function (e) {
     var layer = e.target;
-    var distNumber = layer.feature.properties.objectid;
-    var neighborhoodStr = this.getNeighborhoods(distNumber);
 
     layer.setStyle({
         weight: 5,
@@ -256,44 +267,25 @@ var Map = React.createClass({
     });
   },
 
+  capitalizeFirstLetter: function (str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  },
+
   getID: function() {
     // get the "id" attribute of our component's DOM node
     return ReactDOM.findDOMNode(this).querySelectorAll('#map')[0];
   },
 
-  init: function(mapElement) {
-
+  createMap: function(mapElement) {
+    var _this = this;
     // this function creates the Leaflet map object and is called after the Map component mounts
     map = L.map(mapElement, config.params);
-    // L.control.zoom({ position: "bottomleft" }).addTo(map);
-    // L.control.scale({ position: "bottomleft" }).addTo(map);
 
     // set our state to include the tile layer
     this.state.tileLayer = L.tileLayer(config.tileLayer.url, config.tileLayer.params).addTo(map);
-
-    this.addGeoJSON(this.props.chamber);
-
-    // Top right info panel
-    var info = this.info = L.control();
-    info.onAdd = function (map) {
-        this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-        this.update();
-        return this._div;
-    };
-    // method that we will use to update the control based on feature properties passed
-    info.update = function (props) {
-        this._div.innerHTML = '<h4>Hawaii House Districts</h4>' +  (props ?
-            '<b>House District ' + props.objectid + '</b>' //+
-            // '<p>Neighborhoods: ' + districtData.senate[props.objectid].district_area
-            : 'Hover over a district!');
-    };
-    info.addTo(map);
   },
 
   render : function() {
-
-    // return our JSX that is rendered to the DOM
-    console.log(this.props);
     return (
       <div id="mapUI">
         <div id="map"></div>
@@ -304,24 +296,6 @@ var Map = React.createClass({
   }
 });
 
-
 // export our Map component so that Browserify can include it with other components that require it
 module.exports = Map;
 
-// bottom right legend panel
-      // var legend = L.control({position: 'bottomright'});
-      // var _this = this;
-      // legend.onAdd = function (map) {
-      //   console.log(_this.state.chamber);
-      //   var div = L.DomUtil.create('div', 'info legend'),
-      //     grades = [0, 7, 14, 21, 28, 35],
-      //     labels = [];
-      //   // loop through our density intervals and generate a label with a colored square for each interval
-      //   for (var i = 0; i < grades.length; i++) {
-      //     div.innerHTML +=
-      //       '<i style="background:' + _this.getColor(grades[i] + 1) + '"></i> ' +
-      //       grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-      //   }
-      //   return div;
-      // };
-      // legend.addTo(map);

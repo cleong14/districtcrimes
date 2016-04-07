@@ -54,7 +54,6 @@ app.get('/api', function (req, res) {
     });
 });
 
-
 app.route('/politicians')
 	.get(function (req, res) {
 		Politician.find({}, function(err,politicians) {
@@ -90,6 +89,31 @@ app.route('/politicians/:id')
   			res.json(politicians);
 			});
 	});
+
+app.get('/file/:name', function (req, res, next) {
+
+  var options = {
+    root: __dirname + '/client/data/',
+    dotfiles: 'deny',
+    headers: {
+        'x-timestamp': Date.now(),
+        'x-sent': true
+    }
+  };
+
+  var fileName = req.params.name;
+  res.sendFile(fileName, options, function (err) {
+    if (err) {
+      console.log(err);
+      res.status(err.status).end();
+    }
+    else {
+      console.log('Sent:', fileName);
+    }
+  });
+
+});
+
 
 
 var mongo = mongoose.connection;
