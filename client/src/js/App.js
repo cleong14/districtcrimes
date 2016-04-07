@@ -5,6 +5,7 @@ var Map = require('./Map');
 var Filter = require('./Filter');
 var Summary = require('./Summary');
 var Dashboard = require('./Dashboard');
+var update = require('react-addons-update');
 
 // where in the actual DOM to mount our App
 var mountNode = document.getElementById('app');
@@ -40,17 +41,21 @@ var App = React.createClass({
 
     //write some logic to add into the array, and remove, should only have about 2 things in array
     
+      // if (this.state.filter[i] == type) {
+      //   this.setState({filter: []});
+      // }
     this.setState({filter: this.state.filter.concat(type)});//concat state filter with type
 
+    var newArr = this.state.filter.slice();//copy array
     for (var i = 0; i < this.state.filter.length; i++) {
-
       if (this.state.filter[i] == type) {
-        this.setState({filter: []});
+        newArr.splice(this.state.filter[i], 1);
       }
     }
-    //this.setState({filter: this.state.filter.splice(this.state.filter[i], 1)}); this works differently
+    this.setState({filter: newArr});//update state
     console.log('toggling', type, this.state.filter);
   }, 
+    //this.setState({filter: this.state.filter.splice(this.state.filter[i], 1)}); this works differently
   updateChamber: function (val) {
     this.setState({
       chamber: val

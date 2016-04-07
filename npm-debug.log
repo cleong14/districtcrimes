@@ -1,0 +1,253 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '-S',
+1 verbose cli   'react-addons-update' ]
+2 info using npm@2.14.2
+3 info using node@v4.0.0
+4 verbose install initial load of /Users/theotran/Devleague/extortion/package.json
+5 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/angular-animate/package.json
+6 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/angular-ui-bootstrap/package.json
+7 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/bluebird/package.json
+8 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/body-parser/package.json
+9 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/browser-sync/package.json
+10 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/browserify/package.json
+11 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/express/package.json
+12 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/gulp/package.json
+13 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/gulp-concat/package.json
+14 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/gulp-connect/package.json
+15 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/gulp-load-plugins/package.json
+16 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/gulp-react/package.json
+17 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/gulp-streamify/package.json
+18 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/gulp-uglify/package.json
+19 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/gulp-useref/package.json
+20 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/leaflet/package.json
+21 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/method-override/package.json
+22 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/mongoose/package.json
+23 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/node-geocoder/package.json
+24 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/path/package.json
+25 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/pg/package.json
+26 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/pg-hstore/package.json
+27 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/qwest/package.json
+28 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/rc-checkbox/package.json
+29 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/react/package.json
+30 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/react-addons-update/package.json
+31 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/react-dom/package.json
+32 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/react-leaflet/package.json
+33 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/react-simpletabs/package.json
+34 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/react-tabs/package.json
+35 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/reactify/package.json
+36 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/rimraf/package.json
+37 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/sequelize/package.json
+38 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/vinyl-source-stream/package.json
+39 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/watchify/package.json
+40 info package.json pg-hstore@2.3.2 No license field.
+41 info package.json gulp-streamify@1.0.2 No license field.
+42 info package.json leaflet@0.7.7 No license field.
+43 info package.json path@0.12.7 path is also the name of a node core module.
+44 info package.json rc-checkbox@1.3.2 No license field.
+45 verbose readDependencies loading dependencies from /Users/theotran/Devleague/extortion/package.json
+46 verbose install react-addons-update is installed as 0.14.8
+47 silly cache add args [ 'react-addons-update', null ]
+48 verbose cache add spec react-addons-update
+49 silly cache add parsed spec Result {
+49 silly cache add   raw: 'react-addons-update',
+49 silly cache add   scope: null,
+49 silly cache add   name: 'react-addons-update',
+49 silly cache add   rawSpec: '',
+49 silly cache add   spec: '*',
+49 silly cache add   type: 'range' }
+50 silly addNamed react-addons-update@*
+51 verbose addNamed "*" is a valid semver range for react-addons-update
+52 silly addNameRange { name: 'react-addons-update', range: '*', hasData: false }
+53 silly mapToRegistry name react-addons-update
+54 silly mapToRegistry using default registry
+55 silly mapToRegistry registry https://registry.npmjs.org/
+56 silly mapToRegistry uri https://registry.npmjs.org/react-addons-update
+57 verbose addNameRange registry:https://registry.npmjs.org/react-addons-update not in flight; fetching
+58 verbose request uri https://registry.npmjs.org/react-addons-update
+59 verbose request no auth needed
+60 info attempt registry request try #1 at 2:20:54 PM
+61 verbose request id ef50b5402ad1cd1f
+62 verbose etag "5IPLURCGC4C25I7BKCU4GV7ZI"
+63 http request GET https://registry.npmjs.org/react-addons-update
+64 http 304 https://registry.npmjs.org/react-addons-update
+65 silly get cb [ 304,
+65 silly get   { date: 'Wed, 06 Apr 2016 00:20:54 GMT',
+65 silly get     via: '1.1 varnish',
+65 silly get     'cache-control': 'max-age=300',
+65 silly get     etag: '"5IPLURCGC4C25I7BKCU4GV7ZI"',
+65 silly get     age: '176',
+65 silly get     connection: 'keep-alive',
+65 silly get     'x-served-by': 'cache-sjc3129-SJC',
+65 silly get     'x-cache': 'HIT',
+65 silly get     'x-cache-hits': '1',
+65 silly get     'x-timer': 'S1459902054.509834,VS0,VE0',
+65 silly get     vary: 'Accept-Encoding' } ]
+66 verbose etag https://registry.npmjs.org/react-addons-update from cache
+67 verbose get saving react-addons-update to /Users/theotran/.npm/registry.npmjs.org/react-addons-update/.cache.json
+68 silly addNameRange number 2 { name: 'react-addons-update', range: '*', hasData: true }
+69 silly addNameRange versions [ 'react-addons-update',
+69 silly addNameRange   [ '0.14.0-beta1',
+69 silly addNameRange     '0.14.0-beta2',
+69 silly addNameRange     '0.14.0-beta3',
+69 silly addNameRange     '0.14.0-rc1',
+69 silly addNameRange     '0.14.0',
+69 silly addNameRange     '0.14.1',
+69 silly addNameRange     '0.14.2',
+69 silly addNameRange     '0.14.3',
+69 silly addNameRange     '0.14.4',
+69 silly addNameRange     '0.14.5',
+69 silly addNameRange     '0.14.6',
+69 silly addNameRange     '0.15.0-alpha.1',
+69 silly addNameRange     '0.14.7',
+69 silly addNameRange     '15.0.0-rc.1',
+69 silly addNameRange     '15.0.0-rc.2',
+69 silly addNameRange     '0.14.8' ] ]
+70 silly addNamed react-addons-update@0.14.8
+71 verbose addNamed "0.14.8" is a plain semver version for react-addons-update
+72 silly cache afterAdd react-addons-update@0.14.8
+73 verbose afterAdd /Users/theotran/.npm/react-addons-update/0.14.8/package/package.json not in flight; writing
+74 verbose afterAdd /Users/theotran/.npm/react-addons-update/0.14.8/package/package.json written
+75 silly install resolved [ { name: 'react-addons-update',
+75 silly install resolved     version: '0.14.8',
+75 silly install resolved     main: 'index.js',
+75 silly install resolved     repository:
+75 silly install resolved      { type: 'git',
+75 silly install resolved        url: 'git+https://github.com/facebook/react.git' },
+75 silly install resolved     keywords: [ 'react', 'react-addon' ],
+75 silly install resolved     license: 'BSD-3-Clause',
+75 silly install resolved     dependencies: {},
+75 silly install resolved     peerDependencies: { react: '^0.14.8' },
+75 silly install resolved     description: 'This package provides the React updates add-on.',
+75 silly install resolved     bugs: { url: 'https://github.com/facebook/react/issues' },
+75 silly install resolved     homepage: 'https://github.com/facebook/react#readme',
+75 silly install resolved     _id: 'react-addons-update@0.14.8',
+75 silly install resolved     _shasum: '486f1fb71e09ef8ad09c0e95fbe59d173782fe1a',
+75 silly install resolved     _resolved: 'https://registry.npmjs.org/react-addons-update/-/react-addons-update-0.14.8.tgz',
+75 silly install resolved     _from: 'react-addons-update@*',
+75 silly install resolved     scripts: {},
+75 silly install resolved     _npmVersion: '2.14.7',
+75 silly install resolved     _nodeVersion: '4.2.1',
+75 silly install resolved     _npmUser: { name: 'gaearon', email: 'dan.abramov@gmail.com' },
+75 silly install resolved     dist:
+75 silly install resolved      { shasum: '486f1fb71e09ef8ad09c0e95fbe59d173782fe1a',
+75 silly install resolved        tarball: 'https://registry.npmjs.org/react-addons-update/-/react-addons-update-0.14.8.tgz' },
+75 silly install resolved     maintainers: [ [Object], [Object], [Object], [Object], [Object] ],
+75 silly install resolved     _npmOperationalInternal:
+75 silly install resolved      { host: 'packages-16-east.internal.npmjs.com',
+75 silly install resolved        tmp: 'tmp/react-addons-update-0.14.8.tgz_1459268475120_0.8253944886382669' },
+75 silly install resolved     directories: {},
+75 silly install resolved     readme: 'ERROR: No README data found!' } ]
+76 info install react-addons-update@0.14.8 into /Users/theotran/Devleague/extortion
+77 info installOne react-addons-update@0.14.8
+78 verbose installOne of react-addons-update to /Users/theotran/Devleague/extortion not in flight; installing
+79 verbose lock using /Users/theotran/.npm/_locks/react-addons-update-20ccf414bc935845.lock for /Users/theotran/Devleague/extortion/node_modules/react-addons-update
+80 silly install write writing react-addons-update 0.14.8 to /Users/theotran/Devleague/extortion/node_modules/react-addons-update
+81 verbose unbuild node_modules/react-addons-update
+82 info preuninstall react-addons-update@0.14.8
+83 info uninstall react-addons-update@0.14.8
+84 verbose unbuild rmStuff react-addons-update@0.14.8 from /Users/theotran/Devleague/extortion/node_modules
+85 info postuninstall react-addons-update@0.14.8
+86 silly gentlyRm /Users/theotran/Devleague/extortion/node_modules/react-addons-update is being purged from base /Users/theotran/Devleague/extortion
+87 verbose gentlyRm don't care about contents; nuking /Users/theotran/Devleague/extortion/node_modules/react-addons-update
+88 silly vacuum-fs purging /Users/theotran/Devleague/extortion/node_modules/react-addons-update
+89 silly vacuum-fs quitting because other entries in /Users/theotran/Devleague/extortion/node_modules
+90 verbose tar unpack /Users/theotran/.npm/react-addons-update/0.14.8/package.tgz
+91 verbose tar unpacking to /Users/theotran/Devleague/extortion/node_modules/react-addons-update
+92 silly gentlyRm /Users/theotran/Devleague/extortion/node_modules/react-addons-update is being purged
+93 verbose gentlyRm don't care about contents; nuking /Users/theotran/Devleague/extortion/node_modules/react-addons-update
+94 silly gunzTarPerm modes [ '755', '644' ]
+95 silly gunzTarPerm extractEntry package.json
+96 silly gunzTarPerm extractEntry README.md
+97 silly gunzTarPerm extractEntry LICENSE
+98 silly gunzTarPerm extractEntry index.js
+99 silly gunzTarPerm extractEntry PATENTS
+100 verbose write writing to /Users/theotran/Devleague/extortion/node_modules/react-addons-update/package.json
+101 info preinstall react-addons-update@0.14.8
+102 verbose readDependencies loading dependencies from /Users/theotran/Devleague/extortion/node_modules/react-addons-update/package.json
+103 silly prepareForInstallMany adding react@^0.14.8 from react-addons-update peerDependencies
+104 warn peerDependencies The peer dependency react@^0.14.8 included from react-addons-update will no
+105 warn peerDependencies longer be automatically installed to fulfill the peerDependency
+106 warn peerDependencies in npm 3+. Your application will need to depend on it explicitly.
+107 verbose readDependencies loading dependencies from /Users/theotran/Devleague/extortion/node_modules/react-addons-update/package.json
+108 silly install resolved []
+109 verbose about to build /Users/theotran/Devleague/extortion/node_modules/react-addons-update
+110 info build /Users/theotran/Devleague/extortion/node_modules/react-addons-update
+111 info linkStuff react-addons-update@0.14.8
+112 silly linkStuff react-addons-update@0.14.8 has /Users/theotran/Devleague/extortion/node_modules as its parent node_modules
+113 verbose linkBins react-addons-update@0.14.8
+114 verbose linkMans react-addons-update@0.14.8
+115 verbose rebuildBundles react-addons-update@0.14.8
+116 info install react-addons-update@0.14.8
+117 info postinstall react-addons-update@0.14.8
+118 verbose readDependencies loading dependencies from /Users/theotran/Devleague/extortion/package.json
+119 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/angular-animate/package.json
+120 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/angular-ui-bootstrap/package.json
+121 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/bluebird/package.json
+122 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/body-parser/package.json
+123 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/browser-sync/package.json
+124 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/browserify/package.json
+125 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/express/package.json
+126 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/gulp/package.json
+127 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/gulp-concat/package.json
+128 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/gulp-connect/package.json
+129 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/gulp-load-plugins/package.json
+130 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/gulp-react/package.json
+131 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/gulp-streamify/package.json
+132 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/gulp-uglify/package.json
+133 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/gulp-useref/package.json
+134 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/leaflet/package.json
+135 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/method-override/package.json
+136 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/mongoose/package.json
+137 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/node-geocoder/package.json
+138 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/path/package.json
+139 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/pg/package.json
+140 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/pg-hstore/package.json
+141 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/qwest/package.json
+142 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/rc-checkbox/package.json
+143 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/react/package.json
+144 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/react-addons-update/package.json
+145 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/react-dom/package.json
+146 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/react-leaflet/package.json
+147 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/react-simpletabs/package.json
+148 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/react-tabs/package.json
+149 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/reactify/package.json
+150 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/rimraf/package.json
+151 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/sequelize/package.json
+152 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/vinyl-source-stream/package.json
+153 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/watchify/package.json
+154 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/.bin/browser-sync/package.json
+155 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/.bin/browserify/package.json
+156 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/.bin/gulp/package.json
+157 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/.bin/rimraf/package.json
+158 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/.bin/watchify/package.json
+159 verbose already installed skipping react@^0.14.8 /Users/theotran/Devleague/extortion
+160 silly install resolved []
+161 verbose unlock done using /Users/theotran/.npm/_locks/react-addons-update-20ccf414bc935845.lock for /Users/theotran/Devleague/extortion/node_modules/react-addons-update
+162 verbose validateInstall loading /Users/theotran/Devleague/extortion/package.json for validation
+163 verbose stack Error: The package react@0.14.7 does not satisfy its siblings' peerDependencies requirements!
+163 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:125:32
+163 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:268:7
+163 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:142:5
+163 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+163 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+163 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+163 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+163 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+163 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+163 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+164 verbose cwd /Users/theotran/Devleague/extortion
+165 error Darwin 15.4.0
+166 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "install" "-S" "react-addons-update"
+167 error node v4.0.0
+168 error npm  v2.14.2
+169 error code EPEERINVALID
+170 error peerinvalid The package react@0.14.7 does not satisfy its siblings' peerDependencies requirements!
+170 error peerinvalid Peer react-dom@0.14.7 wants react@^0.14.7
+170 error peerinvalid Peer react-tabs@0.5.3 wants react@^0.14.7
+170 error peerinvalid Peer react-addons-update@0.14.8 wants react@^0.14.8
+170 error peerinvalid Peer react-leaflet@0.10.2 wants react@^0.14.0 || ^15.0.0-rc.1
+170 error peerinvalid Peer react-simpletabs@0.7.0 wants react@0.12.x - 1.x
+171 verbose exit [ 1, true ]
