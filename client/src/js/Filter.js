@@ -360,10 +360,3 @@ var Filter = React.createClass({
 
 
 module.exports = Filter;
-
-// setInterval(function() {
-//   ReactDOM.render(
-//     <App url="http://localhost:3000/api" data={crimes}/>,  document.querySelector('.container')
-//   );
-// }, 2000);
-

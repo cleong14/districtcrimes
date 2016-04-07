@@ -78,10 +78,10 @@ var Map = React.createClass({
   },
 
   // After App loads jsons, they are passed to Map as props; then we can run functions based upon those loaded props
-  componentWillReceiveProps: function() {
-    this.addGeoJSON(this.props.chamber);
+  componentWillReceiveProps: function(newProps) {
+    this.addGeoJSON(newProps.chamber);
     this.addInfoToMap();
-    this.addLegendToMap();
+    this.addLegendToMap(newProps.chamber);
   },
 
   componentWillUnmount: function() {
@@ -95,6 +95,7 @@ var Map = React.createClass({
       this.state.geojsonLayer.clearLayers();
     }
 
+    console.log(chamber);
     //return map to center
     this.zoomToCenter();
 
@@ -113,7 +114,7 @@ var Map = React.createClass({
     var geojsonLayer = L
       .geoJson(data, {
         onEachFeature: this.onEachFeature,
-        style: this.style
+        style: this.style.bind(null, chamber)
       })
       .addTo(map);
 
@@ -123,9 +124,9 @@ var Map = React.createClass({
   },
 
   // style object for Leaflet map
-  style: function (feature) {
+  style: function (chamber, feature) {
     return {
-      fillColor: this.getColor(feature.properties.objectid),
+      fillColor: this.getColor(chamber, feature.properties.objectid),
       "color": "#ffffff",
       "opacity": 1,
       "weight": 1,
@@ -164,7 +165,7 @@ var Map = React.createClass({
   },
 
   // Leaflet Control object - Map legend
-  addLegendToMap: function () {
+  addLegendToMap: function (chamber) {
     // bottom right legend panel
     if (this.state.legend){
       // remove the data from the geojson layer
@@ -179,7 +180,7 @@ var Map = React.createClass({
       // loop through our density intervals and generate a label with a colored square for each interval
       for (var i = 0; i < grades.length; i++) {
         div.innerHTML +=
-          '<i style="background:' + _this.getColor(grades[i] + 1) + '"></i> ' +
+          '<i style="background:' + _this.getColor(chamber, grades[i] + 1) + '"></i> ' +
           grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
       }
       return div;
@@ -190,14 +191,13 @@ var Map = React.createClass({
     });
   },
 
-  getColor: function (d) {
-    var chamber = this.props.chamber;
-    return d > 35  ? config.colors[chamber].level6 :
-           d > 28  ? config.colors[chamber].level5 :
-           d > 21  ? config.colors[chamber].level4 :
-           d > 14  ? config.colors[chamber].level3 :
-           d > 7   ? config.colors[chamber].level2 :
-                     config.colors[chamber].level1;
+  getColor: function (chamber, d) {
+    return  d > 35  ? config.colors[chamber].level6 :
+            d > 28  ? config.colors[chamber].level5 :
+            d > 21  ? config.colors[chamber].level4 :
+            d > 14  ? config.colors[chamber].level3 :
+            d > 7   ? config.colors[chamber].level2 :
+                      config.colors[chamber].level1;
   },
 
   getNeighborhoods: function (districtNumber) {

@@ -20,7 +20,7 @@ var Summary = React.createClass({
   },
 
   componentWillReceiveProps: function() {
-    this.getPolitician();
+    // this.getPolitician();
   },
 
   componentWillUnmount: function() {
@@ -28,24 +28,24 @@ var Summary = React.createClass({
     // http://d.hipaonline.com/headshots/Baker.jpg
   },
 
-  getPolitician: function () {
-    if (this.props.districtData) {
-      console.log('running ajax...');
-      $.ajax({
-        url: 'http://d.hipaonline.com/headshots/Baker.jpg',
-        // url: this.props.districtData.senate[0].politician_picture,
-        method: "GET",
-        dataType: "json",
-        success: (data) => {
-          console.log(data);
-          $('#photo').append(data);
-        },
-        failure: function (err) {
-          // console.log(err);
-        }
-      });
-    }
-  },
+  // getPolitician: function () {
+  //   if (this.props.districtData) {
+  //     console.log('running ajax...');
+  //     $.ajax({
+  //       url: 'http://d.hipaonline.com/headshots/Baker.jpg',
+  //       // url: this.props.districtData.senate[0].politician_picture,
+  //       method: "GET",
+  //       dataType: "json",
+  //       success: (data) => {
+  //         console.log(data);
+  //         $('#photo').append(data);
+  //       },
+  //       failure: function (err) {
+  //         // console.log(err);
+  //       }
+  //     });
+  //   }
+  // },
 
   render: function() {
     // return our JSX that is rendered to the DOM

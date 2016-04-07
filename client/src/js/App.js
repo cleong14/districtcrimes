@@ -27,7 +27,7 @@ var App = React.createClass({
       method: "GET",
       dataType: "json",
       success: (data) => {
-        this.setState({crimes: data});//setting state of app to have crimes as data
+        this.setState({crimes: data});
       },
       failure: function (err) {
         // console.log(err);
@@ -54,8 +54,8 @@ var App = React.createClass({
     this.loadFile('district-data.json', 'districtData');
     this.loadFile('hshd.geo.json', 'house');
     // this.loadCrimesFromServer();
-    console.log('get picture?');
-    this.getPolitician();
+    // console.log('get picture?');
+    // this.getPolitician();
 
   },
 
@@ -77,29 +77,6 @@ var App = React.createClass({
     this.setState({
       chamber: val
     });
-  },
-
-  getPolitician: function () {
-    // var pictureURL = '';
-
-    // for (var i=0; i < this.state.districtData[this.state.chamber].length; i++) {
-    //   if this.state.districtData[this.state.chamber]
-    // }
-    if (this.state.districtData) {
-      console.log('running ajax...');
-      $.ajax({
-        url: this.state.districtData.senate[0].politician_picture,
-        method: "GET",
-        dataType: "json",
-        success: (data) => {
-          $('#photo').append(data);
-        },
-        failure: function (err) {
-          // console.log(err);
-        }
-      });
-
-    }
   },
 
   render: function() {
