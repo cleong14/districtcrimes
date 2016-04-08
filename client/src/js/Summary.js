@@ -20,33 +20,35 @@ var Summary = React.createClass({
   },
 
   componentWillReceiveProps: function(newProps) {
-    console.log(newProps);
-    this.getPhotoUrl(newProps.districtNumber);
   },
 
   componentWillUnmount: function() {
   },
 
-  getPhotoUrl: function (districtNumber) {
+  getDistrictInfo: function (districtNumber) {
     if (this.props.districtData) {
-      var url;
-      for (var i=0; i < this.props.districtData[this.props.chamber].length; i++) {
-        if (this.props.districtData[this.props.chamber][i].district_name === districtNumber) {
-          url = this.props.districtData[this.props.chamber][i].politician_picture;
+      var chamber = this.props.districtData[this.props.chamber];
+      for (var i=0; i < chamber.length; i++) {
+        if (chamber[i].district_name === districtNumber) {
+          return chamber[i];
         }
-        break;
       }
-      console.log(url);
-      return url;
     }
   },
 
   render: function() {
     // return our JSX that is rendered to the DOM
     if (this.props.districtData) {
+      var districtInfo = this.getDistrictInfo(this.props.districtNumber);
+      console.log(districtInfo);
       return (
         <div id="summary">
-          <h1>I AM THE Summary</h1>
+          <div id="politician">
+            <img id="photo" src={districtInfo.politician_picture}/>
+            <h4>{districtInfo.politician_firstname} {districtInfo.politician_lastname}</h4>
+            <p>TEL: {districtInfo.contact_phone}</p>
+            <p>E-mail: <a href={districtInfo.contact_email}>{districtInfo.contact_email}</a></p>
+          </div>
         </div>
       );
     }
@@ -58,11 +60,33 @@ var Summary = React.createClass({
 // export our Summary component so that Browserify can include it with other components that require it
 module.exports = Summary;
 
-var Politician = React.createClass({
-  render: function () {
-    return (
-      <div>
-      </div>
-    )
-  }
-});
+
+
+// var Politician = React.createClass({
+//   componentWillReceiveProps: function(newProps) {
+//     console.log(newProps);
+//     this.getPhotoUrl(newProps.districtNumber);
+//   },
+
+//   getPhotoUrl: function (districtNumber) {
+//     if (this.props.districtData) {
+//       var url;
+//       for (var i=0; i < this.props.districtData[this.props.chamber].length; i++) {
+//         if (this.props.districtData[this.props.chamber][i].district_name === districtNumber) {
+//           url = this.props.districtData[this.props.chamber][i].politician_picture;
+//         }
+//         break;
+//       }
+//       console.log(url);
+//       return url;
+//     }
+//   },
+
+//   render: function () {
+//     return (
+//       <div>
+//         <img src={} />
+//       </div>
+//     )
+//   }
+// });

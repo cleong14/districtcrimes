@@ -6,6 +6,8 @@ var CONFIG = require('./config');
 var methodOverride = require('method-override');
 var path = require('path');
 var db = require('./models');
+var Sequelize = require('sequelize');
+
 var app = express();
 
 mongoose.connect('mongodb://localhost/mongoose-demo');
@@ -52,6 +54,18 @@ app.get('/api', function (req, res) {
     });
 });
 
+
+app.route('/barchart')
+	.get(function (req, res) {
+		db.crime.findAll({attributes:['type',
+			[Sequelize.fn('COUNT',Sequelize.col('crime.type')),'count']
+		],
+		group:['type']})
+		.then(function (crimes) {
+			res.json(crimes);
+		});
+	});
+
 app.route('/politicians')
 	.get(function (req, res) {
 		Politician.find({}, function(err,politicians) {
@@ -88,6 +102,11 @@ app.route('/politicians/:id')
 			});
 	});
 
+
+
+
+
+
 app.get('/file/:name', function (req, res, next) {
 
   var options = {
@@ -110,6 +129,9 @@ app.get('/file/:name', function (req, res, next) {
     }
   });
 });
+
+db.sequelize
+  .sync();
 
 var mongo = mongoose.connection;
 mongo.on('error', console.error.bind(console, 'connection error:'));

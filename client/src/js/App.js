@@ -5,7 +5,6 @@ var Map = require('./Map');
 var Filter = require('./Filter');
 var Summary = require('./Summary');
 var Dashboard = require('./Dashboard');
-var update = require('react-addons-update');
 
 // where in the actual DOM to mount our App
 var mountNode = document.getElementById('app');
@@ -18,7 +17,7 @@ var App = React.createClass({
       types: ['theft/larceny', 'vehicle-break-in/theft', 'vandalism', 'motor-vehicle-theft', 'burglary', ],
       filter: [],
       chamber: 'senate',
-      districtNumber: null
+      districtNumber: 23
     };
 
   },
@@ -110,7 +109,6 @@ var App = React.createClass({
           districtData={this.state.districtData}
           districtNumber={this.state.districtNumber}
         />
-        <Dashboard />
       </div>
     );
   }
