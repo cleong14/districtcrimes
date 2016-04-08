@@ -1,4 +1,6 @@
 var React = require('react');
+var ReactD3 = require('react-d3-components');
+var LineChart = ReactD3.LineChart;
 
 var Summary = React.createClass({
   //this is the Summary module to be exported. Put all code in here.
