@@ -109,7 +109,6 @@ var App = React.createClass({
           districtData={this.state.districtData}
           districtNumber={this.state.districtNumber}
         />
-        <Dashboard />
       </div>
     );
   }

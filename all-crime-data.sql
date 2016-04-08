@@ -33,20 +33,20 @@ SET default_tablespace = '';
 
 SET default_with_oids = false;
 
---
--- Name: SequelizeMeta; Type: TABLE; Schema: public; Owner: theotran
---
+
+-- Name: SequelizeMeta; Type: TABLE; Schema: public; Owner: fim
+
 
 CREATE TABLE "SequelizeMeta" (
     name character varying(255) NOT NULL
 );
 
 
-ALTER TABLE "SequelizeMeta" OWNER TO theotran;
 
---
--- Name: crimes; Type: TABLE; Schema: public; Owner: theotran
---
+ALTER TABLE "SequelizeMeta" OWNER TO fim;
+
+-- Name: crimes; Type: TABLE; Schema: public; Owner: fim
+
 
 CREATE TABLE crimes (
     id integer NOT NULL,
@@ -63,11 +63,12 @@ CREATE TABLE crimes (
 );
 
 
-ALTER TABLE crimes OWNER TO theotran;
 
---
--- Name: crimes_id_seq; Type: SEQUENCE; Schema: public; Owner: theotran
---
+ALTER TABLE crimes OWNER TO fim;
+
+
+-- Name: crimes_id_seq; Type: SEQUENCE; Schema: public; Owner: fim
+
 
 CREATE SEQUENCE crimes_id_seq
     START WITH 1
@@ -77,25 +78,22 @@ CREATE SEQUENCE crimes_id_seq
     CACHE 1;
 
 
-ALTER TABLE crimes_id_seq OWNER TO theotran;
 
---
--- Name: crimes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: theotran
---
+-- Name: crimes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: fim
+
 
 ALTER SEQUENCE crimes_id_seq OWNED BY crimes.id;
 
 
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: theotran
---
+
+-- Name: id; Type: DEFAULT; Schema: public; Owner: fim
+
 
 ALTER TABLE ONLY crimes ALTER COLUMN id SET DEFAULT nextval('crimes_id_seq'::regclass);
 
 
---
--- Data for Name: SequelizeMeta; Type: TABLE DATA; Schema: public; Owner: theotran
---
+-- Data for Name: SequelizeMeta; Type: TABLE DATA; Schema: public; Owner: fim
+
 
 COPY "SequelizeMeta" (name) FROM stdin;
 20160324120647-create-crime.js
@@ -104,9 +102,8 @@ COPY "SequelizeMeta" (name) FROM stdin;
 \.
 
 
---
--- Data for Name: crimes; Type: TABLE DATA; Schema: public; Owner: theotran
---
+-- Data for Name: crimes; Type: TABLE DATA; Schema: public; Owner: fim
+
 
 COPY crimes (id, "objectID", date, type, location, latitude, longitude, "createdAt", "updatedAt", "houseDistrict", "senateDistrict") FROM stdin;
 1	668327	2016-03-29 20:28:00-10	THEFT/LARCENY	1400 BLOCK ALA MOANA	21.2896092999999986	-157.843583200000012	2016-04-01 17:49:59.181-10	2016-04-01 17:49:59.181-10	22	12
@@ -18277,14 +18274,22 @@ COPY crimes (id, "objectID", date, type, location, latitude, longitude, "created
 
 
 --
+<<<<<<< HEAD
+-- Name: crimes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: fim
+=======
 -- Name: crimes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: theotran
+>>>>>>> development
 --
 
 SELECT pg_catalog.setval('crimes_id_seq', 18164, true);
 
 
 --
+<<<<<<< HEAD
+-- Name: SequelizeMeta_pkey; Type: CONSTRAINT; Schema: public; Owner: fim
+=======
 -- Name: SequelizeMeta_pkey; Type: CONSTRAINT; Schema: public; Owner: theotran
+>>>>>>> development
 --
 
 ALTER TABLE ONLY "SequelizeMeta"
@@ -18292,7 +18297,11 @@ ALTER TABLE ONLY "SequelizeMeta"
 
 
 --
+<<<<<<< HEAD
+-- Name: crimes_pkey; Type: CONSTRAINT; Schema: public; Owner: fim
+=======
 -- Name: crimes_pkey; Type: CONSTRAINT; Schema: public; Owner: theotran
+>>>>>>> development
 --
 
 ALTER TABLE ONLY crimes
@@ -18300,12 +18309,21 @@ ALTER TABLE ONLY crimes
 
 
 --
+<<<<<<< HEAD
+-- Name: public; Type: ACL; Schema: -; Owner: fim
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM fim;
+GRANT ALL ON SCHEMA public TO fim;
+=======
 -- Name: public; Type: ACL; Schema: -; Owner: theotran
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
 REVOKE ALL ON SCHEMA public FROM theotran;
 GRANT ALL ON SCHEMA public TO theotran;
+>>>>>>> development
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
