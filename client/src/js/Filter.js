@@ -32,15 +32,11 @@ const CheckBox = React.createClass({
               onChange={this.handleChange}
               disabled={this.state.disabled}
             />
-
             &nbsp; {this.props.type}
           </label>
           &nbsp;&nbsp;
-
         </p>
       </div>
-      <button onClick={this.toggle}>toggle disabled</button>
-
     </div>);
   },
 });
@@ -101,6 +97,7 @@ var filterCrimeList = React.createClass({//added
 var CrimeList = React.createClass({//added
   render: function () {
   var crimeNodes = this.props.data.map(function (crime, index) {//map is making a new array, this.props.data is flowing from commentBox
+      
       return (
         <Crime
           key={index}
@@ -270,19 +267,18 @@ var Tabs = React.createClass({
       </div>
     );
   },
-  // loadCrimesFromServer: function () {//added
-  //   var _this = this;
-  //   $.ajax({
-  //     url: this.props.url,
-  //     method: "GET",
-  //     dataType: "json",
-  //     success: function (data) {
-  //       console.log("testing");
-  //       _this.setState({data: data});
-  //     }
-  //   });
-  //   // _this.setState({data: crimes});
-  // },
+  loadCrimesFromServer: function () {//added
+    var _this = this;
+    $.ajax({
+      url: this.props.url,
+      method: "GET",
+      dataType: "json",
+      success: function (data) {
+        console.log("testing");
+        _this.setState({data: data});
+      }
+    });
+  },
   componentDidMount: function () {//added
     // this.loadCrimesFromServer();
     setInterval(this.loadCrimesFromServer, 5000);
@@ -342,7 +338,7 @@ var Filter = React.createClass({
             </div>
           </Pane>
           <Pane label="Address">
-            <div>Test</div>
+            <SearchBar />
           </Pane>
           <Pane label="Crimes">
             <div>This is my tab 3 contents!</div>

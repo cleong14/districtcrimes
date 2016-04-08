@@ -5,6 +5,7 @@ var Map = require('./Map');
 var Filter = require('./Filter');
 var Summary = require('./Summary');
 var Dashboard = require('./Dashboard');
+var update = require('react-addons-update');
 
 // where in the actual DOM to mount our App
 var mountNode = document.getElementById('app');
@@ -14,7 +15,7 @@ var App = React.createClass({
   getInitialState: function () {//we set it to state because its subject to change
     return {
       crimes: [],
-      types: ['theft', 'robbery'],
+      types: ['theft/larceny', 'vehicle-break-in/theft', 'vandalism', 'motor-vehicle-theft', 'burglary', ],
       filter: [],
       chamber: 'senate',
       districtNumber: null
@@ -56,22 +57,23 @@ var App = React.createClass({
     this.loadFile('hssd.geo.json', 'senate');
     this.loadFile('district-data.json', 'districtData');
     this.loadFile('hshd.geo.json', 'house');
-    // this.loadCrimesFromServer();
-
   },
 
   componentWillReceiveProps: function() {
   },
 
-  toggleFilter: function (type) {//triggers a render for this component, passing toggleFilter down to CheckBoxes
-    this.setState({filter: this.state.filter.concat(type)});//concat state filter with 7
-    //main thing is you can change filter in this function
-
-    //if youre given an array with the "types", given a new type , if its in the array then remove from array then setState
-    //but if its not in array then you want to concat into array, then setState
-
-    //write some logic to add into the array, and remove, should only have about 2 things in array
-    console.log('toggling', type);
+  toggleFilter: function (type) {
+    if (this.state.filter.indexOf(type) === -1) {
+      this.setState({filter: this.state.filter.concat(type)});//concat state filter with types
+    } else {
+      var newArr = this.state.filter.slice();//copy array
+      for (var i = 0; i < newArr.length; i++) {
+        if (newArr[i] == type) {
+          newArr.splice(i, 1);
+        }
+      }
+      this.setState({filter: newArr});//update state
+    }
   },
 
   updateChamber: function (val) {
@@ -114,8 +116,8 @@ var App = React.createClass({
   }
 });
 
-// render the app using ReactDOM!
+// render the app using ReactDOM! url="http://localhost:3000/api"
 ReactDOM.render(
-  <App url="http://localhost:3000/api" />,
+  <App  />,
   mountNode
 );
