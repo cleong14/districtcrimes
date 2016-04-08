@@ -19,45 +19,50 @@ var Summary = React.createClass({
   componentDidMount: function() {
   },
 
-  componentWillReceiveProps: function() {
-    this.getPolitician();
+  componentWillReceiveProps: function(newProps) {
+    console.log(newProps);
+    this.getPhotoUrl(newProps.districtNumber);
   },
 
   componentWillUnmount: function() {
-    // code to run just before removing the map
-    // http://d.hipaonline.com/headshots/Baker.jpg
   },
 
-  getPolitician: function () {
+  getPhotoUrl: function (districtNumber) {
     if (this.props.districtData) {
-      console.log('running ajax...');
-      $.ajax({
-        url: 'http://d.hipaonline.com/headshots/Baker.jpg',
-        // url: this.props.districtData.senate[0].politician_picture,
-        method: "GET",
-        dataType: "json",
-        success: (data) => {
-          console.log(data);
-          $('#photo').append(data);
-        },
-        failure: function (err) {
-          // console.log(err);
+      var url;
+      for (var i=0; i < this.props.districtData[this.props.chamber].length; i++) {
+        if (this.props.districtData[this.props.chamber][i].district_name === districtNumber) {
+          url = this.props.districtData[this.props.chamber][i].politician_picture;
         }
-      });
+        break;
+      }
+      console.log(url);
+      return url;
     }
   },
 
   render: function() {
     // return our JSX that is rendered to the DOM
-    return (
-      <div id="summary">
-        <h1>I AM THE Summary</h1>
-        <div id="photo"></div>
-      </div>
-    );
+    if (this.props.districtData) {
+      return (
+        <div id="summary">
+          <h1>I AM THE Summary</h1>
+        </div>
+      );
+    }
+    return null;
   }
 
 });
 
 // export our Summary component so that Browserify can include it with other components that require it
 module.exports = Summary;
+
+var Politician = React.createClass({
+  render: function () {
+    return (
+      <div>
+      </div>
+    )
+  }
+});

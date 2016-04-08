@@ -17,18 +17,21 @@ var App = React.createClass({
       crimes: [],
       types: ['theft/larceny', 'vehicle-break-in/theft', 'vandalism', 'motor-vehicle-theft', 'burglary', ],
       filter: [],
-      chamber: 'senate'
+      chamber: 'senate',
+      districtNumber: null
     };
 
   },
   loadCrimesFromServer: function () {//added
-
     $.ajax({
       url: this.props.url,
       method: "GET",
       dataType: "json",
+      xhrFields: {
+        withCredentials: true
+      },
       success: (data) => {
-        this.setState({crimes: data});//setting state of app to have crimes as data
+        this.setState({crimes: data});
       },
       failure: function (err) {
         // console.log(err);
@@ -54,10 +57,6 @@ var App = React.createClass({
     this.loadFile('hssd.geo.json', 'senate');
     this.loadFile('district-data.json', 'districtData');
     this.loadFile('hshd.geo.json', 'house');
-    this.loadCrimesFromServer();
-    console.log('get picture?');
-    this.getPolitician();
-
   },
 
   componentWillReceiveProps: function() {
@@ -75,33 +74,19 @@ var App = React.createClass({
       }
       this.setState({filter: newArr});//update state
     }
-  }, 
+  },
+
   updateChamber: function (val) {
     this.setState({
       chamber: val
     });
   },
-  getPolitician: function () {
-    // var pictureURL = '';
 
-    // for (var i=0; i < this.state.districtData[this.state.chamber].length; i++) {
-    //   if this.state.districtData[this.state.chamber]
-    // }
-    if (this.state.districtData) {
-      console.log('running ajax...');
-      $.ajax({
-        url: this.state.districtData.senate[0].politician_picture,
-        method: "GET",
-        dataType: "json",
-        success: (data) => {
-          $('#photo').append(data);
-        },
-        failure: function (err) {
-          // console.log(err);
-        }
-      });
-
-    }
+  updateDistrictNumber: function (number) {
+    this.setState({
+      districtNumber: number
+    });
+    console.log(this.state);
   },
 
   render: function() {
@@ -118,10 +103,12 @@ var App = React.createClass({
           house={this.state.house}
           senate={this.state.senate}
           districtData={this.state.districtData}
+          updateDistrictNumber={this.updateDistrictNumber}
         />
         <Summary
           chamber={this.state.chamber}
           districtData={this.state.districtData}
+          districtNumber={this.state.districtNumber}
         />
         <Dashboard />
       </div>
