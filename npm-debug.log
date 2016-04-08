@@ -1,0 +1,404 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'install' ]
+2 info using npm@2.14.2
+3 info using node@v4.0.0
+4 verbose readDependencies loading dependencies from /Users/theotran/Devleague/extortion/package.json
+5 verbose install where, deps [ '/Users/theotran/Devleague/extortion',
+5 verbose install   [ 'bluebird',
+5 verbose install     'body-parser',
+5 verbose install     'express',
+5 verbose install     'geojson-utils',
+5 verbose install     'leaflet',
+5 verbose install     'method-override',
+5 verbose install     'mongoose',
+5 verbose install     'node-geocoder',
+5 verbose install     'path',
+5 verbose install     'pg',
+5 verbose install     'pg-hstore',
+5 verbose install     'qwest',
+5 verbose install     'rc-checkbox',
+5 verbose install     'react',
+5 verbose install     'react-dom',
+5 verbose install     'react-tabs',
+5 verbose install     'sequelize',
+5 verbose install     'browser-sync',
+5 verbose install     'browserify',
+5 verbose install     'gulp',
+5 verbose install     'gulp-concat',
+5 verbose install     'gulp-connect',
+5 verbose install     'gulp-load-plugins',
+5 verbose install     'gulp-react',
+5 verbose install     'gulp-streamify',
+5 verbose install     'gulp-uglify',
+5 verbose install     'gulp-useref',
+5 verbose install     'reactify',
+5 verbose install     'rimraf',
+5 verbose install     'vinyl-source-stream',
+5 verbose install     'watchify' ] ]
+6 verbose install where, peers [ '/Users/theotran/Devleague/extortion', [] ]
+7 verbose installManyTop reading for lifecycle /Users/theotran/Devleague/extortion/package.json
+8 info preinstall extortion@1.0.0
+9 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/angular-animate/package.json
+10 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/angular-ui-bootstrap/package.json
+11 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/bluebird/package.json
+12 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/body-parser/package.json
+13 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/browser-sync/package.json
+14 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/browserify/package.json
+15 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/express/package.json
+16 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/gulp/package.json
+17 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/gulp-concat/package.json
+18 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/gulp-connect/package.json
+19 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/gulp-load-plugins/package.json
+20 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/gulp-react/package.json
+21 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/gulp-streamify/package.json
+22 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/gulp-uglify/package.json
+23 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/gulp-useref/package.json
+24 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/leaflet/package.json
+25 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/method-override/package.json
+26 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/mongoose/package.json
+27 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/node-geocoder/package.json
+28 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/path/package.json
+29 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/pg/package.json
+30 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/pg-hstore/package.json
+31 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/qwest/package.json
+32 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/rc-checkbox/package.json
+33 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/react/package.json
+34 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/react-addons-update/package.json
+35 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/react-dom/package.json
+36 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/react-leaflet/package.json
+37 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/react-simpletabs/package.json
+38 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/react-tabs/package.json
+39 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/reactify/package.json
+40 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/rimraf/package.json
+41 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/sequelize/package.json
+42 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/vinyl-source-stream/package.json
+43 verbose installManyTop reading scoped package data from /Users/theotran/Devleague/extortion/node_modules/watchify/package.json
+44 info package.json pg-hstore@2.3.2 No license field.
+45 info package.json leaflet@0.7.7 No license field.
+46 info package.json path@0.12.7 path is also the name of a node core module.
+47 info package.json gulp-streamify@1.0.2 No license field.
+48 info package.json rc-checkbox@1.3.2 No license field.
+49 verbose readDependencies loading dependencies from /Users/theotran/Devleague/extortion/package.json
+50 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/angular-animate/package.json
+51 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/angular-ui-bootstrap/package.json
+52 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/bluebird/package.json
+53 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/body-parser/package.json
+54 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/browser-sync/package.json
+55 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/browserify/package.json
+56 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/express/package.json
+57 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/gulp/package.json
+58 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/gulp-concat/package.json
+59 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/gulp-connect/package.json
+60 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/gulp-load-plugins/package.json
+61 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/gulp-react/package.json
+62 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/gulp-streamify/package.json
+63 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/gulp-uglify/package.json
+64 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/gulp-useref/package.json
+65 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/leaflet/package.json
+66 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/method-override/package.json
+67 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/mongoose/package.json
+68 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/node-geocoder/package.json
+69 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/path/package.json
+70 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/pg/package.json
+71 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/pg-hstore/package.json
+72 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/qwest/package.json
+73 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/rc-checkbox/package.json
+74 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/react/package.json
+75 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/react-addons-update/package.json
+76 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/react-dom/package.json
+77 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/react-leaflet/package.json
+78 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/react-simpletabs/package.json
+79 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/react-tabs/package.json
+80 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/reactify/package.json
+81 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/rimraf/package.json
+82 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/sequelize/package.json
+83 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/vinyl-source-stream/package.json
+84 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/watchify/package.json
+85 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/.bin/browser-sync/package.json
+86 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/.bin/browserify/package.json
+87 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/.bin/gulp/package.json
+88 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/.bin/rimraf/package.json
+89 verbose targetResolver reading package data from /Users/theotran/Devleague/extortion/node_modules/.bin/watchify/package.json
+90 verbose already installed skipping browser-sync@^2.10.1 /Users/theotran/Devleague/extortion
+91 verbose already installed skipping browserify@^12.0.1 /Users/theotran/Devleague/extortion
+92 verbose already installed skipping gulp@^3.9.0 /Users/theotran/Devleague/extortion
+93 verbose already installed skipping gulp-concat@^2.6.0 /Users/theotran/Devleague/extortion
+94 verbose already installed skipping gulp-connect@^3.1.0 /Users/theotran/Devleague/extortion
+95 verbose already installed skipping gulp-load-plugins@^1.1.0 /Users/theotran/Devleague/extortion
+96 verbose already installed skipping gulp-react@^3.1.0 /Users/theotran/Devleague/extortion
+97 verbose already installed skipping gulp-streamify@^1.0.2 /Users/theotran/Devleague/extortion
+98 verbose already installed skipping gulp-uglify@^1.5.1 /Users/theotran/Devleague/extortion
+99 verbose already installed skipping gulp-useref@^3.0.8 /Users/theotran/Devleague/extortion
+100 verbose already installed skipping reactify@^1.1.1 /Users/theotran/Devleague/extortion
+101 verbose already installed skipping rimraf@^2.5.2 /Users/theotran/Devleague/extortion
+102 verbose already installed skipping vinyl-source-stream@^1.1.0 /Users/theotran/Devleague/extortion
+103 verbose already installed skipping watchify@^3.6.1 /Users/theotran/Devleague/extortion
+104 verbose already installed skipping bluebird@^3.3.4 /Users/theotran/Devleague/extortion
+105 verbose already installed skipping body-parser@^1.15.0 /Users/theotran/Devleague/extortion
+106 verbose already installed skipping express@^4.13.4 /Users/theotran/Devleague/extortion
+107 silly cache add args [ 'geojson-utils@^1.1.0', null ]
+108 verbose cache add spec geojson-utils@^1.1.0
+109 silly cache add parsed spec Result {
+109 silly cache add   raw: 'geojson-utils@^1.1.0',
+109 silly cache add   scope: null,
+109 silly cache add   name: 'geojson-utils',
+109 silly cache add   rawSpec: '^1.1.0',
+109 silly cache add   spec: '>=1.1.0 <2.0.0',
+109 silly cache add   type: 'range' }
+110 silly addNamed geojson-utils@>=1.1.0 <2.0.0
+111 verbose addNamed ">=1.1.0 <2.0.0" is a valid semver range for geojson-utils
+112 silly addNameRange { name: 'geojson-utils',
+112 silly addNameRange   range: '>=1.1.0 <2.0.0',
+112 silly addNameRange   hasData: false }
+113 silly mapToRegistry name geojson-utils
+114 silly mapToRegistry using default registry
+115 silly mapToRegistry registry https://registry.npmjs.org/
+116 silly mapToRegistry uri https://registry.npmjs.org/geojson-utils
+117 verbose addNameRange registry:https://registry.npmjs.org/geojson-utils not in flight; fetching
+118 verbose already installed skipping leaflet@^0.7.7 /Users/theotran/Devleague/extortion
+119 verbose request uri https://registry.npmjs.org/geojson-utils
+120 verbose request no auth needed
+121 info attempt registry request try #1 at 6:34:38 PM
+122 verbose request id 851cd38445fa623d
+123 http request GET https://registry.npmjs.org/geojson-utils
+124 verbose already installed skipping method-override@^2.3.5 /Users/theotran/Devleague/extortion
+125 verbose already installed skipping mongoose@^4.4.10 /Users/theotran/Devleague/extortion
+126 verbose already installed skipping node-geocoder@^3.9.1 /Users/theotran/Devleague/extortion
+127 verbose already installed skipping path@^0.12.7 /Users/theotran/Devleague/extortion
+128 verbose already installed skipping pg@^4.5.1 /Users/theotran/Devleague/extortion
+129 verbose already installed skipping pg-hstore@^2.3.2 /Users/theotran/Devleague/extortion
+130 verbose already installed skipping qwest@^4.3.2 /Users/theotran/Devleague/extortion
+131 verbose already installed skipping rc-checkbox@^1.3.2 /Users/theotran/Devleague/extortion
+132 verbose already installed skipping react@^0.14.7 /Users/theotran/Devleague/extortion
+133 verbose already installed skipping react-dom@^0.14.7 /Users/theotran/Devleague/extortion
+134 verbose already installed skipping react-tabs@^0.5.3 /Users/theotran/Devleague/extortion
+135 verbose already installed skipping sequelize@^3.20.0 /Users/theotran/Devleague/extortion
+136 http 200 https://registry.npmjs.org/geojson-utils
+137 silly get cb [ 200,
+137 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+137 silly get     etag: '"AUJCHW8TM58ABZKC0OWMO5TOP"',
+137 silly get     'content-type': 'application/json',
+137 silly get     'content-encoding': 'gzip',
+137 silly get     'cache-control': 'max-age=300',
+137 silly get     'content-length': '3088',
+137 silly get     'accept-ranges': 'bytes',
+137 silly get     date: 'Fri, 08 Apr 2016 04:34:38 GMT',
+137 silly get     via: '1.1 varnish',
+137 silly get     age: '0',
+137 silly get     connection: 'keep-alive',
+137 silly get     'x-served-by': 'cache-dfw1845-DFW',
+137 silly get     'x-cache': 'MISS',
+137 silly get     'x-cache-hits': '0',
+137 silly get     'x-timer': 'S1460090078.563139,VS0,VE263',
+137 silly get     vary: 'Accept-Encoding' } ]
+138 verbose get saving geojson-utils to /Users/theotran/.npm/registry.npmjs.org/geojson-utils/.cache.json
+139 silly addNameRange number 2 { name: 'geojson-utils', range: '>=1.1.0 <2.0.0', hasData: true }
+140 silly addNameRange versions [ 'geojson-utils',
+140 silly addNameRange   [ '0.0.1',
+140 silly addNameRange     '0.0.2',
+140 silly addNameRange     '0.1.0',
+140 silly addNameRange     '0.2.0',
+140 silly addNameRange     '1.0.0',
+140 silly addNameRange     '1.0.1',
+140 silly addNameRange     '1.0.2',
+140 silly addNameRange     '1.1.0' ] ]
+141 silly addNamed geojson-utils@1.1.0
+142 verbose addNamed "1.1.0" is a plain semver version for geojson-utils
+143 silly mapToRegistry name geojson-utils
+144 silly mapToRegistry using default registry
+145 silly mapToRegistry registry https://registry.npmjs.org/
+146 silly mapToRegistry uri https://registry.npmjs.org/geojson-utils
+147 verbose addRemoteTarball https://registry.npmjs.org/geojson-utils/-/geojson-utils-1.1.0.tgz not in flight; adding
+148 verbose addRemoteTarball [ 'https://registry.npmjs.org/geojson-utils/-/geojson-utils-1.1.0.tgz',
+148 verbose addRemoteTarball   'e8ffb4c81c0a75b3e306f5187265d6f23040f50b' ]
+149 info retry fetch attempt 1 at 6:34:39 PM
+150 info attempt registry request try #1 at 6:34:39 PM
+151 http fetch GET https://registry.npmjs.org/geojson-utils/-/geojson-utils-1.1.0.tgz
+152 http fetch 200 https://registry.npmjs.org/geojson-utils/-/geojson-utils-1.1.0.tgz
+153 silly fetchAndShaCheck shasum e8ffb4c81c0a75b3e306f5187265d6f23040f50b
+154 verbose addTmpTarball /var/folders/dk/71ww79rn7d1dtktdzb_96csw0000gn/T/npm-5398-5359c55d/registry.npmjs.org/geojson-utils/-/geojson-utils-1.1.0.tgz not in flight; adding
+155 verbose addTmpTarball already have metadata; skipping unpack for geojson-utils@1.1.0
+156 silly cache afterAdd geojson-utils@1.1.0
+157 verbose afterAdd /Users/theotran/.npm/geojson-utils/1.1.0/package/package.json not in flight; writing
+158 verbose afterAdd /Users/theotran/.npm/geojson-utils/1.1.0/package/package.json written
+159 silly install resolved [ { name: 'geojson-utils',
+159 silly install resolved     version: '1.1.0',
+159 silly install resolved     description: 'GeoJSON Utilities for JavaScript',
+159 silly install resolved     main: 'geojson-utils.js',
+159 silly install resolved     scripts: { test: 'node test.js' },
+159 silly install resolved     repository:
+159 silly install resolved      { type: 'git',
+159 silly install resolved        url: 'git://github.com/maxogden/geojson-js-utils.git' },
+159 silly install resolved     keywords: [ 'geojson', 'geocouch' ],
+159 silly install resolved     author: { name: 'Max Ogden' },
+159 silly install resolved     license: 'MIT',
+159 silly install resolved     bugs: { url: 'https://github.com/maxogden/geojson-js-utils/issues' },
+159 silly install resolved     homepage: 'https://github.com/maxogden/geojson-js-utils',
+159 silly install resolved     _id: 'geojson-utils@1.1.0',
+159 silly install resolved     dist:
+159 silly install resolved      { shasum: 'e8ffb4c81c0a75b3e306f5187265d6f23040f50b',
+159 silly install resolved        tarball: 'https://registry.npmjs.org/geojson-utils/-/geojson-utils-1.1.0.tgz' },
+159 silly install resolved     _from: 'geojson-utils@>=1.1.0 <2.0.0',
+159 silly install resolved     _npmVersion: '1.4.3',
+159 silly install resolved     _npmUser: { name: 'maxogden', email: 'max@maxogden.com' },
+159 silly install resolved     maintainers: [ [Object] ],
+159 silly install resolved     directories: {},
+159 silly install resolved     _shasum: 'e8ffb4c81c0a75b3e306f5187265d6f23040f50b',
+159 silly install resolved     _resolved: 'https://registry.npmjs.org/geojson-utils/-/geojson-utils-1.1.0.tgz' } ]
+160 info install geojson-utils@1.1.0 into /Users/theotran/Devleague/extortion
+161 info installOne geojson-utils@1.1.0
+162 verbose installOne of geojson-utils to /Users/theotran/Devleague/extortion not in flight; installing
+163 verbose lock using /Users/theotran/.npm/_locks/geojson-utils-834e08d145308669.lock for /Users/theotran/Devleague/extortion/node_modules/geojson-utils
+164 silly install write writing geojson-utils 1.1.0 to /Users/theotran/Devleague/extortion/node_modules/geojson-utils
+165 verbose unbuild node_modules/geojson-utils
+166 silly gentlyRm /Users/theotran/Devleague/extortion/node_modules/geojson-utils is being purged from base /Users/theotran/Devleague/extortion
+167 verbose gentlyRm don't care about contents; nuking /Users/theotran/Devleague/extortion/node_modules/geojson-utils
+168 verbose tar unpack /Users/theotran/.npm/geojson-utils/1.1.0/package.tgz
+169 verbose tar unpacking to /Users/theotran/Devleague/extortion/node_modules/geojson-utils
+170 silly gentlyRm /Users/theotran/Devleague/extortion/node_modules/geojson-utils is being purged
+171 verbose gentlyRm don't care about contents; nuking /Users/theotran/Devleague/extortion/node_modules/geojson-utils
+172 silly gunzTarPerm modes [ '755', '644' ]
+173 silly gunzTarPerm extractEntry package.json
+174 silly gunzTarPerm extractEntry .npmignore
+175 silly gunzTarPerm extractEntry README.md
+176 silly gunzTarPerm extractEntry LICENSE
+177 silly gunzTarPerm extractEntry geojson-utils.js
+178 silly gunzTarPerm extractEntry test.js
+179 verbose write writing to /Users/theotran/Devleague/extortion/node_modules/geojson-utils/package.json
+180 info preinstall geojson-utils@1.1.0
+181 verbose readDependencies loading dependencies from /Users/theotran/Devleague/extortion/node_modules/geojson-utils/package.json
+182 verbose readDependencies loading dependencies from /Users/theotran/Devleague/extortion/node_modules/geojson-utils/package.json
+183 silly install resolved []
+184 verbose about to build /Users/theotran/Devleague/extortion/node_modules/geojson-utils
+185 info build /Users/theotran/Devleague/extortion/node_modules/geojson-utils
+186 info linkStuff geojson-utils@1.1.0
+187 silly linkStuff geojson-utils@1.1.0 has /Users/theotran/Devleague/extortion/node_modules as its parent node_modules
+188 verbose linkBins geojson-utils@1.1.0
+189 verbose linkMans geojson-utils@1.1.0
+190 verbose rebuildBundles geojson-utils@1.1.0
+191 info install geojson-utils@1.1.0
+192 info postinstall geojson-utils@1.1.0
+193 verbose unlock done using /Users/theotran/.npm/_locks/geojson-utils-834e08d145308669.lock for /Users/theotran/Devleague/extortion/node_modules/geojson-utils
+194 info build /Users/theotran/Devleague/extortion
+195 info linkStuff extortion@1.0.0
+196 silly linkStuff extortion@1.0.0 has /Users/theotran/Devleague as its parent node_modules
+197 verbose linkBins extortion@1.0.0
+198 verbose linkMans extortion@1.0.0
+199 verbose rebuildBundles extortion@1.0.0
+200 verbose rebuildBundles [ '.bin',
+200 verbose rebuildBundles   'angular-animate',
+200 verbose rebuildBundles   'angular-ui-bootstrap',
+200 verbose rebuildBundles   'bluebird',
+200 verbose rebuildBundles   'body-parser',
+200 verbose rebuildBundles   'browser-sync',
+200 verbose rebuildBundles   'browserify',
+200 verbose rebuildBundles   'express',
+200 verbose rebuildBundles   'geojson-utils',
+200 verbose rebuildBundles   'gulp',
+200 verbose rebuildBundles   'gulp-concat',
+200 verbose rebuildBundles   'gulp-connect',
+200 verbose rebuildBundles   'gulp-load-plugins',
+200 verbose rebuildBundles   'gulp-react',
+200 verbose rebuildBundles   'gulp-streamify',
+200 verbose rebuildBundles   'gulp-uglify',
+200 verbose rebuildBundles   'gulp-useref',
+200 verbose rebuildBundles   'leaflet',
+200 verbose rebuildBundles   'method-override',
+200 verbose rebuildBundles   'mongoose',
+200 verbose rebuildBundles   'node-geocoder',
+200 verbose rebuildBundles   'path',
+200 verbose rebuildBundles   'pg',
+200 verbose rebuildBundles   'pg-hstore',
+200 verbose rebuildBundles   'qwest',
+200 verbose rebuildBundles   'rc-checkbox',
+200 verbose rebuildBundles   'react',
+200 verbose rebuildBundles   'react-addons-update',
+200 verbose rebuildBundles   'react-dom',
+200 verbose rebuildBundles   'react-leaflet',
+200 verbose rebuildBundles   'react-simpletabs',
+200 verbose rebuildBundles   'react-tabs',
+200 verbose rebuildBundles   'reactify',
+200 verbose rebuildBundles   'rimraf',
+200 verbose rebuildBundles   'sequelize',
+200 verbose rebuildBundles   'vinyl-source-stream',
+200 verbose rebuildBundles   'watchify' ]
+201 verbose rebuild bundle /Users/theotran/Devleague/extortion/node_modules/angular-animate
+202 info build /Users/theotran/Devleague/extortion/node_modules/angular-animate
+203 info preinstall angular-animate@1.5.3
+204 info linkStuff angular-animate@1.5.3
+205 silly linkStuff angular-animate@1.5.3 has /Users/theotran/Devleague/extortion/node_modules as its parent node_modules
+206 verbose linkBins angular-animate@1.5.3
+207 verbose linkMans angular-animate@1.5.3
+208 verbose rebuildBundles angular-animate@1.5.3
+209 info install angular-animate@1.5.3
+210 info postinstall angular-animate@1.5.3
+211 verbose rebuild bundle /Users/theotran/Devleague/extortion/node_modules/angular-ui-bootstrap
+212 info build /Users/theotran/Devleague/extortion/node_modules/angular-ui-bootstrap
+213 info preinstall angular-ui-bootstrap@1.2.5
+214 info linkStuff angular-ui-bootstrap@1.2.5
+215 silly linkStuff angular-ui-bootstrap@1.2.5 has /Users/theotran/Devleague/extortion/node_modules as its parent node_modules
+216 verbose linkBins angular-ui-bootstrap@1.2.5
+217 verbose linkMans angular-ui-bootstrap@1.2.5
+218 verbose rebuildBundles angular-ui-bootstrap@1.2.5
+219 info install angular-ui-bootstrap@1.2.5
+220 info postinstall angular-ui-bootstrap@1.2.5
+221 verbose rebuild bundle /Users/theotran/Devleague/extortion/node_modules/react-addons-update
+222 info build /Users/theotran/Devleague/extortion/node_modules/react-addons-update
+223 info preinstall react-addons-update@0.14.8
+224 info linkStuff react-addons-update@0.14.8
+225 silly linkStuff react-addons-update@0.14.8 has /Users/theotran/Devleague/extortion/node_modules as its parent node_modules
+226 verbose linkBins react-addons-update@0.14.8
+227 verbose linkMans react-addons-update@0.14.8
+228 verbose rebuildBundles react-addons-update@0.14.8
+229 info install react-addons-update@0.14.8
+230 info postinstall react-addons-update@0.14.8
+231 verbose rebuild bundle /Users/theotran/Devleague/extortion/node_modules/react-leaflet
+232 info build /Users/theotran/Devleague/extortion/node_modules/react-leaflet
+233 info preinstall react-leaflet@0.10.2
+234 info linkStuff react-leaflet@0.10.2
+235 silly linkStuff react-leaflet@0.10.2 has /Users/theotran/Devleague/extortion/node_modules as its parent node_modules
+236 verbose linkBins react-leaflet@0.10.2
+237 verbose linkMans react-leaflet@0.10.2
+238 verbose rebuildBundles react-leaflet@0.10.2
+239 verbose rebuildBundles [ 'lodash' ]
+240 info install react-leaflet@0.10.2
+241 info postinstall react-leaflet@0.10.2
+242 verbose rebuild bundle /Users/theotran/Devleague/extortion/node_modules/react-simpletabs
+243 info build /Users/theotran/Devleague/extortion/node_modules/react-simpletabs
+244 info preinstall react-simpletabs@0.7.0
+245 info linkStuff react-simpletabs@0.7.0
+246 silly linkStuff react-simpletabs@0.7.0 has /Users/theotran/Devleague/extortion/node_modules as its parent node_modules
+247 verbose linkBins react-simpletabs@0.7.0
+248 verbose linkMans react-simpletabs@0.7.0
+249 verbose rebuildBundles react-simpletabs@0.7.0
+250 verbose rebuildBundles [ 'classnames' ]
+251 info install react-simpletabs@0.7.0
+252 info postinstall react-simpletabs@0.7.0
+253 info install extortion@1.0.0
+254 info postinstall extortion@1.0.0
+255 info prepublish extortion@1.0.0
+256 verbose validateInstall loading /Users/theotran/Devleague/extortion/package.json for validation
+257 verbose stack Error: The package react@0.14.7 does not satisfy its siblings' peerDependencies requirements!
+257 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:125:32
+257 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:268:7
+257 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:142:5
+257 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+257 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+257 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+257 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+257 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+257 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+257 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+258 verbose cwd /Users/theotran/Devleague/extortion
+259 error Darwin 15.4.0
+260 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "install"
+261 error node v4.0.0
+262 error npm  v2.14.2
+263 error code EPEERINVALID
+264 error peerinvalid The package react@0.14.7 does not satisfy its siblings' peerDependencies requirements!
+264 error peerinvalid Peer react-dom@0.14.7 wants react@^0.14.7
+264 error peerinvalid Peer react-tabs@0.5.3 wants react@^0.14.7
+264 error peerinvalid Peer react-addons-update@0.14.8 wants react@^0.14.8
+264 error peerinvalid Peer react-leaflet@0.10.2 wants react@^0.14.0 || ^15.0.0-rc.1
+264 error peerinvalid Peer react-simpletabs@0.7.0 wants react@0.12.x - 1.x
+265 verbose exit [ 1, true ]

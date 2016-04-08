@@ -14,7 +14,7 @@ var App = React.createClass({
   getInitialState: function () {//we set it to state because its subject to change
     return {
       crimes: [],
-      types: ['theft/larceny', 'vehicle-break-in/theft', 'vandalism', 'motor-vehicle-theft', 'burglary', ],
+      types: ['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY', ],
       filter: [],
       chamber: 'senate',
       districtNumber: 23
@@ -56,6 +56,7 @@ var App = React.createClass({
     this.loadFile('hssd.geo.json', 'senate');
     this.loadFile('district-data.json', 'districtData');
     this.loadFile('hshd.geo.json', 'house');
+    this.loadCrimesFromServer();
   },
 
   componentWillReceiveProps: function() {
@@ -96,6 +97,7 @@ var App = React.createClass({
           types={this.state.types}
           onChange={this.toggleFilter}
           updateChamber={this.updateChamber}
+          filter={this.state.filter}
         />
         <Map
           chamber={this.state.chamber}
