@@ -120,3 +120,13 @@ html, body {
 .dropdown-container.show .dropdown-list {
   display: block;
 }
+
+/*.brush .extent {
+  stroke: #000;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
+
+.brush .background {
+  fill: #ddd;
+}*/

@@ -1,14 +1,27 @@
 var React = require('react');
 var ReactD3 = require('react-d3-components');
 var LineChart = ReactD3.LineChart;
+var Brush = ReactD3.Brush;
+
+var data = [
+  {
+  label: 'somethingA',
+  values: [{x: 0, y: 2}, {x: 1.3, y: 5}, {x: 3, y: 6}, {x: 3.5, y: 6.5}, {x: 4, y: 6}]
+  },
+  {
+  label: 'somethingB',
+  values: [{x: 0, y: 3}, {x: 1.3, y: 4}, {x: 3, y: 7}, {x: 3.5, y: 8}, {x: 4, y: 7}]
+  }
+];
 
 var Summary = React.createClass({
   //this is the Summary module to be exported. Put all code in here.
 
   getInitialState: function() {
     // TODO: if we wanted an initial "state" for our map component we could add it here
+    console.log(LineChart);
     return {
-
+      
     };
   },
 
@@ -51,6 +64,13 @@ var Summary = React.createClass({
             <p>TEL: {districtInfo.contact_phone}</p>
             <p>E-mail: <a href={districtInfo.contact_email}>{districtInfo.contact_email}</a></p>
           </div>
+
+          <LineChart
+            data={data}
+            width={400}
+            height={400}
+            margin={{top: 10, bottom: 50, left: 50, right: 10}}
+          />
         </div>
       );
     }
