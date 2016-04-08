@@ -58,7 +58,7 @@ gulp.task('watch', function() {
   gulp.watch(path.HTML, ['copy']);
 
   var watcher  = watchify(
-    browserify({
+    browserify({git
     entries: [path.ENTRY_POINT],
     transform: [reactify],
     debug: true,

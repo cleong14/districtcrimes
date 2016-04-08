@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var methodOverride = require('method-override');
 var path = require('path');
 var db = require('./models');
-var Sequelize = require('sequelize');
+var sequelize = require('sequelize');
 
 var app = express();
 
@@ -57,13 +57,49 @@ app.get('/api', function (req, res) {
 app.route('/barchart')
 	.get(function (req, res) {
 		db.crime.findAll({attributes:['type',
-			[Sequelize.fn('COUNT',Sequelize.col('crime.type')),'count']
+			[sequelize.fn('COUNT',sequelize.col('crime.type')),'count']
 		],
 		group:['type']})
 		.then(function (crimes) {
 			res.json(crimes);
 		});
 	});
+
+app.get('/senatecrimeglobs', function (req, res) {
+  db.crime.findAll({
+    attributes: [
+      'type',
+      'senateDistrict',
+      [sequelize.fn('COUNT', sequelize.col('crime.type')), 'count']
+    ],
+    group: [
+      'type',
+      'senateDistrict'
+    ],
+    order: 'type'
+  })
+  .then(function (crimes) {
+    res.json(crimes);
+  });
+});
+
+app.get('/housecrimeglobs', function (req, res) {
+  db.crime.findAll({
+    attributes: [
+      'type',
+      'houseDistrict',
+      [sequelize.fn('COUNT', sequelize.col('crime.type')), 'count']
+    ],
+    group: [
+      'type',
+      'houseDistrict'
+    ],
+    order: 'type'
+  })
+  .then(function (crimes) {
+    res.json(crimes);
+  });
+});
 
 app.route('/politicians')
 	.get(function (req, res) {
@@ -73,8 +109,6 @@ app.route('/politicians')
 			}
 			res.json(politicians);
 		});
-
-
 	})
 	.post(function (req, res) {
 		var newPolitician = new Politician(req.body);
@@ -100,10 +134,6 @@ app.route('/politicians/:id')
   			res.json(politicians);
 			});
 	});
-
-
-
-
 
 
 app.get('/file/:name', function (req, res, next) {
