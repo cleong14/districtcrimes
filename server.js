@@ -6,7 +6,10 @@ var CONFIG = require('./config');
 var methodOverride = require('method-override');
 var path = require('path');
 var db = require('./models');
+var Sequelize = require('sequelize');
+
 var app = express();
+
 
 
 mongoose.connect('mongodb://localhost/mongoose-demo');
@@ -57,14 +60,14 @@ app.get('/api', function (req, res) {
 
 app.route('/barchart')
 	.get(function (req, res) {
-		db.crime.findAll({attributes:[
+		db.crime.findAll({attributes:['type',
 			[Sequelize.fn('COUNT',Sequelize.col('crime.type')),'count']
 		],
-		group:['type'],
-		.then(function crimes) {
-			res.json(politicians);
+		group:['type']})
+		.then(function (crimes) {
+			res.json(crimes);
 		});
-});
+	});
 
 app.route('/politicians')
 	.get(function (req, res) {
@@ -130,6 +133,10 @@ app.get('/file/:name', function (req, res, next) {
   });
 
 });
+
+
+db.sequelize
+  .sync();
 
 
 
