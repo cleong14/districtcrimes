@@ -88,11 +88,13 @@ app.get('/housecrimeglobs', function (req, res) {
     attributes: [
       'type',
       'houseDistrict',
+      'date',
       [sequelize.fn('COUNT', sequelize.col('crime.type')), 'count']
     ],
     group: [
       'type',
-      'houseDistrict'
+      'houseDistrict',
+      'date'
     ],
     order: 'type'
   })
