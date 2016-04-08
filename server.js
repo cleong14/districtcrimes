@@ -130,15 +130,9 @@ app.get('/file/:name', function (req, res, next) {
   });
 });
 
-<<<<<<< HEAD
-
 db.sequelize
   .sync();
 
-
-
-=======
->>>>>>> development
 var mongo = mongoose.connection;
 mongo.on('error', console.error.bind(console, 'connection error:'));
 mongo.once('open', function () {
