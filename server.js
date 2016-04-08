@@ -10,8 +10,11 @@ var Sequelize = require('sequelize');
 
 var app = express();
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> development
 mongoose.connect('mongodb://localhost/mongoose-demo');
 
 var poliSchema = mongoose.Schema({
@@ -42,7 +45,6 @@ var Politician = mongoose.model('Politician', poliSchema);
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(methodOverride('_method'));
-
 
 //render main page
 app.get('/', function (req, res) {
@@ -131,15 +133,17 @@ app.get('/file/:name', function (req, res, next) {
       console.log('Sent:', fileName);
     }
   });
-
 });
 
+<<<<<<< HEAD
 
 db.sequelize
   .sync();
 
 
 
+=======
+>>>>>>> development
 var mongo = mongoose.connection;
 mongo.on('error', console.error.bind(console, 'connection error:'));
 mongo.once('open', function () {
