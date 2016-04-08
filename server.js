@@ -10,11 +10,6 @@ var Sequelize = require('sequelize');
 
 var app = express();
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> development
 mongoose.connect('mongodb://localhost/mongoose-demo');
 
 var poliSchema = mongoose.Schema({
