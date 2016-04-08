@@ -131,6 +131,6 @@ var App = React.createClass({
 
 // render the app using ReactDOM! url="http://localhost:3000/api"
 ReactDOM.render(
-  <App  />,
+  <App url="http://localhost:3000/api" />,
   mountNode
 );
