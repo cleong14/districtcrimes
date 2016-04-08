@@ -16,16 +16,19 @@ var App = React.createClass({
       crimes: [],
       types: ['theft', 'robbery'],
       filter: [],
-      chamber: 'senate'
+      chamber: 'senate',
+      districtNumber: null
     };
 
   },
   loadCrimesFromServer: function () {//added
-
     $.ajax({
       url: this.props.url,
       method: "GET",
       dataType: "json",
+      xhrFields: {
+        withCredentials: true
+      },
       success: (data) => {
         this.setState({crimes: data});
       },
@@ -54,8 +57,6 @@ var App = React.createClass({
     this.loadFile('district-data.json', 'districtData');
     this.loadFile('hshd.geo.json', 'house');
     // this.loadCrimesFromServer();
-    // console.log('get picture?');
-    // this.getPolitician();
 
   },
 
@@ -79,6 +80,13 @@ var App = React.createClass({
     });
   },
 
+  updateDistrictNumber: function (number) {
+    this.setState({
+      districtNumber: number
+    });
+    console.log(this.state);
+  },
+
   render: function() {
     return (
       <div>
@@ -93,10 +101,12 @@ var App = React.createClass({
           house={this.state.house}
           senate={this.state.senate}
           districtData={this.state.districtData}
+          updateDistrictNumber={this.updateDistrictNumber}
         />
         <Summary
           chamber={this.state.chamber}
           districtData={this.state.districtData}
+          districtNumber={this.state.districtNumber}
         />
         <Dashboard />
       </div>

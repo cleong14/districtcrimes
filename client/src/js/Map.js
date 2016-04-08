@@ -95,7 +95,6 @@ var Map = React.createClass({
       this.state.geojsonLayer.clearLayers();
     }
 
-    console.log(chamber);
     //return map to center
     this.zoomToCenter();
 
@@ -253,6 +252,8 @@ var Map = React.createClass({
 
   zoomToFeature: function (e) {
     map.fitBounds(e.target.getBounds());
+    var districtNumber = e.target.feature.properties.objectid;
+    this.props.updateDistrictNumber(districtNumber);
   },
 
   zoomToCenter: function (e) {

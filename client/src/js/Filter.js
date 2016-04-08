@@ -212,10 +212,6 @@ var HelloWorld = React.createClass({
 });
 
 
-
-
-
-
 //TABS
 var Tabs = React.createClass({
   getInitialState: function () {
