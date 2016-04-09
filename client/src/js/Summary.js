@@ -19,6 +19,10 @@ var data = [
   {
   label: 'somethingD',
   values: [{x: 0, y: 0}, {x: 1.3, y: 2}, {x: 3, y: 4}, {x: 3.5, y: 6}, {x: 4, y: 10}]
+  },
+  {
+  label: 'somethingE',
+  values: [{x: 0, y: 1}, {x: 1.3, y: 2}, {x: 3, y: 6}, {x: 3.5, y: 3}, {x: 4, y: 3}]
   }
 ];
 
@@ -75,7 +79,7 @@ var Summary = React.createClass({
 
           <LineChart
             data={data}
-            width={40%}
+            width={400}
             height={400}
             margin={{top: 10, bottom: 50, left: 50, right: 10}}
           />
@@ -121,17 +125,9 @@ module.exports = Summary;
 //   }
 // });
 
-// select date, date_trunc('week',date) as timestamp
+
+// working sql query
+// SELECT date_trunc('week',crimes.date) as "crimes_date", crimes.type, "houseDistrict", "senateDistrict", count(crimes.type) as "crimes_count"
 // FROM crimes
-// GROUP BY date, date_trunc('week',date)
-// ORDER BY date;
-
-// 'SELECT ' +
-//       '"type", "senateDistrict", COUNT("crime"."type") AS "count" ' +
-//     'FROM ' +
-//       '"crimes" AS "crime" ' +
-//     'GROUP BY ' +
-//       '"type", "senateDistrict" ' +
-//     'ORDER BY ' +
-//       'type'
-
+// GROUP BY "crimes_date", crimes.type, "houseDistrict", "senateDistrict"
+// ORDER BY crimes.type;
