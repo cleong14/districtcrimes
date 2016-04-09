@@ -11,6 +11,14 @@ var data = [
   {
   label: 'somethingB',
   values: [{x: 0, y: 3}, {x: 1.3, y: 4}, {x: 3, y: 7}, {x: 3.5, y: 8}, {x: 4, y: 7}]
+  },
+  {
+  label: 'somethingC',
+  values: [{x: 0, y: 4}, {x: 1.3, y: 3}, {x: 3, y: 7}, {x: 3.5, y: 2}, {x: 4, y: 9}]
+  },
+  {
+  label: 'somethingD',
+  values: [{x: 0, y: 0}, {x: 1.3, y: 2}, {x: 3, y: 4}, {x: 3.5, y: 6}, {x: 4, y: 10}]
   }
 ];
 
@@ -67,7 +75,7 @@ var Summary = React.createClass({
 
           <LineChart
             data={data}
-            width={400}
+            width={40%}
             height={400}
             margin={{top: 10, bottom: 50, left: 50, right: 10}}
           />
@@ -112,3 +120,18 @@ module.exports = Summary;
 //     )
 //   }
 // });
+
+// select date, date_trunc('week',date) as timestamp
+// FROM crimes
+// GROUP BY date, date_trunc('week',date)
+// ORDER BY date;
+
+// 'SELECT ' +
+//       '"type", "senateDistrict", COUNT("crime"."type") AS "count" ' +
+//     'FROM ' +
+//       '"crimes" AS "crime" ' +
+//     'GROUP BY ' +
+//       '"type", "senateDistrict" ' +
+//     'ORDER BY ' +
+//       'type'
+
