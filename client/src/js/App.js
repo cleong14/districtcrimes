@@ -14,7 +14,7 @@ var App = React.createClass({
   getInitialState: function () {//we set it to state because its subject to change
     return {
       crimes: [],
-      types: ['theft/larceny', 'vehicle-break-in/theft', 'vandalism', 'motor-vehicle-theft', 'burglary', ],
+      types: ['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY', ],
       filter: [],
       chamber: 'senate',
       districtNumber: 23
@@ -68,6 +68,7 @@ var App = React.createClass({
     this.loadFile('hssd.geo.json', 'senate');
     this.loadFile('district-data.json', 'districtData');
     this.loadSenateCrimes();
+    this.loadHouseCrimes();
     this.loadFile('hshd.geo.json', 'house');
   },
 
@@ -85,6 +86,7 @@ var App = React.createClass({
         }
       }
       this.setState({filter: newArr});//update state
+      console.log(this.state.filter);
     }
   },
 
@@ -105,10 +107,11 @@ var App = React.createClass({
     return (
       <div>
         <Filter
-          crimes={this.state.crimes}
+          senateCrimes={this.state.crimes}
           types={this.state.types}
           onChange={this.toggleFilter}
           updateChamber={this.updateChamber}
+          filter={this.state.filter}
         />
         <Map
           chamber={this.state.chamber}
@@ -116,6 +119,7 @@ var App = React.createClass({
           senate={this.state.senate}
           districtData={this.state.districtData}
           senateCrimes={this.state.senateCrimes}
+          houseCrimes={this.state.houseCrimes}
           updateDistrictNumber={this.updateDistrictNumber}
         />
         <Summary
@@ -123,6 +127,7 @@ var App = React.createClass({
           districtData={this.state.districtData}
           districtNumber={this.state.districtNumber}
           senateCrimes={this.state.senateCrimes}
+          houseCrimes={this.state.houseCrimes}
         />
       </div>
     );
@@ -131,6 +136,6 @@ var App = React.createClass({
 
 // render the app using ReactDOM! url="http://localhost:3000/api"
 ReactDOM.render(
-  <App  />,
+  <App url="http://localhost:3000/api" />,
   mountNode
 );
