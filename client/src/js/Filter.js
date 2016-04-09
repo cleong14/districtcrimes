@@ -1,12 +1,7 @@
 var React = require('react');
 var Checkbox = require('rc-checkbox');
 
-
-
-
 // export our Filter component so that Browserify can include it with other components that require it
-
-
 
 
 const CheckBox = React.createClass({
@@ -41,63 +36,10 @@ const CheckBox = React.createClass({
   },
 });
 
-
-
-
-
-
-var SearchBar = React.createClass({
-  handleChange: function() {
-      this.props.onUserInput(
-          this.refs.filterTextInput.getDOMNode().value
-      );
-  },
-  render: function() {
-      return (
-          <form>
-              <input
-                  type="text"
-                  placeholder="Search..."
-                  value={this.props.filterText}
-                  ref="filterTextInput"
-                  onChange={this.handleChange}
-              />
-          </form>
-      );
-  }
-});
-
-
-var filterCrimeList = React.createClass({//added
-  render: function () {
-  var filterCrimeNodes = this.props.data.map(function (crime, index) {//map is making a new array, this.props.data is flowing from commentBox
-    if (crime.type === "MOTOR VEHICLE THEFT") {
-      return (
-        <Crime
-          key={index}
-          type={crime.type}
-        >
-        {crime.location}
-        </Crime>
-      )
-    }
-  });
-    return (
-      <div>
-        {filterCrimeNodes}
-      </div>
-    )
-  }
-});
-
-
-
-
-
 var CrimeList = React.createClass({//added
   render: function () {
   var crimeNodes = this.props.data.map(function (crime, index) {//map is making a new array, this.props.data is flowing from commentBox
-      
+
       return (
         <Crime
           key={index}
@@ -115,8 +57,6 @@ var CrimeList = React.createClass({//added
   }
 });
 
-
-
 var Crime = React.createClass({//type is "type"
   render: function () {
     return (
@@ -129,85 +69,6 @@ var Crime = React.createClass({//type is "type"
     )
   }
 })
-
-
-var colours = [{
-    name: "Red",
-    hex: "#F21B1B"
-}, {
-    name: "Blue",
-    hex: "#1B66F2"
-}, {
-    name: "Green",
-    hex: "#07BA16"
-}];
-
-
-//dropdown list
-var Dropdown = React.createClass({
-    getInitialState: function () {
-      return {
-        selected: this.props.selected,//default state
-        listVisible: false
-      };
-    },
-    select: function (item) {//when clicked
-      this.setState({
-        selected: item,
-        listVisible: true
-      });
-    },
-    show: function () {
-      this.setState({ listVisible: true });
-      document.addEventListener("click", this.show);
-    },
-    hide: function () {
-      this.setState({ listVisible: false });
-      document.addEventListener("click", this.hide);
-    },
-    render: function () {
-    return  <div className={"dropdown-container" + (this.state.listVisible ? " show": " ")}>
-                <div className={"dropdown-display" + (this.state.listVisible ? " clicked": "")} onClick={this.show}>
-                  <span style={{ color: this.state.selected.hex }}>{this.state.selected.name}</span>
-                  <i className="fa fa-angle-down"></i>
-                </div>
-                <div className="dropdown-list">
-                  <div>
-                    {this.renderListItems()}
-                  </div>
-                </div>
-            </div>
-    },
-    renderListItems: function () {
-      var items = [];
-      for (var i = 0; i < this.props.list.length; i++) {
-        var item = this.props.list[i];
-        items.push(<div key={i} onClick={this.select.bind(null, item)}>
-          <span style={{ color: item.hex }}>{item.name}</span>
-        </div>);
-      }
-      return items;
-    }
-});
-
-
-
-
-var HelloWorld = React.createClass({
-  render: function() {
-    return (
-      <div>
-        <h4>Crimes</h4>
-
-        <p>
-          Hello, <input type="text" placeholder="Your name here" />!
-          It is {this.props.date.toTimeString()} In your District.
-        </p>
-      </div>
-    );
-  }
-});
-
 
 //TABS
 var Tabs = React.createClass({
