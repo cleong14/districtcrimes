@@ -5,21 +5,18 @@ var Map = require('./Map');
 var Filter = require('./Filter');
 var Summary = require('./Summary');
 var Dashboard = require('./Dashboard');
-
 // where in the actual DOM to mount our App
 var mountNode = document.getElementById('app');
-
 // App component
 var App = React.createClass({
   getInitialState: function () {//we set it to state because its subject to change
     return {
       crimes: [],
-      types: ['THEFT/LARCENY', 'VEHICLE-BREAK-IN/THEFT', 'VANDALISM', 'MOTOR-VEHICLE-THEFT', 'BURGLARY', ],
+      types: ['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY', ],
       filter: [],
       chamber: 'senate',
       districtNumber: 23
     };
-
   },
   loadCrimesFromServer: function () {//added
     $.ajax({
@@ -56,11 +53,10 @@ var App = React.createClass({
     this.loadFile('hssd.geo.json', 'senate');
     this.loadFile('district-data.json', 'districtData');
     this.loadFile('hshd.geo.json', 'house');
+    this.loadCrimesFromServer();
   },
-
   componentWillReceiveProps: function() {
   },
-
   toggleFilter: function (type) {
     if (this.state.filter.indexOf(type) === -1) {
       this.setState({filter: this.state.filter.concat(type)});//concat state filter with types
@@ -74,20 +70,17 @@ var App = React.createClass({
       this.setState({filter: newArr});//update state
     }
   },
-
   updateChamber: function (val) {
     this.setState({
       chamber: val
     });
   },
-
   updateDistrictNumber: function (number) {
     this.setState({
       districtNumber: number
     });
     console.log(this.state);
   },
-
   render: function() {
     return (
       <div>
@@ -96,6 +89,7 @@ var App = React.createClass({
           types={this.state.types}
           onChange={this.toggleFilter}
           updateChamber={this.updateChamber}
+          filter={this.state.filter}
         />
         <Map
           chamber={this.state.chamber}
@@ -113,7 +107,6 @@ var App = React.createClass({
     );
   }
 });
-
 // render the app using ReactDOM! url="http://localhost:3000/api"
 ReactDOM.render(
   <App url="http://localhost:3000/api" />,

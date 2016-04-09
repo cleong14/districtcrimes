@@ -1,14 +1,6 @@
 var React = require('react');
 var Checkbox = require('rc-checkbox');
-
-
-
-
 // export our Filter component so that Browserify can include it with other components that require it
-
-
-
-
 const CheckBox = React.createClass({
   getInitialState() {
     return {
@@ -40,12 +32,6 @@ const CheckBox = React.createClass({
     </div>);
   },
 });
-
-
-
-
-
-
 var SearchBar = React.createClass({
   handleChange: function() {
       this.props.onUserInput(
@@ -66,8 +52,6 @@ var SearchBar = React.createClass({
       );
   }
 });
-
-
 var crime_type_totals = {
   theft_larceny: 0,
   vehicle_breakIn_theft: 0,
@@ -130,9 +114,6 @@ var CrimeList = React.createClass({//factor in type states
     )
   }
 });
-
-
-
 var Crime = React.createClass({//type is "type"
   render: function () {
     return (
@@ -145,8 +126,6 @@ var Crime = React.createClass({//type is "type"
     )
   }
 })
-
-
 var colours = [{
     name: "Red",
     hex: "#F21B1B"
@@ -157,8 +136,6 @@ var colours = [{
     name: "Green",
     hex: "#07BA16"
 }];
-
-
 //dropdown list
 var Dropdown = React.createClass({
     getInitialState: function () {
@@ -205,16 +182,11 @@ var Dropdown = React.createClass({
       return items;
     }
 });
-
-
-
-
 var HelloWorld = React.createClass({
   render: function() {
     return (
       <div>
         <h4>Crimes</h4>
-
         <p>
           Hello, <input type="text" placeholder="Your name here" />!
           It is {this.props.date.toTimeString()} In your District.
@@ -223,8 +195,6 @@ var HelloWorld = React.createClass({
     );
   }
 });
-
-
 //TABS
 var Tabs = React.createClass({
   getInitialState: function () {
@@ -308,7 +278,6 @@ var Tabs = React.createClass({
     );
   }
 });
-
 var Pane = React.createClass({
   displayName: 'Pane',
   propTypes: {
@@ -323,8 +292,6 @@ var Pane = React.createClass({
     );
   }
 });
-
-
 //parents have state, children have props
 //props never change and always need to be passed from parent to child
 var Filter = React.createClass({
@@ -332,7 +299,6 @@ var Filter = React.createClass({
     var value = event.target.getAttribute('value');
     this.props.updateChamber(value);
   },
-
   render: function () {
     var typeNodes = this.props.types.map((type, index) => {//by doing es6 it automatically binds this
       return (
@@ -349,22 +315,15 @@ var Filter = React.createClass({
                 <button onClick={this.update} value="house">House</button>
                 <button onClick={this.update} value="senate">Senate</button>
               </div>
-              <CrimeList data={this.props.crimes} />
-
+              <CrimeList data={this.props.crimes} filter={this.props.filter}/>
             </div>
           </Pane>
           <Pane label="Address">
             <SearchBar />
-          </Pane>
-          <Pane label="Crimes">
-            <div>This is my tab 3 contents!</div>
-
           </Pane>
         </Tabs>
       </div>
     );
   }
 });
-
-
 module.exports = Filter;
