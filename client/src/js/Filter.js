@@ -198,9 +198,6 @@ var Filter = React.createClass({
 
             </div>
           </Pane>
-          <Pane label="Address">
-            <SearchBar />
-          </Pane>
           <Pane label="Crimes">
             <div>This is my tab 3 contents!</div>
 
