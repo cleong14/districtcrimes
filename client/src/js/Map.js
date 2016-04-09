@@ -287,6 +287,7 @@ var Map = React.createClass({
   },
 
   render : function() {
+    console.log(this.props);
     return (
       <div id="mapUI">
         <div id="map"></div>

@@ -21,16 +21,28 @@ var App = React.createClass({
     };
 
   },
-  loadCrimesFromServer: function () {//added
+  loadSenateCrimes: function () {//added
     $.ajax({
-      url: this.props.url,
+      url: 'http://localhost:3000/senatecrimequery',
       method: "GET",
       dataType: "json",
-      xhrFields: {
-        withCredentials: true
-      },
       success: (data) => {
-        this.setState({crimes: data});
+        this.setState({senateCrimes: data[0]});
+        console.log(this.state);
+      },
+      failure: function (err) {
+        // console.log(err);
+      }
+    });
+  },
+  loadHouseCrimes: function () {//added
+    $.ajax({
+      url: 'http://localhost:3000/housecrimequery',
+      method: "GET",
+      dataType: "json",
+      success: (data) => {
+        this.setState({houseCrimes: data[0]});
+        console.log(this.state);
       },
       failure: function (err) {
         // console.log(err);
@@ -55,6 +67,7 @@ var App = React.createClass({
   componentDidMount: function () {//added
     this.loadFile('hssd.geo.json', 'senate');
     this.loadFile('district-data.json', 'districtData');
+    this.loadSenateCrimes();
     this.loadFile('hshd.geo.json', 'house');
   },
 
@@ -102,12 +115,14 @@ var App = React.createClass({
           house={this.state.house}
           senate={this.state.senate}
           districtData={this.state.districtData}
+          senateCrimes={this.state.senateCrimes}
           updateDistrictNumber={this.updateDistrictNumber}
         />
         <Summary
           chamber={this.state.chamber}
           districtData={this.state.districtData}
           districtNumber={this.state.districtNumber}
+          senateCrimes={this.state.senateCrimes}
         />
       </div>
     );

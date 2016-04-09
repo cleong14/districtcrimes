@@ -65,47 +65,7 @@ app.route('/barchart')
 		});
 	});
 
-app.get('/senatecrimeglobs', function (req, res) {
-  db.crime.findAll({
-    attributes: [
-      'type',
-      'senateDistrict',
-      [sequelize.fn('COUNT', sequelize.col('crime.type')), 'count']
-    ],
-    group: [
-      'type',
-      'senateDistrict'
-    ],
-    order: 'type'
-  })
-  .then(function (crimes) {
-    res.json(crimes);
-  });
-});
-
-app.get('/housecrimeglobs', function (req, res) {
-  db.crime.findAll({
-    attributes: [
-      'type',
-      'houseDistrict',
-      'date',
-      [sequelize.fn('COUNT', sequelize.col('crime.type')), 'count']
-    ],
-    group: [
-      'type',
-      'houseDistrict',
-      'date'
-    ],
-    order: 'type'
-  })
-  .then(function (crimes) {
-    res.json(crimes);
-  });
-});
-
-app.get('/testquery', function (req, res) {
-
-  var dateClump = '';
+app.get('/senatecrimequery', function (req, res) {
 
   db.crime.sequelize.query(
     'SELECT ' +
@@ -116,6 +76,25 @@ app.get('/testquery', function (req, res) {
       '"crimes" AS "crime" ' +
     'GROUP BY ' +
       '"type", "senateDistrict", "to_timestamp" ' +
+    'ORDER BY ' +
+      'type'
+  )
+  .then(function (results) {
+    res.json(results);
+  });
+});
+
+app.get('/housecrimequery', function (req, res) {
+
+  db.crime.sequelize.query(
+    'SELECT ' +
+      '"type", "houseDistrict", COUNT("crime"."type") AS "count", ' +
+      'to_timestamp(floor((extract("epoch" from date) / 604800 )) * 604800) ' +
+      // 'AT TIME ZONE "UTC" as "interval_alias" ' +
+    'FROM ' +
+      '"crimes" AS "crime" ' +
+    'GROUP BY ' +
+      '"type", "houseDistrict", "to_timestamp" ' +
     'ORDER BY ' +
       'type'
   )
