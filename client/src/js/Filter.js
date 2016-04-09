@@ -68,45 +68,61 @@ var SearchBar = React.createClass({
 });
 
 
-var filterCrimeList = React.createClass({//added
+var crime_type_totals = {
+  theft_larceny: 0,
+  vehicle_breakIn_theft: 0,
+  vandalism: 0,
+  burglary: 0,
+  motor_vehicle_theft: 0
+}
+var currentlyDisplayed = {
+  total: 0
+}
+var CrimeList = React.createClass({//factor in type states
   render: function () {
-  var filterCrimeNodes = this.props.data.map(function (crime, index) {//map is making a new array, this.props.data is flowing from commentBox
-    if (crime.type === "MOTOR VEHICLE THEFT") {
-      return (
-        <Crime
-          key={index}
-          type={crime.type}
-        >
-        {crime.location}
-        </Crime>
-      )
-    }
-  });
-    return (
-      <div>
-        {filterCrimeNodes}
-      </div>
-    )
+  crime_type_totals = {
+    theft_larceny: 0,
+    vehicle_breakIn_theft: 0,
+    vandalism: 0,
+    burglary: 0,
+    motor_vehicle_theft: 0
   }
-});
-
-
-
-
-
-var CrimeList = React.createClass({//added
-  render: function () {
-  var crimeNodes = this.props.data.map(function (crime, index) {//map is making a new array, this.props.data is flowing from commentBox
-      
+  currentlyDisplayed = {
+    total: 0
+  }
+  var crimeNodes = this.props.data.map((crime, index) => {//map is making a new array
+    if (this.props.filter.indexOf(crime.type) > -1) {//this makes things faster by running this first, only accounting for whats checked instead of loading all
+      currentlyDisplayed.total++;
+    } else {
+      return;
+    }
+    if (crime.type === 'THEFT/LARCENY') {
+    crime_type_totals.theft_larceny++; 
+    }
+    if (crime.type === 'VEHICLE BREAK-IN/THEFT') {
+    crime_type_totals.vehicle_breakIn_theft++; 
+    }
+    if (crime.type === 'BURGLARY') {
+    crime_type_totals.burglary++; 
+    }
+    if (crime.type === 'MOTOR VEHICLE THEFT') {
+    crime_type_totals.motor_vehicle_theft++; 
+    }
+    if (crime.type === 'VANDALISM') {
+    crime_type_totals.vandalism++; 
+    }
       return (
         <Crime
           key={index}
-          crimeType={crime.type}
+          
         >
-          {crime.location}
+          
         </Crime>
       )
   })
+  console.log(crime_type_totals);
+  console.log(currentlyDisplayed);
+  
     return (
       <div className="crimeList">
         {crimeNodes.reverse()}
