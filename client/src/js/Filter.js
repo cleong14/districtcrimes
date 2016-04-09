@@ -52,6 +52,9 @@ var SearchBar = React.createClass({
       );
   }
 });
+
+
+
 var crime_type_totals = {
   theft_larceny: 0,
   vehicle_breakIn_theft: 0,
@@ -59,9 +62,13 @@ var crime_type_totals = {
   burglary: 0,
   motor_vehicle_theft: 0
 }
+
+
+
 var currentlyDisplayed = {
   total: 0
 }
+
 var CrimeList = React.createClass({//factor in type states
   render: function () {
   crime_type_totals = {
@@ -106,7 +113,6 @@ var CrimeList = React.createClass({//factor in type states
   })
   console.log(crime_type_totals);
   console.log(currentlyDisplayed);
-  
     return (
       <div className="crimeList">
         {crimeNodes.reverse()}
@@ -114,6 +120,7 @@ var CrimeList = React.createClass({//factor in type states
     )
   }
 });
+
 var Crime = React.createClass({//type is "type"
   render: function () {
     return (
@@ -126,75 +133,7 @@ var Crime = React.createClass({//type is "type"
     )
   }
 })
-var colours = [{
-    name: "Red",
-    hex: "#F21B1B"
-}, {
-    name: "Blue",
-    hex: "#1B66F2"
-}, {
-    name: "Green",
-    hex: "#07BA16"
-}];
-//dropdown list
-var Dropdown = React.createClass({
-    getInitialState: function () {
-      return {
-        selected: this.props.selected,//default state
-        listVisible: false
-      };
-    },
-    select: function (item) {//when clicked
-      this.setState({
-        selected: item,
-        listVisible: true
-      });
-    },
-    show: function () {
-      this.setState({ listVisible: true });
-      document.addEventListener("click", this.show);
-    },
-    hide: function () {
-      this.setState({ listVisible: false });
-      document.addEventListener("click", this.hide);
-    },
-    render: function () {
-    return  <div className={"dropdown-container" + (this.state.listVisible ? " show": " ")}>
-                <div className={"dropdown-display" + (this.state.listVisible ? " clicked": "")} onClick={this.show}>
-                  <span style={{ color: this.state.selected.hex }}>{this.state.selected.name}</span>
-                  <i className="fa fa-angle-down"></i>
-                </div>
-                <div className="dropdown-list">
-                  <div>
-                    {this.renderListItems()}
-                  </div>
-                </div>
-            </div>
-    },
-    renderListItems: function () {
-      var items = [];
-      for (var i = 0; i < this.props.list.length; i++) {
-        var item = this.props.list[i];
-        items.push(<div key={i} onClick={this.select.bind(null, item)}>
-          <span style={{ color: item.hex }}>{item.name}</span>
-        </div>);
-      }
-      return items;
-    }
-});
-var HelloWorld = React.createClass({
-  render: function() {
-    return (
-      <div>
-        <h4>Crimes</h4>
-        <p>
-          Hello, <input type="text" placeholder="Your name here" />!
-          It is {this.props.date.toTimeString()} In your District.
-        </p>
-      </div>
-    );
-  }
-});
+
 //TABS
 var Tabs = React.createClass({
   getInitialState: function () {

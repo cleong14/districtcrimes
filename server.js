@@ -2,11 +2,10 @@ var express = require('express');
 var crime = require('./crime-dataset');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var CONFIG = require('./config');
 var methodOverride = require('method-override');
 var path = require('path');
 var db = require('./models');
-var Sequelize = require('sequelize');
+var sequelize = require('sequelize');
 
 var app = express();
 
@@ -58,13 +57,51 @@ app.get('/api', function (req, res) {
 app.route('/barchart')
 	.get(function (req, res) {
 		db.crime.findAll({attributes:['type',
-			[Sequelize.fn('COUNT',Sequelize.col('crime.type')),'count']
+			[sequelize.fn('COUNT',sequelize.col('crime.type')),'count']
 		],
 		group:['type']})
 		.then(function (crimes) {
 			res.json(crimes);
 		});
 	});
+
+app.get('/senatecrimeglobs', function (req, res) {
+  db.crime.findAll({
+    attributes: [
+      'type',
+      'senateDistrict',
+      [sequelize.fn('COUNT', sequelize.col('crime.type')), 'count']
+    ],
+    group: [
+      'type',
+      'senateDistrict'
+    ],
+    order: 'type'
+  })
+  .then(function (crimes) {
+    res.json(crimes);
+  });
+});
+
+app.get('/housecrimeglobs', function (req, res) {
+  db.crime.findAll({
+    attributes: [
+      'type',
+      'houseDistrict',
+      'date',
+      [sequelize.fn('COUNT', sequelize.col('crime.type')), 'count']
+    ],
+    group: [
+      'type',
+      'houseDistrict',
+      'date'
+    ],
+    order: 'type'
+  })
+  .then(function (crimes) {
+    res.json(crimes);
+  });
+});
 
 app.route('/politicians')
 	.get(function (req, res) {
@@ -74,8 +111,6 @@ app.route('/politicians')
 			}
 			res.json(politicians);
 		});
-
-
 	})
 	.post(function (req, res) {
 		var newPolitician = new Politician(req.body);
@@ -101,10 +136,6 @@ app.route('/politicians/:id')
   			res.json(politicians);
 			});
 	});
-
-
-
-
 
 
 app.get('/file/:name', function (req, res, next) {
@@ -136,8 +167,8 @@ db.sequelize
 var mongo = mongoose.connection;
 mongo.on('error', console.error.bind(console, 'connection error:'));
 mongo.once('open', function () {
-	var server = app.listen(CONFIG.PORT, function () {
-		console.log('Listening on port', CONFIG.PORT);
+	var server = app.listen(3000, function () {
+		console.log('Listening on port', 3000);
 	});
 
 });
