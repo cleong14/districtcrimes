@@ -32,107 +32,83 @@ const CheckBox = React.createClass({
     </div>);
   },
 });
-var SearchBar = React.createClass({
-  handleChange: function() {
-      this.props.onUserInput(
-          this.refs.filterTextInput.getDOMNode().value
-      );
-  },
-  render: function() {
-      return (
-          <form>
-              <input
-                  type="text"
-                  placeholder="Search..."
-                  value={this.props.filterText}
-                  ref="filterTextInput"
-                  onChange={this.handleChange}
-              />
-          </form>
-      );
-  }
-});
 
 
+// var crime_type_totals = {
+//   theft_larceny: 0,
+//   vehicle_breakIn_theft: 0,
+//   vandalism: 0,
+//   burglary: 0,
+//   motor_vehicle_theft: 0
+// }
+// var currentlyDisplayed = {
+//   total: 0
+// }
 
-var crime_type_totals = {
-  theft_larceny: 0,
-  vehicle_breakIn_theft: 0,
-  vandalism: 0,
-  burglary: 0,
-  motor_vehicle_theft: 0
-}
-
-
-
-var currentlyDisplayed = {
-  total: 0
-}
-
-var CrimeList = React.createClass({//factor in type states
-  render: function () {
-  crime_type_totals = {
-    theft_larceny: 0,
-    vehicle_breakIn_theft: 0,
-    vandalism: 0,
-    burglary: 0,
-    motor_vehicle_theft: 0
-  }
-  currentlyDisplayed = {
-    total: 0
-  }
-  var crimeNodes = this.props.data.map((crime, index) => {//map is making a new array
-    if (this.props.filter.indexOf(crime.type) > -1) {//this makes things faster by running this first, only accounting for whats checked instead of loading all
-      currentlyDisplayed.total++;
-    } else {
-      return;
-    }
-    if (crime.type === 'THEFT/LARCENY') {
-    crime_type_totals.theft_larceny++; 
-    }
-    if (crime.type === 'VEHICLE BREAK-IN/THEFT') {
-    crime_type_totals.vehicle_breakIn_theft++; 
-    }
-    if (crime.type === 'BURGLARY') {
-    crime_type_totals.burglary++; 
-    }
-    if (crime.type === 'MOTOR VEHICLE THEFT') {
-    crime_type_totals.motor_vehicle_theft++; 
-    }
-    if (crime.type === 'VANDALISM') {
-    crime_type_totals.vandalism++; 
-    }
-      return (
-        <Crime
-          key={index}
+// var CrimeList = React.createClass({//factor in type states
+//   render: function () {
+//   crime_type_totals = {
+//     theft_larceny: 0,
+//     vehicle_breakIn_theft: 0,
+//     vandalism: 0,
+//     burglary: 0,
+//     motor_vehicle_theft: 0
+//   }
+//   currentlyDisplayed = {
+//     total: 0
+//   }
+//   var crimeNodes = this.props.data.map((crime, index) => {//checking to see if crime.type exists
+//     if (this.props.filter.indexOf(crime.type) > -1) {//this makes things faster by running this first, only accounting for whats checked instead of loading all
+//       currentlyDisplayed.total++;
+//     } else {
+//       return;
+//     }
+//     if (crime.type === 'THEFT/LARCENY') {
+//     crime_type_totals.theft_larceny++; 
+//     }
+//     if (crime.type === 'VEHICLE BREAK-IN/THEFT') {
+//     crime_type_totals.vehicle_breakIn_theft++; 
+//     }
+//     if (crime.type === 'BURGLARY') {
+//     crime_type_totals.burglary++; 
+//     }
+//     if (crime.type === 'MOTOR VEHICLE THEFT') {
+//     crime_type_totals.motor_vehicle_theft++; 
+//     }
+//     if (crime.type === 'VANDALISM') {
+//     crime_type_totals.vandalism++; 
+//     }
+//       return (
+//         <Crime
+//           key={index}
           
-        >
+//         >
           
-        </Crime>
-      )
-  })
-  console.log(crime_type_totals);
-  console.log(currentlyDisplayed);
-    return (
-      <div className="crimeList">
-        {crimeNodes.reverse()}
-      </div>
-    )
-  }
-});
+//         </Crime>
+//       )
+//   })
+//   console.log(crime_type_totals);
+//   console.log(currentlyDisplayed);
+//     return (
+//       <div className="crimeList">
+//         {crimeNodes.reverse()}
+//       </div>
+//     )
+//   }
+// });
 
-var Crime = React.createClass({//type is "type"
-  render: function () {
-    return (
-      <div className="crime">
-        <h4 className="crimeType">
-          {this.props.crimeType}
-        </h4>
-        <p>{this.props.children}</p>
-      </div>
-    )
-  }
-})
+// var Crime = React.createClass({//type is "type"
+//   render: function () {
+//     return (
+//       <div className="crime">
+//         <h4 className="crimeType">
+//           {this.props.crimeType}
+//         </h4>
+//         <p>{this.props.children}</p>
+//       </div>
+//     )
+//   }
+// })
 
 //TABS
 var Tabs = React.createClass({
@@ -251,14 +227,13 @@ var Filter = React.createClass({
             <div>Info Tab
               {typeNodes}
               <div>
-                <button onClick={this.update} value="house">House</button>
-                <button onClick={this.update} value="senate">Senate</button>
+                <button className="button success" onClick={this.update} value="house">House</button>
+                <button className="button warning" onClick={this.update} value="senate">Senate</button>
               </div>
-              <CrimeList data={this.props.crimes} filter={this.props.filter}/>
             </div>
           </Pane>
-          <Pane label="Address">
-            <SearchBar />
+          <Pane label="Crimes">
+            <div></div>
           </Pane>
         </Tabs>
       </div>
@@ -266,3 +241,5 @@ var Filter = React.createClass({
   }
 });
 module.exports = Filter;
+
+// <CrimeList data={this.props.crimes} filter={this.props.filter}/>

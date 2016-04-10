@@ -84,20 +84,22 @@ var App = React.createClass({
   render: function() {
     return (
       <div>
-        <Filter
-          crimes={this.state.crimes}
-          types={this.state.types}
-          onChange={this.toggleFilter}
-          updateChamber={this.updateChamber}
-          filter={this.state.filter}
-        />
-        <Map
-          chamber={this.state.chamber}
-          house={this.state.house}
-          senate={this.state.senate}
-          districtData={this.state.districtData}
-          updateDistrictNumber={this.updateDistrictNumber}
-        />
+        <div className="topLevel">
+          <Filter
+            crimes={this.state.crimes}
+            types={this.state.types}
+            onChange={this.toggleFilter}
+            updateChamber={this.updateChamber}
+            filter={this.state.filter}
+          />
+          <Map
+            chamber={this.state.chamber}
+            house={this.state.house}
+            senate={this.state.senate}
+            districtData={this.state.districtData}
+            updateDistrictNumber={this.updateDistrictNumber}
+          />
+        </div>
         <Summary
           chamber={this.state.chamber}
           districtData={this.state.districtData}
