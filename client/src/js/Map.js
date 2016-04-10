@@ -291,7 +291,7 @@ var Map = React.createClass({
     return (
       <div id="mapUI">
         <div id="map"></div>
-        <button onClick={this.zoomToCenter}>Image-Hawaii Islands</button>
+        <button className="button" onClick={this.zoomToCenter}>Image-Hawaii Islands</button>
       </div>
     );
 
