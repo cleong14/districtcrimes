@@ -5,10 +5,8 @@ var Map = require('./Map');
 var Filter = require('./Filter');
 var Summary = require('./Summary');
 var Dashboard = require('./Dashboard');
-
 // where in the actual DOM to mount our App
 var mountNode = document.getElementById('app');
-
 // App component
 var App = React.createClass({
   getInitialState: function () {//we set it to state because its subject to change
@@ -19,7 +17,6 @@ var App = React.createClass({
       chamber: 'senate',
       districtNumber: 23
     };
-
   },
   loadSenateCrimes: function () {//added
     $.ajax({
@@ -42,7 +39,6 @@ var App = React.createClass({
       dataType: "json",
       success: (data) => {
         this.setState({houseCrimes: data[0]});
-        console.log(this.state);
       },
       failure: function (err) {
         // console.log(err);
@@ -71,10 +67,8 @@ var App = React.createClass({
     this.loadHouseCrimes();
     this.loadFile('hshd.geo.json', 'house');
   },
-
   componentWillReceiveProps: function() {
   },
-
   toggleFilter: function (type) {
     if (this.state.filter.indexOf(type) === -1) {
       this.setState({filter: this.state.filter.concat(type)});//concat state filter with types
@@ -89,39 +83,38 @@ var App = React.createClass({
       console.log(this.state.filter);
     }
   },
-
   updateChamber: function (val) {
     this.setState({
       chamber: val
     });
   },
-
   updateDistrictNumber: function (number) {
     this.setState({
       districtNumber: number
     });
     console.log(this.state);
   },
-
   render: function() {
     return (
       <div>
-        <Filter
-          senateCrimes={this.state.crimes}
-          types={this.state.types}
-          onChange={this.toggleFilter}
-          updateChamber={this.updateChamber}
-          filter={this.state.filter}
-        />
-        <Map
-          chamber={this.state.chamber}
-          house={this.state.house}
-          senate={this.state.senate}
-          districtData={this.state.districtData}
-          senateCrimes={this.state.senateCrimes}
-          houseCrimes={this.state.houseCrimes}
-          updateDistrictNumber={this.updateDistrictNumber}
-        />
+        <div className="topLevel">
+          <Filter
+            crimes={this.state.crimes}
+            types={this.state.types}
+            onChange={this.toggleFilter}
+            updateChamber={this.updateChamber}
+            filter={this.state.filter}
+          />
+          <Map
+            chamber={this.state.chamber}
+            house={this.state.house}
+            senate={this.state.senate}
+            districtData={this.state.districtData}
+            updateDistrictNumber={this.updateDistrictNumber}
+            senateCrimes={this.state.senateCrimes}
+            houseCrimes={this.state.houseCrimes}
+          />
+        </div>
         <Summary
           chamber={this.state.chamber}
           districtData={this.state.districtData}
@@ -133,7 +126,6 @@ var App = React.createClass({
     );
   }
 });
-
 // render the app using ReactDOM! url="http://localhost:3000/api"
 ReactDOM.render(
   <App url="http://localhost:3000/api" />,

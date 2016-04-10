@@ -10,7 +10,8 @@ html, body {
   height: 100%;
   width: 100%;
   font: 300 14px/1.4 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background: #eee;
+  /*background-image: url("../../assets/gplay.png");*/
+  background-color: #0f7d9e;
 }
 
 #app, #mapUI {
@@ -46,7 +47,7 @@ html, body {
   background: rgba(255,255,255,0.8);
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
   border-radius: 5px;
-  width: 90px;
+  width: 120px;
   line-height: 18px;
   color: #555;
 }
@@ -59,12 +60,12 @@ html, body {
   opacity: 0.7;
 }
 
-.button {
+/*.button {
   width: 40px;
   height: 40px;
   border-radius: 4px;
   background: rgba(255,255,255,0.8);
-}
+}*/
 
 /***********************/
 
@@ -82,7 +83,7 @@ html, body {
 
 #filter {
   width: 40%;
-  height: 400px;
+  height: 30%;
   float: left;
 }
 
@@ -111,6 +112,7 @@ html, body {
 }
 .tabs__content {
   padding: 25px;
+  height: 30%;
 }
 
 .dropdown-list {
@@ -119,4 +121,16 @@ html, body {
 
 .dropdown-container.show .dropdown-list {
   display: block;
+}
+
+.button {
+  background-color: #168fe0;
+}
+
+.button.success {
+  background-color: #168fe0;
+}
+
+.button.warning {
+  background-color: #a81018;
 }
