@@ -61,7 +61,7 @@ var Map = React.createClass({
   getInitialState: function() {
     // TODO: if we wanted an initial "state" for our map component we could add it here
     return {
-
+      allCrimes: []
     };
   },
 
@@ -79,6 +79,7 @@ var Map = React.createClass({
 
   // After App loads jsons, they are passed to Map as props; then we can run functions based upon those loaded props
   componentWillReceiveProps: function(newProps) {
+    this.totalCrimesPerDistrict(newProps.chamber);
     this.addGeoJSON(newProps.chamber);
     this.addInfoToMap();
     this.addLegendToMap(newProps.chamber);
@@ -124,13 +125,91 @@ var Map = React.createClass({
 
   // style object for Leaflet map
   style: function (chamber, feature) {
+    if (!this.state.allCrimes["district"+feature.properties.objectid]) {
+      return {
+        "fillColor": "#707070",
+        "color": "#ffffff",
+        "opacity": 1,
+        "weight": 1,
+        "fillOpacity": 0.7
+      };
+    }
+    var district = this.state.allCrimes["district"+feature.properties.objectid].total;
     return {
-      fillColor: this.getColor(chamber, feature.properties.objectid),
+      "fillColor": this.getColor(chamber, district),
       "color": "#ffffff",
       "opacity": 1,
       "weight": 1,
       "fillOpacity": 0.7
     };
+  },
+
+  getColor: function (chamber, d) {
+    return  d > 2000  ? config.colors[chamber].level6 :
+            d > 1000  ? config.colors[chamber].level5 :
+            d > 500  ? config.colors[chamber].level4 :
+            d > 250  ? config.colors[chamber].level3 :
+            d > 100   ? config.colors[chamber].level2 :
+            d > 1   ?     config.colors[chamber].level1 :
+                      '#707070';
+  },
+
+  totalCrimesPerDistrict: function (chamber) {
+    if (this.props.senateCrimes) {
+
+      var allCrimes;
+      switch (chamber) {
+        case 'house':
+          allCrimes = this.props.houseCrimes;
+          break;
+        case 'senate':
+          allCrimes = this.props.senateCrimes;
+          break;
+      }
+
+      var initialValue = {};
+
+      var reducer = function(newObj, crimeGlob) {
+        // total crimes
+        if (!newObj["district"+crimeGlob.district]) {
+          newObj["district"+crimeGlob.district] = {
+            total: parseInt(crimeGlob.count)
+          };
+          // newObj["district"+crimeGlob.district][crimeGlob.type] = parseInt(crimeGlob.count);
+        } else {
+          newObj["district"+crimeGlob.district].total += parseInt(crimeGlob.count);
+          // if (!newObj["district"+crimeGlob.district][crimeGlob.type]) {
+          //   newObj["district"+crimeGlob.district][crimeGlob.type] = parseInt(crimeGlob.count);
+          // } else {
+          //   newObj["district"+crimeGlob.district][crimeGlob.type] += parseInt(crimeGlob.count);
+          // }
+        }
+        return newObj;
+      };
+
+      var result = allCrimes.reduce(reducer, initialValue);
+
+      // for (var i=1; i < 53; i++) {
+      //   if(!result["district"+i]) {
+      //     result["district"+i] = {
+      //       "total": 0,
+      //       "BURGLARY": 0,
+      //       "MOTOR VEHICLE THEFT": 0,
+      //       "THEFT/LARCENY": 0,
+      //       "VANDALISM": 0,
+      //       "VEHICLE BREAK-IN/THEFT": 0
+      //     };
+      //   }
+      // }
+
+      this.setState({
+        allCrimes: result
+      }, () => {
+        this.addGeoJSON(this.props.chamber);
+      });
+
+      console.log(this.state.allCrimes);
+    }
   },
 
   // Leaflet Control object - District Information
@@ -174,7 +253,7 @@ var Map = React.createClass({
     var legend = L.control({position: 'bottomright'});
     legend.onAdd = function (map) {
       var div = L.DomUtil.create('div', 'legend'),
-        grades = [0, 7, 14, 21, 28, 35],
+        grades = [0, 1, 100, 250, 500, 1000, 2000],
         labels = [];
       // loop through our density intervals and generate a label with a colored square for each interval
       for (var i = 0; i < grades.length; i++) {
@@ -188,15 +267,6 @@ var Map = React.createClass({
     this.setState({
       legend: legend
     });
-  },
-
-  getColor: function (chamber, d) {
-    return  d > 35  ? config.colors[chamber].level6 :
-            d > 28  ? config.colors[chamber].level5 :
-            d > 21  ? config.colors[chamber].level4 :
-            d > 14  ? config.colors[chamber].level3 :
-            d > 7   ? config.colors[chamber].level2 :
-                      config.colors[chamber].level1;
   },
 
   getNeighborhoods: function (districtNumber) {
@@ -287,11 +357,10 @@ var Map = React.createClass({
   },
 
   render : function() {
-    console.log(this.props);
     return (
       <div id="mapUI">
         <div id="map"></div>
-        <button className="button" onClick={this.zoomToCenter}>Image-Hawaii Islands</button>
+        <button className="button" onClick={this.zoomToCenter}>Zoom Out</button>
       </div>
     );
 
