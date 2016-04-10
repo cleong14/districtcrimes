@@ -122,6 +122,9 @@ var App = React.createClass({
           senateCrimes={this.state.senateCrimes}
           houseCrimes={this.state.houseCrimes}
         />
+        <Dashboard 
+          filter={this.state.filter}
+        />
       </div>
     );
   }
