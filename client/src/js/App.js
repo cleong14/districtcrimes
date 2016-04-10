@@ -39,7 +39,6 @@ var App = React.createClass({
       dataType: "json",
       success: (data) => {
         this.setState({houseCrimes: data[0]});
-        console.log(this.state);
       },
       failure: function (err) {
         // console.log(err);
@@ -112,6 +111,8 @@ var App = React.createClass({
             senate={this.state.senate}
             districtData={this.state.districtData}
             updateDistrictNumber={this.updateDistrictNumber}
+            senateCrimes={this.state.senateCrimes}
+            houseCrimes={this.state.houseCrimes}
           />
         </div>
         <Summary
