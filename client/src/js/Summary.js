@@ -1,40 +1,43 @@
 var React = require('react');
+var d3 = require('d3');
 var ReactD3 = require('react-d3-components');
 var LineChart = ReactD3.LineChart;
 var Brush = ReactD3.Brush;
 
-var data = [
-  {
-  label: 'somethingA',
-  values: [{x: 0, y: 2}, {x: 1.3, y: 5}, {x: 3, y: 6}, {x: 3.5, y: 6.5}, {x: 4, y: 6}]
-  },
-  {
-  label: 'somethingB',
-  values: [{x: 0, y: 3}, {x: 1.3, y: 4}, {x: 3, y: 7}, {x: 3.5, y: 8}, {x: 4, y: 7}]
-  },
-  {
-  label: 'somethingC',
-  values: [{x: 0, y: 4}, {x: 1.3, y: 3}, {x: 3, y: 7}, {x: 3.5, y: 2}, {x: 4, y: 9}]
-  },
-  {
-  label: 'somethingD',
-  values: [{x: 0, y: 0}, {x: 1.3, y: 2}, {x: 3, y: 4}, {x: 3.5, y: 6}, {x: 4, y: 10}]
-  },
-  {
-  label: 'somethingE',
-  values: [{x: 0, y: 1}, {x: 1.3, y: 2}, {x: 3, y: 6}, {x: 3.5, y: 3}, {x: 4, y: 3}]
-  }
-];
 
 var Summary = React.createClass({
   //this is the Summary module to be exported. Put all code in here.
 
   getInitialState: function() {
+    var lines = [
+      {
+      label: 'THEFT/LARCENY',
+      values: [{x: new Date(2015, 8, 24), y: 0}]
+      },
+      {
+      label: 'VEHICLE BREAK-IN/THEFT',
+      values: [{x: new Date(2015, 8, 24), y: 0}]
+      },
+      {
+      label: 'VANDALISM',
+      values: [{x: new Date(2015, 8, 24), y: 0}]
+      },
+      {
+      label: 'MOTOR VEHICLE THEFT',
+      values: [{x: new Date(2015, 8, 24), y: 0}]
+      },
+      {
+      label: 'BURGLARY',
+      values: [{x: new Date(2015, 8, 24), y: 0}]
+      }
+    ];
+    // TODO:
+    // calculate min and max domain from props data
+
+    var xScale = d3.time.scale().domain([new Date(2015, 8, 24), new Date(2016, 2, 29)]).range([0, 400 - 70]);
+    // xScaleBrush: d3.time.scale().domain([new Date(2015, 2, 5), new Date(2015, 2, 26)]).range([0, 400 - 70]);
     // TODO: if we wanted an initial "state" for our map component we could add it here
-    console.log(LineChart);
-    return {
-      
-    };
+    return {lines: lines, xScale: xScale};
   },
 
   componentWillMount: function() {
@@ -44,9 +47,11 @@ var Summary = React.createClass({
   },
 
   componentDidMount: function() {
+    
   },
 
   componentWillReceiveProps: function(newProps) {
+    this.totalCrimesPerWeek(newProps.chamber);
   },
 
   componentWillUnmount: function() {
@@ -63,8 +68,87 @@ var Summary = React.createClass({
     }
   },
 
+  totalCrimesPerWeek: function (chamber) {
+  if (this.props.senateCrimes) {
+
+    var allCrimes;
+    switch (chamber) {
+      case 'house':
+        allCrimes = this.props.houseCrimes;
+        break;
+      case 'senate':
+        allCrimes = this.props.senateCrimes;
+        break;
+    }
+
+    var initialValue = {};
+
+    var reducer = function(newObj, crimeGlob) {
+      // total crimes
+      if (!newObj[crimeGlob.to_timestamp]) {
+        newObj[crimeGlob.to_timestamp] = {
+          total: parseInt(crimeGlob.count)
+        };
+        newObj[crimeGlob.to_timestamp][crimeGlob.type] = parseInt(crimeGlob.count);
+      } else {
+        newObj[crimeGlob.to_timestamp].total += parseInt(crimeGlob.count);
+        if (!newObj[crimeGlob.to_timestamp][crimeGlob.type]) {
+          newObj[crimeGlob.to_timestamp][crimeGlob.type] = parseInt(crimeGlob.count);
+        } else {
+          newObj[crimeGlob.to_timestamp][crimeGlob.type] += parseInt(crimeGlob.count);
+        }
+      }
+      return newObj;
+    };
+
+    var result = allCrimes.reduce(reducer, initialValue);
+
+    // for (var i=1; i < 50; i++) {
+    //   if(!result["district"+i]) {
+    //     result["district"+i] = {
+    //       "total": 0,
+    //       "BURGLARY": 0,
+    //       "MOTOR VEHICLE THEFT": 0,
+    //       "THEFT/LARCENY": 0,
+    //       "VANDALISM": 0,
+    //       "VEHICLE BREAK-IN/THEFT": 0
+    //     };
+    //   }
+    // }
+
+    this.setState({
+      allCrimes: result
+    });
+
+    console.log(this.state.allCrimes);
+  }
+},
+
   render: function() {
-    console.log(this.props);
+    var theftLarcenyObj = {};
+    var vehicleBreakInTheftObj = {};
+    var vandalismObj = {};
+    var motorVehicleTheftObj = {};
+    var burglaryObj = {};
+
+    if (this.props.senateCrimes) {
+      for (var i = 0; i < this.props.senateCrimes.length; i++) {
+        var currentCrime = this.props.senateCrimes[i];
+        // console.log(currentCrime);
+        var year = currentCrime.to_timestamp[0] + currentCrime.to_timestamp[1] + currentCrime.to_timestamp[2] + currentCrime.to_timestamp[3];
+        var month = currentCrime.to_timestamp[5] + currentCrime.to_timestamp[6];
+        var day = currentCrime.to_timestamp[8] + currentCrime.to_timestamp[9];
+        var newDate = year + ', ' + (month - 1) + ', ' + day;
+        // console.log(newDate);
+        // for line chart: {x: new Date(newDate), y: this.state.allCrimes.}
+        for (var prop in this.state.allCrimes) {
+          // console.log(this.state.allCrimes[prop].BURGLARY);
+        }
+      }
+      console.log(this.state.lines);
+      console.log(this.state.allCrimes);
+    }
+
     // return our JSX that is rendered to the DOM
     if (this.props.districtData) {
       var districtInfo = this.getDistrictInfo(this.props.districtNumber);
@@ -78,10 +162,12 @@ var Summary = React.createClass({
           </div>
 
           <LineChart
-            data={data}
-            width={400}
+            data={this.state.lines}
+            width={800}
             height={400}
             margin={{top: 10, bottom: 50, left: 50, right: 10}}
+            xScale={this.state.xScale}
+            xAxis={{tickValues: this.state.xScale.ticks(d3.time.day, 7), tickFormat: d3.time.format("%m/%d")}}
           />
         </div>
       );
