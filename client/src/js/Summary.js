@@ -37,7 +37,6 @@ var Summary = React.createClass({
   },
 
   render: function() {
-    console.log(this.props);
     // return our JSX that is rendered to the DOM
     if (this.props.districtData) {
       var districtInfo = this.getDistrictInfo(this.props.districtNumber);
