@@ -6,8 +6,12 @@ var methodOverride = require('method-override');
 var path = require('path');
 var db = require('./models');
 var sequelize = require('sequelize');
+var webpack = require('webpack');
+var config = require('./webpack.config');
+
 
 var app = express();
+var compiler = webpack(config);
 
 mongoose.connect('mongodb://localhost/mongoose-demo');
 
@@ -52,7 +56,6 @@ app.get('/api', function (req, res) {
       res.json(crimes);
     });
 });
-
 
 app.route('/barchart')
 	.get(function (req, res) {
@@ -137,7 +140,6 @@ app.route('/politicians/:id')
 			});
 	});
 
-
 app.get('/file/:name', function (req, res, next) {
 
   var options = {
@@ -159,6 +161,21 @@ app.get('/file/:name', function (req, res, next) {
       console.log('Sent:', fileName);
     }
   });
+});
+
+app.use(require('webpack-dev-middleware')(compiler, {
+  noInfo: true,
+  publicPath: config.output.publicPath
+}));
+
+app.use(require('webpack-hot-middleware')(compiler));
+
+app.get('/piechart', function(req, res) {
+  res.sendFile(path.join(__dirname, './piechart/index.html'));
+});
+
+app.get('/piechart/*', function(req, res) {
+  res.sendFile(path.join(__dirname, './piechart/index.html'));
 });
 
 db.sequelize
