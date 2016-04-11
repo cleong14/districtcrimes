@@ -136,17 +136,17 @@ var DonutChart=React.createClass({
             .range(['#68c8d7','#eccd63','#bb8cdd','#de6942','#52b36e','#bbc7d9']);
  
         var data = [
-            { name: 'THEFT/LARCENY', count: 40 },
-            { name: 'BURGLARY', count: 32 },
-            { name: 'MOTOR-VEHICLE-THEFT', count: 14 },
-            { name: 'VANDALISM', count: 9 },
-            { name: 'VEHICLE-BREAK-IN', count: 6 }
+            { name: 'THEFT/LARCENY', count: 8849 },
+            { name: 'BURGLARY', count: 2054 },
+            { name: 'MOTOR-VEHICLE-THEFT', count: 1891 },
+            { name: 'VANDALISM', count: 242 },
+            { name: 'VEHICLE-BREAK-IN', count: 5128 }
         ];
  
         this.setState({'data':data,width:this.props.width});
     },
  
-    updateData:function(){//state changes go here?
+    updateData:function(){//state changes go here? when the state changes the chart should too
         var data = [
             { name: 'THEFT/LARCENY', count: 10 },
             { name: 'BURGLARY', count: 32 },
@@ -178,19 +178,61 @@ var DonutChart=React.createClass({
 });
 
 
+var crime_type_totals = {
+  theft_larceny: 0,
+  vehicle_breakIn_theft: 0,
+  vandalism: 0,
+  burglary: 0,
+  motor_vehicle_theft: 0
+}
+var currentlyDisplayed = {
+  total: 0
+}
 
 var Dashboard = React.createClass({
-    render:function(){
-        console.log(this.props.filter);
-        return (
-            <div>
-                <h3>Total Crimes</h3>
-                <div className="pad bottom-left-svg">
-                    <DonutChart id="bs_chart" padAngle={0.03}/>
-                </div>
-            </div>
-        )
+  render:function(){
+    crime_type_totals = {
+      theft_larceny: 0,
+      vehicle_breakIn_theft: 0,
+      vandalism: 0,
+      burglary: 0,
+      motor_vehicle_theft: 0
     }
+    currentlyDisplayed = {
+      total: 0
+    }
+    var crimeNodes = this.props.allCrimeData.map((crime, index) => {//map is making a new array
+      if (this.props.filter.indexOf(crime.type) > -1) {//this makes things faster by running this first, only accounting for whats checked instead of loading all
+        currentlyDisplayed.total++;
+      } else {
+        return;
+      }
+      if (crime.type === 'THEFT/LARCENY') {
+      crime_type_totals.theft_larceny++; 
+      }
+      if (crime.type === 'VEHICLE BREAK-IN/THEFT') {
+      crime_type_totals.vehicle_breakIn_theft++; 
+      }
+      if (crime.type === 'BURGLARY') {
+      crime_type_totals.burglary++; 
+      }
+      if (crime.type === 'MOTOR VEHICLE THEFT') {
+      crime_type_totals.motor_vehicle_theft++; 
+      }
+      if (crime.type === 'VANDALISM') {
+      crime_type_totals.vandalism++; 
+      }
+    })
+    console.log(crime_type_totals);
+    return (
+      <div>
+          <h3>Total Crimes</h3>
+          <div className="pad bottom-left-svg">
+              <DonutChart id="bs_chart" padAngle={0.03}/>
+          </div>
+      </div>
+    )
+  }
 });
  
 

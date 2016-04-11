@@ -15,8 +15,22 @@ var App = React.createClass({
       types: ['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY', ],
       filter: [],
       chamber: 'senate',
-      districtNumber: 23
+      districtNumber: 23,
+      allCrimeData: []
     };
+  },
+  loadCrimesFromServer: function () {//added
+    $.ajax({
+      url: 'http://localhost:3000/api',
+      method: "GET",
+      dataType: "json",
+      success: (data) => {
+        this.setState({allCrimeData: data});
+      },
+      failure: function (err) {
+        // console.log(err);
+      }
+    });
   },
   loadSenateCrimes: function () {//added
     $.ajax({
@@ -66,6 +80,7 @@ var App = React.createClass({
     this.loadSenateCrimes();
     this.loadHouseCrimes();
     this.loadFile('hshd.geo.json', 'house');
+    this.loadCrimesFromServer();
   },
   componentWillReceiveProps: function() {
   },
@@ -124,6 +139,7 @@ var App = React.createClass({
         />
         <Dashboard 
           filter={this.state.filter}
+          allCrimeData={this.state.allCrimeData}
         />
       </div>
     );
