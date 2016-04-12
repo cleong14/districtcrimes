@@ -69,72 +69,72 @@ var Summary = React.createClass({
   },
 
   totalCrimesPerWeek: function (chamber) {
-  if (this.props.senateCrimes) {
+    if (this.props.senateCrimes) {
 
-    var allCrimes;
-    switch (chamber) {
-      case 'house':
-        allCrimes = this.props.houseCrimes;
-        break;
-      case 'senate':
-        allCrimes = this.props.senateCrimes;
-        break;
-    }
+      var allCrimes;
+      switch (chamber) {
+        case 'house':
+          allCrimes = this.props.houseCrimes;
+          break;
+        case 'senate':
+          allCrimes = this.props.senateCrimes;
+          break;
+      }
 
-    var initialValue = {};
+      var initialValue = {};
 
-    var reducer = function(newObj, crimeGlob) {
-      // total crimes
-      if (!newObj[crimeGlob.to_timestamp]) {
-        newObj[crimeGlob.to_timestamp] = {
-          total: parseInt(crimeGlob.count)
-        };
-        newObj[crimeGlob.to_timestamp][crimeGlob.type] = parseInt(crimeGlob.count);
-      } else {
-        newObj[crimeGlob.to_timestamp].total += parseInt(crimeGlob.count);
-        if (!newObj[crimeGlob.to_timestamp][crimeGlob.type]) {
+      var reducer = function(newObj, crimeGlob) {
+        // total crimes
+        if (!newObj[crimeGlob.to_timestamp]) {
+          newObj[crimeGlob.to_timestamp] = {
+            total: parseInt(crimeGlob.count)
+          };
           newObj[crimeGlob.to_timestamp][crimeGlob.type] = parseInt(crimeGlob.count);
         } else {
-          newObj[crimeGlob.to_timestamp][crimeGlob.type] += parseInt(crimeGlob.count);
+          newObj[crimeGlob.to_timestamp].total += parseInt(crimeGlob.count);
+          if (!newObj[crimeGlob.to_timestamp][crimeGlob.type]) {
+            newObj[crimeGlob.to_timestamp][crimeGlob.type] = parseInt(crimeGlob.count);
+          } else {
+            newObj[crimeGlob.to_timestamp][crimeGlob.type] += parseInt(crimeGlob.count);
+          }
         }
-      }
-      return newObj;
-    };
+        return newObj;
+      };
 
-    var result = allCrimes.reduce(reducer, initialValue);
+      var result = allCrimes.reduce(reducer, initialValue);
 
-    // for (var i=1; i < 50; i++) {
-    //   if(!result["district"+i]) {
-    //     result["district"+i] = {
-    //       "total": 0,
-    //       "BURGLARY": 0,
-    //       "MOTOR VEHICLE THEFT": 0,
-    //       "THEFT/LARCENY": 0,
-    //       "VANDALISM": 0,
-    //       "VEHICLE BREAK-IN/THEFT": 0
-    //     };
-    //   }
-    // }
+      // for (var i=1; i < 50; i++) {
+      //   if(!result["district"+i]) {
+      //     result["district"+i] = {
+      //       "total": 0,
+      //       "BURGLARY": 0,
+      //       "MOTOR VEHICLE THEFT": 0,
+      //       "THEFT/LARCENY": 0,
+      //       "VANDALISM": 0,
+      //       "VEHICLE BREAK-IN/THEFT": 0
+      //     };
+      //   }
+      // }
 
-    this.setState({
-      allCrimes: result
-    });
+      this.setState({
+        allCrimes: result
+      });
 
-    console.log(this.state.allCrimes);
-  }
-},
+      console.log(this.state.allCrimes);
+    }
+  },
 
-  render: function() {
+  drawLines: function () {
     var theftLarcenyObj = {};
     var vehicleBreakInTheftObj = {};
     var vandalismObj = {};
     var motorVehicleTheftObj = {};
-    var burglaryObj = {};
-
+    var burglaryObj;
+    
     if (this.props.senateCrimes) {
       for (var i = 0; i < this.props.senateCrimes.length; i++) {
         var currentCrime = this.props.senateCrimes[i];
-        // console.log(currentCrime.to_timestamp);
+        // console.log(currentCrime.to_timestamp.length);
         var year = currentCrime.to_timestamp[0] + currentCrime.to_timestamp[1] + currentCrime.to_timestamp[2] + currentCrime.to_timestamp[3];
         var month = currentCrime.to_timestamp[5] + currentCrime.to_timestamp[6];
         var day = currentCrime.to_timestamp[8] + currentCrime.to_timestamp[9];
@@ -145,7 +145,7 @@ var Summary = React.createClass({
           // console.log(this.state.allCrimes[obj].BURGLARY);
           // console.log(Object.keys(this.state.allCrimes[obj]));
           for (var k = 0; k < this.state.lines.length; k++) {
-            this.state.lines[4].values.push({x: new Date(newDate), y: this.state.allCrimes[obj].BURGLARY});
+            // this.state.lines[4].values.push({x: new Date(newDate), y: this.state.allCrimes[obj].BURGLARY});
             // console.log(this.state.lines[k].values);
           }
         }
@@ -155,6 +155,12 @@ var Summary = React.createClass({
       // console.log(this.state.allCrimes);
       // console.log(Object.keys(this.state.allCrimes));
     }
+    this.setState({
+      lines: data
+    });
+  },
+
+  render: function() {
 
     // return our JSX that is rendered to the DOM
     if (this.props.districtData) {

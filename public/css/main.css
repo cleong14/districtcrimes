@@ -123,7 +123,6 @@ html, body {
   display: block;
 }
 
-<<<<<<< HEAD
 /*.brush .extent {
   stroke: #000;
   fill-opacity: .125;
@@ -133,7 +132,7 @@ html, body {
 .brush .background {
   fill: #ddd;
 }*/
-=======
+
 .button {
   background-color: #168fe0;
 }
@@ -145,4 +144,3 @@ html, body {
 .button.warning {
   background-color: #a81018;
 }
->>>>>>> development
