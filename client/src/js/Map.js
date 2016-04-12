@@ -208,7 +208,7 @@ var Map = React.createClass({
         this.addGeoJSON(this.props.chamber);
       });
 
-      console.log(this.state.allCrimes);
+      // console.log(this.state.allCrimes);
     }
   },
 

@@ -13,9 +13,10 @@ var App = React.createClass({
     return {
       crimes: [],
       types: ['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY', ],
-      filter: [],
+      filter: ['BURGLARY', 'VANDALISM'],
       chamber: 'senate',
-      districtNumber: 23
+      districtNumber: 23,
+      // senateCrimes: []
     };
   },
   loadSenateCrimes: function () {//added
@@ -25,7 +26,6 @@ var App = React.createClass({
       dataType: "json",
       success: (data) => {
         this.setState({senateCrimes: data[0]});
-        console.log(this.state);
       },
       failure: function (err) {
         // console.log(err);
@@ -54,6 +54,7 @@ var App = React.createClass({
       success: (data) => {
         newState[label] = data;
         this.setState(newState);//setting state of app to have crimes as data
+
       },
       failure: function (err) {
         // console.log(err);
@@ -67,8 +68,31 @@ var App = React.createClass({
     this.loadHouseCrimes();
     this.loadFile('hshd.geo.json', 'house');
   },
+
   componentWillReceiveProps: function() {
+
   },
+
+  // shouldComponentUpdate: function () {
+  //   if (this.state.senateCrimes) {
+  //     this.filterCrimes(this.state.senateCrimes, "filteredSenateCrimes");
+  //   }
+  //   return true;
+  // },
+
+  filterCrimes: function (crimeData, label) {
+    var newState = {};
+    var _this = this;
+    var filteredCrimes = crimeData
+      .filter(function (crime) {
+        var types = _this.state.filter;
+        return types.indexOf(crime.type) > -1;
+      });
+    // console.log(filteredCrimes);
+    newState[label] = filteredCrimes;
+    this.setState(newState);
+  },
+
   toggleFilter: function (type) {
     if (this.state.filter.indexOf(type) === -1) {
       this.setState({filter: this.state.filter.concat(type)});//concat state filter with types
