@@ -69,13 +69,12 @@ app.get('/senatecrimequery', function (req, res) {
 
   db.crime.sequelize.query(
     'SELECT ' +
-      '"type", "senateDistrict", COUNT("crime"."type") AS "count", ' +
+      '"type", "senateDistrict" AS "district", COUNT("crime"."type") AS "count", ' +
       'to_timestamp(floor((extract("epoch" from date) / 604800 )) * 604800) ' +
-      // 'AT TIME ZONE "UTC" as "interval_alias" ' +
     'FROM ' +
       '"crimes" AS "crime" ' +
     'GROUP BY ' +
-      '"type", "senateDistrict", "to_timestamp" ' +
+      '"type", "district", "to_timestamp" ' +
     'ORDER BY ' +
       'type'
   )
@@ -107,13 +106,12 @@ app.get('/housecrimequery', function (req, res) {
 
   db.crime.sequelize.query(
     'SELECT ' +
-      '"type", "houseDistrict", COUNT("crime"."type") AS "count", ' +
+      '"type", "houseDistrict" AS "district", COUNT("crime"."type") AS "count", ' +
       'to_timestamp(floor((extract("epoch" from date) / 604800 )) * 604800) ' +
-      // 'AT TIME ZONE "UTC" as "interval_alias" ' +
     'FROM ' +
       '"crimes" AS "crime" ' +
     'GROUP BY ' +
-      '"type", "houseDistrict", "to_timestamp" ' +
+      '"type", "district", "to_timestamp" ' +
     'ORDER BY ' +
       'type'
   )
