@@ -134,19 +134,26 @@ var Summary = React.createClass({
     if (this.props.senateCrimes) {
       for (var i = 0; i < this.props.senateCrimes.length; i++) {
         var currentCrime = this.props.senateCrimes[i];
-        // console.log(currentCrime);
+        // console.log(currentCrime.to_timestamp);
         var year = currentCrime.to_timestamp[0] + currentCrime.to_timestamp[1] + currentCrime.to_timestamp[2] + currentCrime.to_timestamp[3];
         var month = currentCrime.to_timestamp[5] + currentCrime.to_timestamp[6];
         var day = currentCrime.to_timestamp[8] + currentCrime.to_timestamp[9];
         var newDate = year + ', ' + (month - 1) + ', ' + day;
         // console.log(newDate);
         // for line chart: {x: new Date(newDate), y: this.state.allCrimes.}
-        for (var prop in this.state.allCrimes) {
-          // console.log(this.state.allCrimes[prop].BURGLARY);
+        for (var obj in this.state.allCrimes) {
+          // console.log(this.state.allCrimes[obj].BURGLARY);
+          // console.log(Object.keys(this.state.allCrimes[obj]));
+          for (var k = 0; k < this.state.lines.length; k++) {
+            this.state.lines[4].values.push({x: new Date(newDate), y: this.state.allCrimes[obj].BURGLARY});
+            // console.log(this.state.lines[k].values);
+          }
         }
       }
+      // console.log(Object.keys(this.state.allCrimes));
       console.log(this.state.lines);
-      console.log(this.state.allCrimes);
+      // console.log(this.state.allCrimes);
+      // console.log(Object.keys(this.state.allCrimes));
     }
 
     // return our JSX that is rendered to the DOM
