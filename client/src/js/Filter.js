@@ -4,6 +4,7 @@ var Checkbox = require('rc-checkbox');
 // export our Filter component so that Browserify can include it with other components that require it
 
 const CheckBox = React.createClass({
+
   getInitialState() {
     return {
       disabled: false,
@@ -15,6 +16,7 @@ const CheckBox = React.createClass({
     });
   },
   handleChange(event) {
+    console.log(this.props.type);
     this.props.onChange(this.props.type);//passing in type from the parent
   },
   render() {
@@ -146,7 +148,11 @@ var Filter = React.createClass({
   render: function () {
     var typeNodes = this.props.types.map((type, index) => {//by doing es6 it automatically binds this
       return (
-        <CheckBox type={type} key={index} onChange={this.props.onChange} />
+        <CheckBox
+          type={type}
+          key={index}
+          onChange={this.props.onChange}
+        />
       )
     })
     return (

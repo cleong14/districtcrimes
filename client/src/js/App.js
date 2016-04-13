@@ -16,7 +16,9 @@ var App = React.createClass({
       filter: ['BURGLARY', 'VANDALISM'],
       chamber: 'senate',
       districtNumber: 23,
-      // senateCrimes: []
+      senateCrimes: [],
+      houseCrimes: [],
+      filteredSenateCrimes: []
     };
   },
   loadSenateCrimes: function () {//added
@@ -70,27 +72,27 @@ var App = React.createClass({
   },
 
   componentWillReceiveProps: function() {
-
+    // this.filterCrimes(this.state.senateCrimes);
   },
 
-  // shouldComponentUpdate: function () {
-  //   if (this.state.senateCrimes) {
-  //     this.filterCrimes(this.state.senateCrimes, "filteredSenateCrimes");
-  //   }
-  //   return true;
-  // },
+  componentWillUpdate: function () {
+    // this.filterCrimes(this.state.senateCrimes);
+  },
 
-  filterCrimes: function (crimeData, label) {
-    var newState = {};
+  componentDidUpdate: function () {
+    this.filterCrimes(this.state.senateCrimes);
+  },
+
+  filterCrimes: function (crimeData) {
     var _this = this;
     var filteredCrimes = crimeData
       .filter(function (crime) {
         var types = _this.state.filter;
         return types.indexOf(crime.type) > -1;
       });
-    // console.log(filteredCrimes);
-    newState[label] = filteredCrimes;
-    this.setState(newState);
+    console.log(filteredCrimes);
+    // newState[label] = filteredCrimes;
+    this.replaceState({filteredSenateCrimes: filteredCrimes});
   },
 
   toggleFilter: function (type) {
@@ -104,7 +106,6 @@ var App = React.createClass({
         }
       }
       this.setState({filter: newArr});//update state
-      console.log(this.state.filter);
     }
   },
   updateChamber: function (val) {
@@ -116,7 +117,6 @@ var App = React.createClass({
     this.setState({
       districtNumber: number
     });
-    console.log(this.state);
   },
   render: function() {
     return (
@@ -128,6 +128,7 @@ var App = React.createClass({
             onChange={this.toggleFilter}
             updateChamber={this.updateChamber}
             filter={this.state.filter}
+            filterCrimes={this.filterCrimes}
           />
           <Map
             chamber={this.state.chamber}
