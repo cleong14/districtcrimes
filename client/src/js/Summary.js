@@ -52,6 +52,7 @@ var Summary = React.createClass({
 
   componentWillReceiveProps: function(newProps) {
     this.totalCrimesPerWeek(newProps.chamber);
+    // this.drawLines();
   },
 
   componentWillUnmount: function() {
@@ -130,37 +131,54 @@ var Summary = React.createClass({
     var vandalismObj = {};
     var motorVehicleTheftObj = {};
     var burglaryObj;
-    
+
     if (this.props.senateCrimes) {
-      for (var i = 0; i < this.props.senateCrimes.length; i++) {
-        var currentCrime = this.props.senateCrimes[i];
-        // console.log(currentCrime.to_timestamp.length);
-        var year = currentCrime.to_timestamp[0] + currentCrime.to_timestamp[1] + currentCrime.to_timestamp[2] + currentCrime.to_timestamp[3];
-        var month = currentCrime.to_timestamp[5] + currentCrime.to_timestamp[6];
-        var day = currentCrime.to_timestamp[8] + currentCrime.to_timestamp[9];
-        var newDate = year + ', ' + (month - 1) + ', ' + day;
+      // for (var i = 0; i < this.props.senateCrimes.length; i++) {
+      //   var currentCrime = this.props.senateCrimes[i];
+      //   // console.log(currentCrime.to_timestamp.length);
+      //   var year = currentCrime.to_timestamp[0] + currentCrime.to_timestamp[1] + currentCrime.to_timestamp[2] + currentCrime.to_timestamp[3];
+      //   var month = currentCrime.to_timestamp[5] + currentCrime.to_timestamp[6];
+      //   var day = currentCrime.to_timestamp[8] + currentCrime.to_timestamp[9];
+        // var newDate = year + ', ' + (month - 1) + ', ' + day;
         // console.log(newDate);
         // for line chart: {x: new Date(newDate), y: this.state.allCrimes.}
         for (var obj in this.state.allCrimes) {
+          var year = obj[0] + obj[1] + obj[2] + obj[3];
+          var month = obj[5] + obj[6];
+          var day = obj[8] + obj[9];
+          var newDate = year + ', ' + (month - 1) + ', ' + day;
+
+          // this.state.lines[4].values.push({x: new Date (newDate), y: this.state.allCrimes[obj].BURGLARY});
+          // console.log(this.state.lines[4]);
+          // console.log(new Date(newDate));
+          console.log(newDate);
+
           // console.log(this.state.allCrimes[obj].BURGLARY);
           // console.log(Object.keys(this.state.allCrimes[obj]));
           for (var k = 0; k < this.state.lines.length; k++) {
             // this.state.lines[4].values.push({x: new Date(newDate), y: this.state.allCrimes[obj].BURGLARY});
+            // this.state.lines[3].values.push({x: new Date(newDate), y: this.state.allCrimes[obj]['MOTOR VEHICLE THEFT']});
+            // this.state.lines[2].values.push({x: new Date(newDate), y: this.state.allCrimes[obj].VANDALISM});
+            // this.state.lines[1].values.push({x: new Date(newDate), y: this.state.allCrimes[obj]['VEHICLE BREAK-IN/THEFT']});
+            // this.state.lines[0].values.push({x: new Date(newDate), y: this.state.allCrimes[obj]['THEFT/LARCENY']});
+
+            // console.log(this.state.allCrimes[obj]);
             // console.log(this.state.lines[k].values);
           }
         }
-      }
+      // }
       // console.log(Object.keys(this.state.allCrimes));
       console.log(this.state.lines);
       // console.log(this.state.allCrimes);
       // console.log(Object.keys(this.state.allCrimes));
     }
-    this.setState({
-      lines: data
-    });
+    // this.setState({
+    //   lines: data
+    // });
   },
 
   render: function() {
+    this.drawLines();
 
     // return our JSX that is rendered to the DOM
     if (this.props.districtData) {
