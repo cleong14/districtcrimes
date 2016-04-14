@@ -155,7 +155,7 @@ var Map = React.createClass({
   },
 
   totalCrimesPerDistrict: function (chamber) {
-    // if (this.props.senateCrimes) {
+    if (this.props.senateCrimes) {
 
       var allCrimes;
       switch (chamber) {
@@ -186,9 +186,8 @@ var Map = React.createClass({
         }
         return newObj;
       };
-
+      // debugger;
       var result = allCrimes.reduce(reducer, initialValue);
-
 
       this.setState({
         allCrimes: result
@@ -196,7 +195,7 @@ var Map = React.createClass({
         this.addGeoJSON(this.props.chamber);
       });
 
-    // }
+    }
   },
 
   // Leaflet Control object - District Information
