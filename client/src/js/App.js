@@ -17,8 +17,7 @@ var App = React.createClass({
       chamber: 'senate',
       districtNumber: 23,
       senateCrimes: [],
-      houseCrimes: [],
-      filteredSenateCrimes: []
+      houseCrimes: []
     };
   },
   loadSenateCrimes: function () {//added
@@ -80,19 +79,21 @@ var App = React.createClass({
   },
 
   componentDidUpdate: function () {
-    this.filterCrimes(this.state.senateCrimes);
+    // this.filterCrimes(this.state.senateCrimes);
   },
 
   filterCrimes: function (crimeData) {
-    var _this = this;
-    var filteredCrimes = crimeData
-      .filter(function (crime) {
-        var types = _this.state.filter;
-        return types.indexOf(crime.type) > -1;
-      });
-    console.log(filteredCrimes);
-    // newState[label] = filteredCrimes;
-    this.replaceState({filteredSenateCrimes: filteredCrimes});
+    if (this.state.senateCrimes) {
+      var _this = this;
+      var filteredCrimes = crimeData
+        .filter(function (crime) {
+          var types = _this.state.filter;
+          return types.indexOf(crime.type) > -1;
+        });
+      this.setState({filteredSenateCrimes: filteredCrimes});
+      console.log(this.state);
+
+    }
   },
 
   toggleFilter: function (type) {
@@ -107,6 +108,7 @@ var App = React.createClass({
       }
       this.setState({filter: newArr});//update state
     }
+    this.filterCrimes(this.state.senateCrimes);
   },
   updateChamber: function (val) {
     this.setState({
