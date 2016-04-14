@@ -191,39 +191,6 @@ var currentlyDisplayed = {
 
 var Dashboard = React.createClass({
   render:function(){
-    crime_type_totals = {
-      theft_larceny: 0,
-      vehicle_breakIn_theft: 0,
-      vandalism: 0,
-      burglary: 0,
-      motor_vehicle_theft: 0
-    }
-    currentlyDisplayed = {
-      total: 0
-    }
-    var crimeNodes = this.props.allCrimeData.map((crime, index) => {//map is making a new array
-      if (this.props.filter.indexOf(crime.type) > -1) {//this makes things faster by running this first, only accounting for whats checked instead of loading all
-        currentlyDisplayed.total++;
-      } else {
-        return;
-      }
-      if (crime.type === 'THEFT/LARCENY') {
-      crime_type_totals.theft_larceny++; 
-      }
-      if (crime.type === 'VEHICLE BREAK-IN/THEFT') {
-      crime_type_totals.vehicle_breakIn_theft++; 
-      }
-      if (crime.type === 'BURGLARY') {
-      crime_type_totals.burglary++; 
-      }
-      if (crime.type === 'MOTOR VEHICLE THEFT') {
-      crime_type_totals.motor_vehicle_theft++; 
-      }
-      if (crime.type === 'VANDALISM') {
-      crime_type_totals.vandalism++; 
-      }
-    })
-    console.log(crime_type_totals);
     return (
       <div>
           <h3>Total Crimes</h3>

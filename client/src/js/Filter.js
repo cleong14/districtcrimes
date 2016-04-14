@@ -150,7 +150,7 @@ var Filter = React.createClass({
       )
     })
     return (
-      <div id="filter">
+      <div id="filter" class="col-lg-4">
         <Tabs selected={0}>
           <Pane label="Poltical">
             <div>Info Tab

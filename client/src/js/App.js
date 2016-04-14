@@ -16,22 +16,9 @@ var App = React.createClass({
       filter: [],
       chamber: 'senate',
       districtNumber: 23,
-      allCrimeData: []
     };
   },
-  loadCrimesFromServer: function () {//added
-    $.ajax({
-      url: 'http://localhost:3000/api',
-      method: "GET",
-      dataType: "json",
-      success: (data) => {
-        this.setState({allCrimeData: data});
-      },
-      failure: function (err) {
-        // console.log(err);
-      }
-    });
-  },
+
   loadSenateCrimes: function () {//added
     $.ajax({
       url: 'http://localhost:3000/senatecrimequery',
@@ -139,7 +126,6 @@ var App = React.createClass({
         />
         <Dashboard 
           filter={this.state.filter}
-          allCrimeData={this.state.allCrimeData}
         />
       </div>
     );
