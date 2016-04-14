@@ -188,12 +188,8 @@ var Summary = React.createClass({
   render: function() {
     this.drawLines();
 
-    // return our JSX that is rendered to the DOM
-    if (this.props.districtData) {
-      var districtInfo = this.getDistrictInfo(this.props.districtNumber);
       return (
         <div id="summary">
-
           <LineChart
             data={this.state.lines}
             width={800}
@@ -204,7 +200,7 @@ var Summary = React.createClass({
           />
         </div>
       );
-    }
+
     return null;
   }
 
