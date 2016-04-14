@@ -189,10 +189,10 @@ var currentlyDisplayed = {
   total: 0
 }
 
-var Dashboard = React.createClass({
+var PieChart = React.createClass({
   render:function(){
     return (
-      <div>
+      <div id="pie-chart">
           <h3>Total Crimes</h3>
           <div>
             <DonutChart id="bs_chart" padAngle={0.03}/>
@@ -206,4 +206,4 @@ var Dashboard = React.createClass({
 
 
 
-module.exports = Dashboard;
+module.exports = PieChart;
