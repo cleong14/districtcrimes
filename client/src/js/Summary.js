@@ -3,7 +3,14 @@ var d3 = require('d3');
 var ReactD3 = require('react-d3-components');
 var LineChart = ReactD3.LineChart;
 var Brush = ReactD3.Brush;
+var moment = require('moment');
+var range = require('moment-range');
+moment().format();
 
+var start = new Date(2015, 8, 24);
+var end = new Date(2016, 2, 29);
+var range = moment.range(start, end);
+// console.log(range);
 
 var Summary = React.createClass({
   //this is the Summary module to be exported. Put all code in here.
@@ -151,6 +158,7 @@ var Summary = React.createClass({
           // this.state.lines[4].values.push({x: new Date (newDate), y: this.state.allCrimes[obj].BURGLARY});
           // console.log(this.state.lines[4]);
           // console.log(new Date(newDate));
+          // console.log(obj);
           console.log(newDate);
 
           // console.log(this.state.allCrimes[obj].BURGLARY);
