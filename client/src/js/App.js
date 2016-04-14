@@ -4,7 +4,7 @@ var ReactDOM = require('react-dom');
 var Map = require('./Map');
 var Filter = require('./Filter');
 var Summary = require('./Summary');
-var Dashboard = require('./Dashboard');
+var PieChart = require('./PieChart');
 // where in the actual DOM to mount our App
 var mountNode = document.getElementById('app');
 // App component
@@ -156,31 +156,19 @@ var App = React.createClass({
           <div className="politician-placeholder">
           </div>
         </div>
-        <Summary
-          chamber={this.state.chamber}
-          districtData={this.state.districtData}
-          districtNumber={this.state.districtNumber}
-          senateCrimes={this.state.filteredSenateCrimes}
-          houseCrimes={this.state.filteredHouseCrimes}
-          filter={this.state.filter}
-        />
-        <Dashboard
-          filter={this.state.filter}
-          senateCrimes={this.state.filteredSenateCrimes}
-          houseCrimes={this.state.filteredHouseCrimes}
-        />
-
         <div className="bottomLevel">
           <Summary
             chamber={this.state.chamber}
             districtData={this.state.districtData}
             districtNumber={this.state.districtNumber}
-            senateCrimes={this.state.senateCrimes}
-            houseCrimes={this.state.houseCrimes}
+            senateCrimes={this.state.filteredSenateCrimes}
+            houseCrimes={this.state.filteredHouseCrimes}
             filter={this.state.filter}
           />
-          <Dashboard
+          <PieChart
             filter={this.state.filter}
+            senateCrimes={this.state.filteredSenateCrimes}
+            houseCrimes={this.state.filteredHouseCrimes}
           />
         </div>
       </div>
