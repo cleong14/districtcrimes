@@ -7,35 +7,37 @@ var moment = require('moment');
 var range = require('moment-range');
 moment().format();
 
-var start = new Date(2015, 8, 24);
-var end = new Date(2016, 2, 29);
-var range = moment.range(start, end);
+var datesArr = [];
+var objArr = [];
 // console.log(range);
+
+// console.log(moment().toObject());
 
 var Summary = React.createClass({
   //this is the Summary module to be exported. Put all code in here.
 
   getInitialState: function() {
+    var allCrimes = [];
     var lines = [
       {
       label: 'THEFT/LARCENY',
-      values: [{x: new Date(2015, 8, 24), y: 0}]
+      values: []
       },
       {
       label: 'VEHICLE BREAK-IN/THEFT',
-      values: [{x: new Date(2015, 8, 24), y: 0}]
+      values: []
       },
       {
       label: 'VANDALISM',
-      values: [{x: new Date(2015, 8, 24), y: 0}]
+      values: []
       },
       {
       label: 'MOTOR VEHICLE THEFT',
-      values: [{x: new Date(2015, 8, 24), y: 0}]
+      values: []
       },
       {
       label: 'BURGLARY',
-      values: [{x: new Date(2015, 8, 24), y: 0}]
+      values: []
       }
     ];
     // TODO:
@@ -44,7 +46,7 @@ var Summary = React.createClass({
     var xScale = d3.time.scale().domain([new Date(2015, 8, 24), new Date(2016, 2, 29)]).range([0, 400 - 70]);
     // xScaleBrush: d3.time.scale().domain([new Date(2015, 2, 5), new Date(2015, 2, 26)]).range([0, 400 - 70]);
     // TODO: if we wanted an initial "state" for our map component we could add it here
-    return {lines: lines, xScale: xScale};
+    return {lines: lines, xScale: xScale, allCrimes: allCrimes};
   },
 
   componentWillMount: function() {
@@ -54,15 +56,19 @@ var Summary = React.createClass({
   },
 
   componentDidMount: function() {
-    
+
   },
 
   componentWillReceiveProps: function(newProps) {
     this.totalCrimesPerWeek(newProps.chamber);
-    // this.drawLines();
+  },
+
+  componentDidUpdate: function () {
+    this.drawLines();
   },
 
   componentWillUnmount: function() {
+
   },
 
   getDistrictInfo: function (districtNumber) {
@@ -111,6 +117,15 @@ var Summary = React.createClass({
 
       var result = allCrimes.reduce(reducer, initialValue);
 
+      var resultArr = [];
+
+      for (var week in result) {
+        resultArr.push({
+          time: new Date(week),
+          values: result[week]
+        });
+      }
+
       // for (var i=1; i < 50; i++) {
       //   if(!result["district"+i]) {
       //     result["district"+i] = {
@@ -125,10 +140,27 @@ var Summary = React.createClass({
       // }
 
       this.setState({
-        allCrimes: result
+        allCrimes: resultArr
+      }, () => {
+        console.log(this.state);
       });
 
       console.log(this.state.allCrimes);
+    }
+  },
+
+  runSort: function () {
+    if (this.props.senateCrimes) {
+      // console.log(this.state.allCrimes);
+      this.state.allCrimes.sort(function (a, b) {
+        if (a.time > b.time) {
+          return 1;
+        }
+        if (a.time < b.time) {
+          return -1;
+        }
+        return 0;
+      });
     }
   },
 
@@ -138,58 +170,43 @@ var Summary = React.createClass({
     var vandalismObj = {};
     var motorVehicleTheftObj = {};
     var burglaryObj;
+    var allDates;
 
     if (this.props.senateCrimes) {
-      // for (var i = 0; i < this.props.senateCrimes.length; i++) {
-      //   var currentCrime = this.props.senateCrimes[i];
-      //   // console.log(currentCrime.to_timestamp.length);
-      //   var year = currentCrime.to_timestamp[0] + currentCrime.to_timestamp[1] + currentCrime.to_timestamp[2] + currentCrime.to_timestamp[3];
-      //   var month = currentCrime.to_timestamp[5] + currentCrime.to_timestamp[6];
-      //   var day = currentCrime.to_timestamp[8] + currentCrime.to_timestamp[9];
-        // var newDate = year + ', ' + (month - 1) + ', ' + day;
-        // console.log(newDate);
-        // for line chart: {x: new Date(newDate), y: this.state.allCrimes.}
-        for (var obj in this.state.allCrimes) {
-          var year = obj[0] + obj[1] + obj[2] + obj[3];
-          var month = obj[5] + obj[6];
-          var day = obj[8] + obj[9];
-          var newDate = year + ', ' + (month - 1) + ', ' + day;
+      this.runSort();
 
-          // this.state.lines[4].values.push({x: new Date (newDate), y: this.state.allCrimes[obj].BURGLARY});
-          // console.log(this.state.lines[4]);
-          // console.log(new Date(newDate));
-          // console.log(obj);
-          console.log(newDate);
+      var theftArr  = [];
+      var vehicleArr  = [];
+      var vandalismArr  = [];
+      var motorArr  = [];
+      var burglaryArr  = [];
 
-          // console.log(this.state.allCrimes[obj].BURGLARY);
-          // console.log(Object.keys(this.state.allCrimes[obj]));
-          for (var k = 0; k < this.state.lines.length; k++) {
-            // this.state.lines[4].values.push({x: new Date(newDate), y: this.state.allCrimes[obj].BURGLARY});
-            // this.state.lines[3].values.push({x: new Date(newDate), y: this.state.allCrimes[obj]['MOTOR VEHICLE THEFT']});
-            // this.state.lines[2].values.push({x: new Date(newDate), y: this.state.allCrimes[obj].VANDALISM});
-            // this.state.lines[1].values.push({x: new Date(newDate), y: this.state.allCrimes[obj]['VEHICLE BREAK-IN/THEFT']});
-            // this.state.lines[0].values.push({x: new Date(newDate), y: this.state.allCrimes[obj]['THEFT/LARCENY']});
+      for (var i = 0; i < this.state.allCrimes.length; i++) {
+        theftArr.push({x: this.state.allCrimes[i].time, y: this.state.allCrimes[i].values['THEFT/LARCENY']});
+        vehicleArr.push({x: this.state.allCrimes[i].time, y: this.state.allCrimes[i].values['VEHICLE BREAK-IN/THEFT']});
+        vandalismArr.push({x: this.state.allCrimes[i].time, y: this.state.allCrimes[i].values.VANDALISM});
+        motorArr.push({x: this.state.allCrimes[i].time, y: this.state.allCrimes[i].values['MOTOR VEHICLE THEFT']});
+        burglaryArr.push({x: this.state.allCrimes[i].time, y: this.state.allCrimes[i].values.BURGLARY});
+      }
 
-            // console.log(this.state.allCrimes[obj]);
-            // console.log(this.state.lines[k].values);
-          }
-        }
-      // }
-      // console.log(Object.keys(this.state.allCrimes));
-      console.log(this.state.lines);
-      // console.log(this.state.allCrimes);
-      // console.log(Object.keys(this.state.allCrimes));
+      this.setState({lines: [
+        {label: 'THEFT/LARCENY', values: theftArr},
+        {label: 'VEHICLE BREAK-IN', values: vehicleArr},
+        {label: 'VANDALISM', values: vandalismArr},
+        {label: 'MOTOR VEHICLE THEFT', values: motorArr},
+        {label: 'BURGLARY', values: burglaryArr}
+      ]});
     }
-    // this.setState({
-    //   lines: data
-    // });
   },
 
   render: function() {
-    this.drawLines();
 
     // return our JSX that is rendered to the DOM
     if (this.props.districtData) {
+      if (this.state.lines.every(line => !line.values.length)) {
+        return null;
+      }
+
       var districtInfo = this.getDistrictInfo(this.props.districtNumber);
       return (
         <div id="summary">
@@ -202,11 +219,12 @@ var Summary = React.createClass({
 
           <LineChart
             data={this.state.lines}
+            interpolate="linear"
             width={800}
             height={400}
             margin={{top: 10, bottom: 50, left: 50, right: 10}}
             xScale={this.state.xScale}
-            xAxis={{tickValues: this.state.xScale.ticks(d3.time.day, 7), tickFormat: d3.time.format("%m/%d")}}
+            xAxis={{tickValues: this.state.xScale.ticks(d3.time.month, 1), tickFormat: d3.time.format("%m/%d")}}
           />
         </div>
       );
@@ -215,6 +233,10 @@ var Summary = React.createClass({
   }
 
 });
+
+function isSameObject (a, b) {
+  return JSON.stringify(a) === JSON.stringify(b);
+}
 
 // export our Summary component so that Browserify can include it with other components that require it
 module.exports = Summary;
