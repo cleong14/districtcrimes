@@ -5,6 +5,7 @@ var Map = require('./Map');
 var Filter = require('./Filter');
 var Summary = require('./Summary');
 var Dashboard = require('./Dashboard');
+var Politician = require('./Politician');
 // where in the actual DOM to mount our App
 var mountNode = document.getElementById('app');
 // App component
@@ -17,7 +18,8 @@ var App = React.createClass({
       districtNumber: 23,
       senateCrimes: [],
       houseCrimes: [],
-      filteredSenateCrimes: []
+      filteredSenateCrimes: [],
+      filteredHouseCrimes: []
     };
   },
 
@@ -152,6 +154,11 @@ var App = React.createClass({
             updateDistrictNumber={this.updateDistrictNumber}
             senateCrimes={this.state.filteredSenateCrimes}
             houseCrimes={this.state.filteredHouseCrimes}
+          />
+          <Politician
+            chamber={this.state.chamber}
+            districtData={this.state.districtData}
+            districtNumber={this.state.districtNumber}
           />
         </div>
         <Summary

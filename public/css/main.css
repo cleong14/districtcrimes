@@ -79,6 +79,7 @@ html, body {
   margin: 25px;
   padding: 10px;
   background: #fff;
+  height: 400px;
 }
 
 #filter {

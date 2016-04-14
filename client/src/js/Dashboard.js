@@ -195,7 +195,7 @@ var Dashboard = React.createClass({
       <div>
           <h3>Total Crimes</h3>
           <div>
-              <DonutChart id="bs_chart" padAngle={0.03}/>
+            <DonutChart id="bs_chart" padAngle={0.03}/>
           </div>
       </div>
     )
