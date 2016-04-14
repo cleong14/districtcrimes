@@ -160,7 +160,7 @@ html, body {
   height: 400px;
 }
 
-.politician-placeholder {
+#politician {
   width: 20%;
   background-color: #FFF;
   order: 3;
