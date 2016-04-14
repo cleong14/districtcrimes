@@ -159,7 +159,7 @@ var App = React.createClass({
             chamber={this.state.chamber}
             districtData={this.state.districtData}
             districtNumber={this.state.districtNumber}
-          </div>
+          />
         </div>
         <div className="bottomLevel">
           <Summary
@@ -172,8 +172,8 @@ var App = React.createClass({
           />
           <PieChart
             filter={this.state.filter}
-            districtNumber={}
-            chamber={}
+            districtNumber={this.state.districtNumber}
+            chamber={this.state.chamber}
             senateCrimes={this.state.filteredSenateCrimes}
             houseCrimes={this.state.filteredHouseCrimes}
           />
