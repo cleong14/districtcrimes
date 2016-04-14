@@ -15,9 +15,10 @@ var App = React.createClass({
       types: ['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY', ],
       filter: [],
       chamber: 'senate',
-      districtNumber: 23
+      districtNumber: 23,
     };
   },
+
   loadSenateCrimes: function () {//added
     $.ajax({
       url: 'http://localhost:3000/senatecrimequery',
@@ -66,6 +67,7 @@ var App = React.createClass({
     this.loadSenateCrimes();
     this.loadHouseCrimes();
     this.loadFile('hshd.geo.json', 'house');
+    this.loadCrimesFromServer();
   },
   componentWillReceiveProps: function() {
   },
@@ -121,6 +123,9 @@ var App = React.createClass({
           districtNumber={this.state.districtNumber}
           senateCrimes={this.state.senateCrimes}
           houseCrimes={this.state.houseCrimes}
+          filter={this.state.filter}
+        />
+        <Dashboard 
           filter={this.state.filter}
         />
       </div>
