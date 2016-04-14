@@ -123,6 +123,16 @@ html, body {
   display: block;
 }
 
+/*.brush .extent {
+  stroke: #000;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
+
+.brush .background {
+  fill: #ddd;
+}*/
+
 .button {
   background-color: #168fe0;
 }

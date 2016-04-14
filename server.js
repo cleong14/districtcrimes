@@ -83,6 +83,25 @@ app.get('/senatecrimequery', function (req, res) {
   });
 });
 
+app.get('/senatecrimequerytest', function (req, res) {
+
+  db.crime.sequelize.query(
+    'SELECT ' +
+      '"type", "senateDistrict", COUNT("crime"."type") AS "count", ' +
+      'to_timestamp(floor((extract("epoch" from date) / 604800 )) * 604800) ' +
+      // 'AT TIME ZONE "UTC" as "interval_alias" ' +
+    'FROM ' +
+      '"crimes" AS "crime" ' +
+    'GROUP BY ' +
+      '"type", "senateDistrict", "to_timestamp" ' +
+    'ORDER BY ' +
+      'to_timestamp'
+  )
+  .then(function (results) {
+    res.json(results);
+  });
+});
+
 app.get('/housecrimequery', function (req, res) {
 
   db.crime.sequelize.query(
