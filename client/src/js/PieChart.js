@@ -148,11 +148,11 @@ var DonutChart=React.createClass({
 
     updateData:function(){//state changes go here? when the state changes the chart should too
         var data = [
-            { name: 'THEFT/LARCENY', count: 10 },
-            { name: 'BURGLARY', count: 32 },
-            { name: 'MOTOR-VEHICLE-THEFT', count: 40 },
-            { name: 'VANDALISM', count: 50 },
-            { name: 'VEHICLE-BREAK-IN', count: 6 }
+            { name: 'THEFT/LARCENY', count: {this.props.count} },
+            { name: 'BURGLARY', count: {this.props.count} },
+            { name: 'MOTOR-VEHICLE-THEFT', count: {this.props.count} },
+            { name: 'VANDALISM', count: {this.props.count} },
+            { name: 'VEHICLE-BREAK-IN', count: {this.props.count} }
         ];
 
         this.setState({'data':data });
@@ -191,6 +191,7 @@ var currentlyDisplayed = {
 
 var PieChart = React.createClass({
   render:function(){
+    console.log(this.props.filteredSenateCrimes);
     return (
       <div id="pie-chart">
           <h3>Total Crimes</h3>
