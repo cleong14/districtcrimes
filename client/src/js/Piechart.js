@@ -1,8 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-
-
 var DonutChartPath=React.createClass({
     propTypes: {
         width:React.PropTypes.number,
@@ -148,11 +146,11 @@ var DonutChart=React.createClass({
  
     updateData:function(){//state changes go here? when the state changes the chart should too
         var data = [
-            { name: 'THEFT/LARCENY', count: 10 },
-            { name: 'BURGLARY', count: 32 },
-            { name: 'MOTOR-VEHICLE-THEFT', count: 40 },
-            { name: 'VANDALISM', count: 50 },
-            { name: 'VEHICLE-BREAK-IN', count: 6 }
+            { name: 'THEFT/LARCENY', count: {this.props.count} },
+            { name: 'BURGLARY', count: {this.props.count} },
+            { name: 'MOTOR-VEHICLE-THEFT', count: {this.props.count} },
+            { name: 'VANDALISM', count: {this.props.count} },
+            { name: 'VEHICLE-BREAK-IN', count: {this.props.count} }
         ];
  
         this.setState({'data':data });
@@ -189,7 +187,7 @@ var currentlyDisplayed = {
   total: 0
 }
 
-var Dashboard = React.createClass({
+var Piechart = React.createClass({
   render:function(){
     return (
       <div>
@@ -206,4 +204,4 @@ var Dashboard = React.createClass({
  
 
 
-module.exports = Dashboard;
+module.exports = Piechart;

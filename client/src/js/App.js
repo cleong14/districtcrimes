@@ -4,7 +4,7 @@ var ReactDOM = require('react-dom');
 var Map = require('./Map');
 var Filter = require('./Filter');
 var Summary = require('./Summary');
-var Dashboard = require('./Dashboard');
+var Piechart = require('./Piechart');
 // where in the actual DOM to mount our App
 var mountNode = document.getElementById('app');
 // App component
@@ -125,7 +125,7 @@ var App = React.createClass({
           houseCrimes={this.state.houseCrimes}
           filter={this.state.filter}
         />
-        <Dashboard 
+        <Piechart 
           filter={this.state.filter}
         />
       </div>
