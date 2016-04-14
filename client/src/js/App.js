@@ -67,7 +67,6 @@ var App = React.createClass({
     this.loadSenateCrimes();
     this.loadHouseCrimes();
     this.loadFile('hshd.geo.json', 'house');
-    this.loadCrimesFromServer();
   },
   componentWillReceiveProps: function() {
   },
@@ -116,18 +115,23 @@ var App = React.createClass({
             senateCrimes={this.state.senateCrimes}
             houseCrimes={this.state.houseCrimes}
           />
+          <div className="politician-placeholder">
+          </div>
         </div>
-        <Summary
-          chamber={this.state.chamber}
-          districtData={this.state.districtData}
-          districtNumber={this.state.districtNumber}
-          senateCrimes={this.state.senateCrimes}
-          houseCrimes={this.state.houseCrimes}
-          filter={this.state.filter}
-        />
-        <Dashboard 
-          filter={this.state.filter}
-        />
+        <div className="bottomLevel">
+          <Summary
+            chamber={this.state.chamber}
+            districtData={this.state.districtData}
+            districtNumber={this.state.districtNumber}
+            senateCrimes={this.state.senateCrimes}
+            houseCrimes={this.state.houseCrimes}
+            filter={this.state.filter}
+          />
+          <Dashboard
+            filter={this.state.filter}
+          />
+        </div>
+        
       </div>
     );
   }

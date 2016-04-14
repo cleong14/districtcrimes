@@ -192,9 +192,9 @@ var currentlyDisplayed = {
 var Dashboard = React.createClass({
   render:function(){
     return (
-      <div>
+      <div id="pie-chart">
           <h3>Total Crimes</h3>
-          <div className="pad bottom-left-svg">
+          <div>
               <DonutChart id="bs_chart" padAngle={0.03}/>
           </div>
       </div>
