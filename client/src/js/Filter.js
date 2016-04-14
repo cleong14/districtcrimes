@@ -159,12 +159,29 @@ var Filter = React.createClass({
     })
     return (
       <div id="filter">
+<<<<<<< HEAD
         SELECT YO CRIME, CRACKA HAOLE
           {typeNodes}
           <div>
             <button className="button success" onClick={this.update} value="house">House</button>
             <button className="button warning" onClick={this.update} value="senate">Senate</button>
           </div>
+=======
+        <Tabs selected={0}>
+          <Pane label="Poltical">
+            <div>Info Tab
+              {typeNodes}
+              <div>
+                <button className="button success" onClick={this.update} value="house">House</button>
+                <button className="button warning" onClick={this.update} value="senate">Senate</button>
+              </div>
+            </div>
+          </Pane>
+          <Pane label="Crimes">
+            <div></div>
+          </Pane>
+        </Tabs>
+>>>>>>> css-visual-villainy
       </div>
     );
   }

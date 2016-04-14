@@ -193,12 +193,6 @@ var Summary = React.createClass({
       var districtInfo = this.getDistrictInfo(this.props.districtNumber);
       return (
         <div id="summary">
-          <div id="politician">
-            <img id="photo" src={districtInfo.politician_picture}/>
-            <h4>{districtInfo.politician_firstname} {districtInfo.politician_lastname}</h4>
-            <p>TEL: {districtInfo.contact_phone}</p>
-            <p>E-mail: <a href={districtInfo.contact_email}>{districtInfo.contact_email}</a></p>
-          </div>
 
           <LineChart
             data={this.state.lines}
@@ -249,6 +243,37 @@ module.exports = Summary;
 //     )
 //   }
 // });
+
+
+
+
+    // // return our JSX that is rendered to the DOM
+    // if (this.props.districtData) {
+    //   var districtInfo = this.getDistrictInfo(this.props.districtNumber);
+    //   return (
+    //     <div id="summary">
+    //       <div id="politician">
+    //         <img id="photo" src={districtInfo.politician_picture}/>
+    //         <h4>{districtInfo.politician_firstname} {districtInfo.politician_lastname}</h4>
+    //         <p>TEL: {districtInfo.contact_phone}</p>
+    //         <p>E-mail: <a href={districtInfo.contact_email}>{districtInfo.contact_email}</a></p>
+    //       </div>
+
+    //       <LineChart
+    //         data={this.state.lines}
+    //         width={800}
+    //         height={400}
+    //         margin={{top: 10, bottom: 50, left: 50, right: 10}}
+    //         xScale={this.state.xScale}
+    //         xAxis={{tickValues: this.state.xScale.ticks(d3.time.day, 7), tickFormat: d3.time.format("%m/%d")}}
+    //       />
+    //     </div>
+    //   );
+
+
+
+
+
 
 
 // working sql query

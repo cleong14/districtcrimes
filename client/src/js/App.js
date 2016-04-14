@@ -153,6 +153,8 @@ var App = React.createClass({
             senateCrimes={this.state.filteredSenateCrimes}
             houseCrimes={this.state.filteredHouseCrimes}
           />
+          <div className="politician-placeholder">
+          </div>
         </div>
         <Summary
           chamber={this.state.chamber}
@@ -167,6 +169,20 @@ var App = React.createClass({
           senateCrimes={this.state.filteredSenateCrimes}
           houseCrimes={this.state.filteredHouseCrimes}
         />
+
+        <div className="bottomLevel">
+          <Summary
+            chamber={this.state.chamber}
+            districtData={this.state.districtData}
+            districtNumber={this.state.districtNumber}
+            senateCrimes={this.state.senateCrimes}
+            houseCrimes={this.state.houseCrimes}
+            filter={this.state.filter}
+          />
+          <Dashboard
+            filter={this.state.filter}
+          />
+        </div>
       </div>
     );
   }
