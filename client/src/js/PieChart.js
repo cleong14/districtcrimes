@@ -12,34 +12,34 @@ var DonutChartPath=React.createClass({
         color:React.PropTypes.func
     },
     componentWillMount:function(){
- 
+
         var radius=this.props.height;
- 
+
         var outerRadius=radius/2;
         var innerRadius=radius/3.3;
- 
+
         this.arc=d3.svg.arc()
             .outerRadius(outerRadius)
             .innerRadius(innerRadius);
- 
+
         this.transform='translate('+radius/2+','+radius/2+')';
- 
+
     },
     createChart:function(_self){
- 
+
         var paths = (this.props.pie(this.props.data)).map(function(d, i) {
- 
+
             return (
                 <path fill={_self.props.color(i)} d={_self.arc(d)} key={i}/>
             )
         });
         return paths;
     },
- 
+
     render:function(){
- 
+
         var paths = this.createChart(this);
- 
+
         return(
             <g transform={this.transform}>
                 {paths}
@@ -47,7 +47,7 @@ var DonutChartPath=React.createClass({
         )
     }
 });
- 
+
 var DonutChartLegend=React.createClass({
     propTypes: {
         width:React.PropTypes.number,
@@ -57,21 +57,21 @@ var DonutChartLegend=React.createClass({
         color:React.PropTypes.func
     },
     createChart:function(_self){
- 
+
         var texts = (this.props.pie(this.props.data)).map(function(d, i) {
- 
+
             var transform="translate(10,"+i*30+")";
- 
+
             var rectStyle = {
                 fill:_self.props.color(i),
                 stroke:_self.props.color(i)
- 
+
             };
- 
+
             var textStyle = {
                 fill:_self.props.color(i)
             };
- 
+
             return (
                 <g transform={transform} key={i}>
                     <rect width="20" height="20" style={rectStyle} rx="2" rx="2"/>
@@ -81,17 +81,17 @@ var DonutChartLegend=React.createClass({
         });
         return texts;
     },
- 
+
     render:function(){
- 
+
         var style={
             visibility:'visible'
         };
- 
+
         if(this.props.width<=this.props.height+70){
             style.visibility='hidden';
         }
- 
+
         var texts = this.createChart(this);
         var transform="translate("+(this.props.width/2+80)+",55)";
         return(
@@ -101,7 +101,7 @@ var DonutChartLegend=React.createClass({
         )
     }
 });
- 
+
 var DonutChart=React.createClass({
     propTypes: {
         width:React.PropTypes.number,
@@ -109,7 +109,7 @@ var DonutChart=React.createClass({
         padAngle:React.PropTypes.number,
         id:React.PropTypes.string.isRequired
     },
- 
+
     getDefaultProps: function() {
         return {
             width: 550,
@@ -123,18 +123,18 @@ var DonutChart=React.createClass({
             width:0
         };
     },
- 
- 
+
+
     componentWillMount:function(){
- 
+
         this.pie=d3.layout.pie()
             .value(function(d){return d.count})
             .padAngle(this.props.padAngle)
             .sort(null);
- 
+
         this.color = d3.scale.ordinal()
             .range(['#68c8d7','#eccd63','#bb8cdd','#de6942','#52b36e','#bbc7d9']);
- 
+
         var data = [
             { name: 'THEFT/LARCENY', count: 8849 },
             { name: 'BURGLARY', count: 2054 },
@@ -142,10 +142,10 @@ var DonutChart=React.createClass({
             { name: 'VANDALISM', count: 242 },
             { name: 'VEHICLE-BREAK-IN', count: 5128 }
         ];
- 
+
         this.setState({'data':data,width:this.props.width});
     },
- 
+
     updateData:function(){//state changes go here? when the state changes the chart should too
         var data = [
             { name: 'THEFT/LARCENY', count: 10 },
@@ -154,23 +154,23 @@ var DonutChart=React.createClass({
             { name: 'VANDALISM', count: 50 },
             { name: 'VEHICLE-BREAK-IN', count: 6 }
         ];
- 
+
         this.setState({'data':data });
     },
     render:function(){
- 
+
         return (
             <div>
                 <svg id={this.props.id} width={this.state.width}
- 
+
                      height={this.props.height} className="shadow" onClick={this.updateData}>
- 
+
                     <DonutChartPath width={this.state.width} height={this.props.height}
                                     pie={this.pie} color={this.color} data={this.state.data}/>
- 
+
                     <DonutChartLegend pie={this.pie} color={this.color} data={this.state.data}
                                       width={this.state.width} height={this.props.height}/>
- 
+
                 </svg>
             </div>
         );
@@ -189,21 +189,21 @@ var currentlyDisplayed = {
   total: 0
 }
 
-var Dashboard = React.createClass({
+var PieChart = React.createClass({
   render:function(){
     return (
-      <div>
+      <div id="pie-chart">
           <h3>Total Crimes</h3>
-          <div className="pad bottom-left-svg">
-              <DonutChart id="bs_chart" padAngle={0.03}/>
+          <div>
+            <DonutChart id="bs_chart" padAngle={0.03}/>
           </div>
       </div>
     )
   }
 });
- 
-
- 
 
 
-module.exports = Dashboard;
+
+
+
+module.exports = PieChart;

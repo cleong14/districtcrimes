@@ -4,18 +4,22 @@ var ReactDOM = require('react-dom');
 var Map = require('./Map');
 var Filter = require('./Filter');
 var Summary = require('./Summary');
-var Dashboard = require('./Dashboard');
+var Politician = require('./Politician');
+var PieChart = require('./PieChart');
 // where in the actual DOM to mount our App
 var mountNode = document.getElementById('app');
 // App component
 var App = React.createClass({
   getInitialState: function () {//we set it to state because its subject to change
     return {
-      crimes: [],
-      types: ['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY', ],
-      filter: [],
+      types: ['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY' ],
+      filter: ['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY'],
       chamber: 'senate',
       districtNumber: 23,
+      senateCrimes: [],
+      houseCrimes: [],
+      filteredSenateCrimes: [],
+      filteredHouseCrimes: []
     };
   },
 
@@ -25,8 +29,7 @@ var App = React.createClass({
       method: "GET",
       dataType: "json",
       success: (data) => {
-        this.setState({senateCrimes: data[0]});
-        console.log(this.state);
+        this.setState({senateCrimes: data[0], filteredSenateCrimes: data[0]});
       },
       failure: function (err) {
         // console.log(err);
@@ -39,7 +42,7 @@ var App = React.createClass({
       method: "GET",
       dataType: "json",
       success: (data) => {
-        this.setState({houseCrimes: data[0]});
+        this.setState({houseCrimes: data[0], filteredHouseCrimes: data[0]});
       },
       failure: function (err) {
         // console.log(err);
@@ -55,6 +58,7 @@ var App = React.createClass({
       success: (data) => {
         newState[label] = data;
         this.setState(newState);//setting state of app to have crimes as data
+
       },
       failure: function (err) {
         // console.log(err);
@@ -67,24 +71,60 @@ var App = React.createClass({
     this.loadSenateCrimes();
     this.loadHouseCrimes();
     this.loadFile('hshd.geo.json', 'house');
-    this.loadCrimesFromServer();
   },
+
   componentWillReceiveProps: function() {
+    // this.filterCrimes(this.state.senateCrimes);
   },
+
+  componentWillUpdate: function () {
+    // this.filterCrimes(this.state.senateCrimes);
+  },
+
+  componentDidUpdate: function () {
+    // this.filterCrimes(this.state.senateCrimes);
+  },
+
+  filterCrimes: function (filterArr, senateCrimeData, houseCrimeData) {
+    if (senateCrimeData && houseCrimeData) {
+      var _this = this;
+      var senateFilteredCrimes = senateCrimeData
+        .filter(function (crime) {
+          return filterArr.indexOf(crime.type) > -1;
+        });
+
+      var houseFilteredCrimes = houseCrimeData
+        .filter(function (crime) {
+          return filterArr.indexOf(crime.type) > -1;
+        });
+
+      // this is the bottle neck!!!
+      this.setState({
+        filteredSenateCrimes: senateFilteredCrimes,
+        filteredHouseCrimes: houseFilteredCrimes,
+        filter: filterArr
+      }, () => {
+        console.log(this.state);
+      });
+
+    }
+  },
+
   toggleFilter: function (type) {
-    if (this.state.filter.indexOf(type) === -1) {
-      this.setState({filter: this.state.filter.concat(type)});//concat state filter with types
+    var newArr = this.state.filter.slice();//copy array
+    if (newArr.indexOf(type) === -1) {
+      newArr = newArr.concat(type);//concat state filter with types
     } else {
-      var newArr = this.state.filter.slice();//copy array
       for (var i = 0; i < newArr.length; i++) {
         if (newArr[i] == type) {
           newArr.splice(i, 1);
         }
       }
-      this.setState({filter: newArr});//update state
-      console.log(this.state.filter);
+      // this.setState({filter: newArr});//update state
     }
+    this.filterCrimes(newArr, this.state.senateCrimes, this.state.houseCrimes);
   },
+
   updateChamber: function (val) {
     this.setState({
       chamber: val
@@ -94,18 +134,17 @@ var App = React.createClass({
     this.setState({
       districtNumber: number
     });
-    console.log(this.state);
   },
   render: function() {
     return (
       <div>
         <div className="topLevel">
           <Filter
-            crimes={this.state.crimes}
             types={this.state.types}
             onChange={this.toggleFilter}
             updateChamber={this.updateChamber}
             filter={this.state.filter}
+            filterCrimes={this.filterCrimes}
           />
           <Map
             chamber={this.state.chamber}
@@ -113,27 +152,38 @@ var App = React.createClass({
             senate={this.state.senate}
             districtData={this.state.districtData}
             updateDistrictNumber={this.updateDistrictNumber}
-            senateCrimes={this.state.senateCrimes}
-            houseCrimes={this.state.houseCrimes}
+            senateCrimes={this.state.filteredSenateCrimes}
+            houseCrimes={this.state.filteredHouseCrimes}
+          />
+          <Politician
+            chamber={this.state.chamber}
+            districtData={this.state.districtData}
+            districtNumber={this.state.districtNumber}
           />
         </div>
-        <Summary
-          chamber={this.state.chamber}
-          districtData={this.state.districtData}
-          districtNumber={this.state.districtNumber}
-          senateCrimes={this.state.senateCrimes}
-          houseCrimes={this.state.houseCrimes}
-          filter={this.state.filter}
-        />
-        <Dashboard 
-          filter={this.state.filter}
-        />
+        <div className="bottomLevel">
+          <Summary
+            chamber={this.state.chamber}
+            districtData={this.state.districtData}
+            districtNumber={this.state.districtNumber}
+            senateCrimes={this.state.filteredSenateCrimes}
+            houseCrimes={this.state.filteredHouseCrimes}
+            filter={this.state.filter}
+          />
+          <PieChart
+            filter={this.state.filter}
+            districtNumber={this.state.districtNumber}
+            chamber={this.state.chamber}
+            senateCrimes={this.state.filteredSenateCrimes}
+            houseCrimes={this.state.filteredHouseCrimes}
+          />
+        </div>
       </div>
     );
   }
 });
-// render the app using ReactDOM! url="http://localhost:3000/api"
+
 ReactDOM.render(
-  <App url="http://localhost:3000/api" />,
+  <App />,
   mountNode
 );

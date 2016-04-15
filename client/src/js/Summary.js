@@ -144,13 +144,12 @@ var Summary = React.createClass({
         console.log(this.state);
       });
 
-      console.log(this.state.allCrimes);
+      // console.log(this.state.allCrimes);
     }
   },
 
   runSort: function () {
     if (this.props.senateCrimes) {
-      // console.log(this.state.allCrimes);
       this.state.allCrimes.sort(function (a, b) {
         if (a.time > b.time) {
           return 1;
@@ -165,6 +164,7 @@ var Summary = React.createClass({
 
   drawLines: function () {
     if (this.props.senateCrimes) {
+      
       this.runSort();
 
       var theftArr  = [];
@@ -202,13 +202,6 @@ var Summary = React.createClass({
       var districtInfo = this.getDistrictInfo(this.props.districtNumber);
       return (
         <div id="summary">
-          <div id="politician">
-            <img id="photo" src={districtInfo.politician_picture}/>
-            <h4>{districtInfo.politician_firstname} {districtInfo.politician_lastname}</h4>
-            <p>TEL: {districtInfo.contact_phone}</p>
-            <p>E-mail: <a href={districtInfo.contact_email}>{districtInfo.contact_email}</a></p>
-          </div>
-
           <LineChart
             data={this.state.lines}
             interpolate="linear"
@@ -225,7 +218,7 @@ var Summary = React.createClass({
             height={50}
             margin={{top: 0, bottom: 30, left: 50, right: 20}}
             xScale={this.state.xScaleBrush}
-            extent{[new Date(2015, 8, 24), new Date(2015, 9, 24)]}
+            extent={[new Date(2015, 8, 24), new Date(2015, 9, 24)]}
             onChange={this._onChange}
             xAxis={{tickValues: this.state.xScaleBrush.ticks(d3.time.month, 1), tickFormat: d3.time.format("%m/%d")}}
           />
@@ -279,6 +272,37 @@ module.exports = Summary;
 //     )
 //   }
 // });
+
+
+
+
+    // // return our JSX that is rendered to the DOM
+    // if (this.props.districtData) {
+    //   var districtInfo = this.getDistrictInfo(this.props.districtNumber);
+    //   return (
+    //     <div id="summary">
+    //       <div id="politician">
+    //         <img id="photo" src={districtInfo.politician_picture}/>
+    //         <h4>{districtInfo.politician_firstname} {districtInfo.politician_lastname}</h4>
+    //         <p>TEL: {districtInfo.contact_phone}</p>
+    //         <p>E-mail: <a href={districtInfo.contact_email}>{districtInfo.contact_email}</a></p>
+    //       </div>
+
+    //       <LineChart
+    //         data={this.state.lines}
+    //         width={800}
+    //         height={400}
+    //         margin={{top: 10, bottom: 50, left: 50, right: 10}}
+    //         xScale={this.state.xScale}
+    //         xAxis={{tickValues: this.state.xScale.ticks(d3.time.day, 7), tickFormat: d3.time.format("%m/%d")}}
+    //       />
+    //     </div>
+    //   );
+
+
+
+
+
 
 
 // working sql query

@@ -186,21 +186,8 @@ var Map = React.createClass({
         }
         return newObj;
       };
-
+      // debugger;
       var result = allCrimes.reduce(reducer, initialValue);
-
-      // for (var i=1; i < 53; i++) {
-      //   if(!result["district"+i]) {
-      //     result["district"+i] = {
-      //       "total": 0,
-      //       "BURGLARY": 0,
-      //       "MOTOR VEHICLE THEFT": 0,
-      //       "THEFT/LARCENY": 0,
-      //       "VANDALISM": 0,
-      //       "VEHICLE BREAK-IN/THEFT": 0
-      //     };
-      //   }
-      // }
 
       this.setState({
         allCrimes: result
@@ -208,7 +195,6 @@ var Map = React.createClass({
         this.addGeoJSON(this.props.chamber);
       });
 
-      console.log(this.state.allCrimes);
     }
   },
 
