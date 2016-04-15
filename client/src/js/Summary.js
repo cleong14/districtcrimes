@@ -70,17 +70,6 @@ var Summary = React.createClass({
 
   },
 
-  getDistrictInfo: function (districtNumber) {
-    if (this.props.districtData) {
-      var chamber = this.props.districtData[this.props.chamber];
-      for (var i=0; i < chamber.length; i++) {
-        if (chamber[i].district_name === districtNumber) {
-          return chamber[i];
-        }
-      }
-    }
-  },
-
   totalCrimesPerWeek: function (chamber) {
     if (this.props.senateCrimes) {
 
@@ -164,7 +153,7 @@ var Summary = React.createClass({
 
   drawLines: function () {
     if (this.props.senateCrimes) {
-      
+
       this.runSort();
 
       var theftArr  = [];
@@ -194,25 +183,23 @@ var Summary = React.createClass({
   render: function() {
 
     // return our JSX that is rendered to the DOM
-    if (this.props.districtData) {
-      if (this.state.lines.every(line => !line.values.length)) {
-        return null;
-      }
+    if (this.state.lines.every(line => !line.values.length)) {
+      return null;
+    }
 
-      var districtInfo = this.getDistrictInfo(this.props.districtNumber);
-      return (
-        <div id="summary">
-          <LineChart
-            data={this.state.lines}
-            interpolate="linear"
-            width={800}
-            height={400}
-            margin={{top: 10, bottom: 50, left: 50, right: 10}}
-            xScale={this.state.xScale}
-            xAxis={{tickValues: this.state.xScale.ticks(d3.time.month, 1), tickFormat: d3.time.format("%m/%d")}}
-            color={this.state.color}
-          />
-          <div className="brush" style={{float: 'none'}}>
+    return (
+      <div id="summary">
+        <LineChart
+          data={this.state.lines}
+          interpolate="linear"
+          width={800}
+          height={400}
+          margin={{top: 10, bottom: 50, left: 50, right: 10}}
+          xScale={this.state.xScale}
+          xAxis={{tickValues: this.state.xScale.ticks(d3.time.month, 1), tickFormat: d3.time.format("%m/%d")}}
+          color={this.state.color}
+        />
+        <div className="brush" style={{float: 'none'}}>
           <Brush
             width={400}
             height={50}
@@ -222,11 +209,9 @@ var Summary = React.createClass({
             onChange={this._onChange}
             xAxis={{tickValues: this.state.xScaleBrush.ticks(d3.time.month, 1), tickFormat: d3.time.format("%m/%d")}}
           />
-          </div>
         </div>
-      );
-    }
-    return null;
+      </div>
+    );
   },
 
   _onChange: function (extent) {
@@ -241,72 +226,3 @@ function isSameObject (a, b) {
 
 // export our Summary component so that Browserify can include it with other components that require it
 module.exports = Summary;
-
-
-
-// var Politician = React.createClass({
-//   componentWillReceiveProps: function(newProps) {
-//     console.log(newProps);
-//     this.getPhotoUrl(newProps.districtNumber);
-//   },
-
-//   getPhotoUrl: function (districtNumber) {
-//     if (this.props.districtData) {
-//       var url;
-//       for (var i=0; i < this.props.districtData[this.props.chamber].length; i++) {
-//         if (this.props.districtData[this.props.chamber][i].district_name === districtNumber) {
-//           url = this.props.districtData[this.props.chamber][i].politician_picture;
-//         }
-//         break;
-//       }
-//       console.log(url);
-//       return url;
-//     }
-//   },
-
-//   render: function () {
-//     return (
-//       <div>
-//         <img src={} />
-//       </div>
-//     )
-//   }
-// });
-
-
-
-
-    // // return our JSX that is rendered to the DOM
-    // if (this.props.districtData) {
-    //   var districtInfo = this.getDistrictInfo(this.props.districtNumber);
-    //   return (
-    //     <div id="summary">
-    //       <div id="politician">
-    //         <img id="photo" src={districtInfo.politician_picture}/>
-    //         <h4>{districtInfo.politician_firstname} {districtInfo.politician_lastname}</h4>
-    //         <p>TEL: {districtInfo.contact_phone}</p>
-    //         <p>E-mail: <a href={districtInfo.contact_email}>{districtInfo.contact_email}</a></p>
-    //       </div>
-
-    //       <LineChart
-    //         data={this.state.lines}
-    //         width={800}
-    //         height={400}
-    //         margin={{top: 10, bottom: 50, left: 50, right: 10}}
-    //         xScale={this.state.xScale}
-    //         xAxis={{tickValues: this.state.xScale.ticks(d3.time.day, 7), tickFormat: d3.time.format("%m/%d")}}
-    //       />
-    //     </div>
-    //   );
-
-
-
-
-
-
-
-// working sql query
-// SELECT date_trunc('week',crimes.date) as "crimes_date", crimes.type, "houseDistrict", "senateDistrict", count(crimes.type) as "crimes_count"
-// FROM crimes
-// GROUP BY "crimes_date", crimes.type, "houseDistrict", "senateDistrict"
-// ORDER BY crimes.type;
