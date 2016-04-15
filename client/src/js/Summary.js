@@ -5,13 +5,10 @@ var LineChart = ReactD3.LineChart;
 var Brush = ReactD3.Brush;
 var moment = require('moment');
 var range = require('moment-range');
-moment().format();
+// moment().format();
 
-var datesArr = [];
-var objArr = [];
-// console.log(range);
-
-// console.log(moment().toObject());
+// var datesArr = [];
+// var objArr = [];
 
 var Summary = React.createClass({
   //this is the Summary module to be exported. Put all code in here.
@@ -44,9 +41,11 @@ var Summary = React.createClass({
     // calculate min and max domain from props data
 
     var xScale = d3.time.scale().domain([new Date(2015, 8, 24), new Date(2016, 2, 29)]).range([0, 400 - 70]);
-    // xScaleBrush: d3.time.scale().domain([new Date(2015, 2, 5), new Date(2015, 2, 26)]).range([0, 400 - 70]);
+    var xScaleBrush = d3.time.scale().domain([new Date(2015, 8, 24), new Date(2016, 2, 29)]).range([0, 400 - 70]);
+    var color = d3.scale.ordinal().domain(['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY']).range(['#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff']);
+
     // TODO: if we wanted an initial "state" for our map component we could add it here
-    return {lines: lines, xScale: xScale, allCrimes: allCrimes};
+    return {lines: lines, xScale: xScale, xScaleBrush: xScaleBrush, color: color, allCrimes: allCrimes};
   },
 
   componentWillMount: function() {
@@ -165,13 +164,6 @@ var Summary = React.createClass({
   },
 
   drawLines: function () {
-    var theftLarcenyObj = {};
-    var vehicleBreakInTheftObj = {};
-    var vandalismObj = {};
-    var motorVehicleTheftObj = {};
-    var burglaryObj;
-    var allDates;
-
     if (this.props.senateCrimes) {
       this.runSort();
 
@@ -225,11 +217,27 @@ var Summary = React.createClass({
             margin={{top: 10, bottom: 50, left: 50, right: 10}}
             xScale={this.state.xScale}
             xAxis={{tickValues: this.state.xScale.ticks(d3.time.month, 1), tickFormat: d3.time.format("%m/%d")}}
+            color={this.state.color}
           />
+          <div className="brush" style={{float: 'none'}}>
+          <Brush
+            width={400}
+            height={50}
+            margin={{top: 0, bottom: 30, left: 50, right: 20}}
+            xScale={this.state.xScaleBrush}
+            extent{[new Date(2015, 8, 24), new Date(2015, 9, 24)]}
+            onChange={this._onChange}
+            xAxis={{tickValues: this.state.xScaleBrush.ticks(d3.time.month, 1), tickFormat: d3.time.format("%m/%d")}}
+          />
+          </div>
         </div>
       );
     }
     return null;
+  },
+
+  _onChange: function (extent) {
+    this.setState({xScale: d3.time.scale().domain([extent[0], extent[1]]).range([0, 400-70])});
   }
 
 });
