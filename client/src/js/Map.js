@@ -175,14 +175,8 @@ var Map = React.createClass({
           newObj["district"+crimeGlob.district] = {
             total: parseInt(crimeGlob.count)
           };
-          // newObj["district"+crimeGlob.district][crimeGlob.type] = parseInt(crimeGlob.count);
         } else {
           newObj["district"+crimeGlob.district].total += parseInt(crimeGlob.count);
-          // if (!newObj["district"+crimeGlob.district][crimeGlob.type]) {
-          //   newObj["district"+crimeGlob.district][crimeGlob.type] = parseInt(crimeGlob.count);
-          // } else {
-          //   newObj["district"+crimeGlob.district][crimeGlob.type] += parseInt(crimeGlob.count);
-          // }
         }
         return newObj;
       };
