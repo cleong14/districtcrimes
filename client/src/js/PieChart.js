@@ -147,24 +147,27 @@ var DonutChart=React.createClass({
     },
 
     updateData:function() {
-            // debugger;
+            //debugger;
             // function getCrimeCount (crimeArray, crimeType) {
 
             //     var crimeArray = ['BURGLARY','THEFT/LARCENY','MOTOR-VEHICLE-THEFT','VANDALISM','VEHICLE-BREAK-IN'];
             // }
 
-    var dataCrime = this.props.senateCrimes;
+    var senateCrime = this.props.senateCrimes;
+    // var houseCrime = this.props.houseCrimes;
+    var district = this.props.districtNumber;
        
     var burglaryCrime = 
-        dataCrime
+        senateCrime
             .filter(function(crime) {
                 if (crime.district && crime.count) return true;
             })
             .filter(function(crime) {
-                return crime.type === 'BURGLARY';  
+                return crime.type === 'BURGLARY' && crime.district === district; 
             })
             // .filter(function(crime) {
             //     // console.log("This is a test " + crime.district);
+            //     // console.log("What " + this.props.districtNumber);
             //     if (this.props.districtNumber) {
             //         return crime.district === this.props.districtNumber;  
             //     } else {
@@ -182,15 +185,15 @@ var DonutChart=React.createClass({
     }, 0);
 
     var theftCrime = 
-        dataCrime
+        senateCrime
             .filter(function(crime) {
                 if (crime.district && crime.count) return true;
             })
             .filter(function(crime) {
-                return crime.type === 'THEFT/LARCENY';  
+                return crime.type === 'THEFT/LARCENY' && crime.district === district;  
             })
             // .filter(function(crime) {
-            //     // console.log("This is a test " + crime.district);
+            // //     // console.log("This is a test " + crime.district);
             //     if (this.props.districtNumber) {
             //         return crime.district == this.props.districtNumber;  
             //     } else {
@@ -208,12 +211,12 @@ var DonutChart=React.createClass({
     }, 0);
 
     var motorCrime = 
-        dataCrime
+        senateCrime
             .filter(function(crime) {
                 if (crime.district && crime.count) return true;
             })
             .filter(function(crime) {
-                return crime.type === 'MOTOR VEHICLE THEFT';  
+                return crime.type === 'MOTOR VEHICLE THEFT' && crime.district === district;  
             })
             // .filter(function(crime) {
             //     // console.log("This is a test " + crime.district);
@@ -234,12 +237,12 @@ var DonutChart=React.createClass({
     }, 0);
 
     var vandalCrime = 
-        dataCrime
+        senateCrime
             .filter(function(crime) {
                 if (crime.district && crime.count) return true;
             })
             .filter(function(crime) {
-                return crime.type === 'VANDALISM';  
+                return crime.type === 'VANDALISM' && crime.district === district;  
             })
             // .filter(function(crime) {
             //     // console.log("This is a test " + crime.district);
@@ -260,13 +263,13 @@ var DonutChart=React.createClass({
     }, 0);
 
     var vehicleCrime = 
-        dataCrime
+        senateCrime
             .filter(function(crime) {
                 if (crime.district && crime.count) return true;
             })
             .filter(function(crime) {
                 // return crime.type === 'VEHICLE-BREAK-IN';
-                return crime.type === 'VEHICLE BREAK-IN/THEFT';
+                return crime.type === 'VEHICLE BREAK-IN/THEFT' && crime.district === district;
             })
             // .filter(function(crime) {
             //     // console.log("This is a test " + crime.district);
@@ -298,7 +301,7 @@ var DonutChart=React.createClass({
         this.setState({ 'data':data });
     },
     render:function(){
-
+        // console.log(this.props)
         return (
             <div>
                 <svg id={this.props.id} width={this.state.width}
@@ -331,7 +334,8 @@ var currentlyDisplayed = {
 
 var PieChart = React.createClass({
   render:function(){
-    console.log(this.props.senateCrimes);
+    // console.log(this.props);
+
     return (
       <div id="pie-chart">
           <h3>Total Crimes</h3>
@@ -341,6 +345,7 @@ var PieChart = React.createClass({
                     districtNumber={this.props.districtNumber}
                     padAngle={0.03}
                     senateCrimes={this.props.senateCrimes}
+                    houseCrimes={this.props.houseCrimes}
                 />
           </div>
       </div>

@@ -167,6 +167,7 @@ var App = React.createClass({
           />
           <PieChart
             filter={this.state.filter}
+            districtNumber={this.state.districtNumber}
             senateCrimes={this.state.filteredSenateCrimes}
             houseCrimes={this.state.filteredHouseCrimes}
           />
