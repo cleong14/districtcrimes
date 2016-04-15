@@ -63,7 +63,7 @@ var Summary = React.createClass({
   },
 
   componentDidUpdate: function () {
-    this.drawLines();
+    // this.drawLines();
   },
 
   componentWillUnmount: function() {
@@ -137,24 +137,24 @@ var Summary = React.createClass({
     }
   },
 
-  runSort: function () {
-    if (this.props.senateCrimes) {
-      this.state.allCrimes.sort(function (a, b) {
-        if (a.time > b.time) {
-          return 1;
-        }
-        if (a.time < b.time) {
-          return -1;
-        }
-        return 0;
-      });
-    }
-  },
+  // runSort: function () {
+  //   if (this.props.senateCrimes) {
+  //     this.state.allCrimes.sort(function (a, b) {
+  //       if (a.time > b.time) {
+  //         return 1;
+  //       }
+  //       if (a.time < b.time) {
+  //         return -1;
+  //       }
+  //       return 0;
+  //     });
+  //   }
+  // },
 
   drawLines: function () {
     if (this.props.senateCrimes) {
 
-      this.runSort();
+      // this.runSort();
 
       var theftArr  = [];
       var vehicleArr  = [];
@@ -189,27 +189,7 @@ var Summary = React.createClass({
 
     return (
       <div id="summary">
-        <LineChart
-          data={this.state.lines}
-          interpolate="linear"
-          width={800}
-          height={400}
-          margin={{top: 10, bottom: 50, left: 50, right: 10}}
-          xScale={this.state.xScale}
-          xAxis={{tickValues: this.state.xScale.ticks(d3.time.month, 1), tickFormat: d3.time.format("%m/%d")}}
-          color={this.state.color}
-        />
-        <div className="brush" style={{float: 'none'}}>
-          <Brush
-            width={400}
-            height={50}
-            margin={{top: 0, bottom: 30, left: 50, right: 20}}
-            xScale={this.state.xScaleBrush}
-            extent={[new Date(2015, 8, 24), new Date(2015, 9, 24)]}
-            onChange={this._onChange}
-            xAxis={{tickValues: this.state.xScaleBrush.ticks(d3.time.month, 1), tickFormat: d3.time.format("%m/%d")}}
-          />
-        </div>
+
       </div>
     );
   },
@@ -226,3 +206,25 @@ function isSameObject (a, b) {
 
 // export our Summary component so that Browserify can include it with other components that require it
 module.exports = Summary;
+
+        // <LineChart
+        //   data={this.state.lines}
+        //   interpolate="linear"
+        //   width={800}
+        //   height={400}
+        //   margin={{top: 10, bottom: 50, left: 50, right: 10}}
+        //   xScale={this.state.xScale}
+        //   xAxis={{tickValues: this.state.xScale.ticks(d3.time.month, 1), tickFormat: d3.time.format("%m/%d")}}
+        //   color={this.state.color}
+        // />
+        // <div className="brush" style={{float: 'none'}}>
+        //   <Brush
+        //     width={400}
+        //     height={50}
+        //     margin={{top: 0, bottom: 30, left: 50, right: 20}}
+        //     xScale={this.state.xScaleBrush}
+        //     extent={[new Date(2015, 8, 24), new Date(2015, 9, 24)]}
+        //     onChange={this._onChange}
+        //     xAxis={{tickValues: this.state.xScaleBrush.ticks(d3.time.month, 1), tickFormat: d3.time.format("%m/%d")}}
+        //   />
+        // </div>
