@@ -137,7 +137,20 @@ var App = React.createClass({
   },
   render: function() {
     return (
-      <div>
+      <div class="container">
+        <div className="banner">
+          <div id="logo">
+            <div id="title">
+              <h3>VISUAL</h3>
+            </div>
+            <div id="title2">
+              <h3>VILLANY</h3>
+            </div>
+            <div id="picture">
+              <img src="../../img/medical.png" height="70" width="70"></img>
+            </div>
+          </div>
+        </div>
         <div className="topLevel">
           <Filter
             types={this.state.types}

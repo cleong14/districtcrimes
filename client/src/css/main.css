@@ -140,8 +140,9 @@ html, body {
 .topLevel {
   display: flex;
   flex-wrap: nowrap | wrap | wrap-reverse;
-  flex-direction: row;
   background-color: #FFF;
+  order: 2;
+  height: 35%;
 }
 
 #filter {
@@ -160,7 +161,7 @@ html, body {
   height: 400px;
 }
 
-.politician-placeholder {
+#politician {
   width: 20%;
   background-color: #FFF;
   order: 3;
@@ -171,6 +172,8 @@ html, body {
   flex-wrap: nowrap | wrap | wrap-reverse;
   flex-direction: row;
   background-color: purple;
+  order: 3;
+  height: 35%;
 }
 
 #summary {
@@ -188,7 +191,46 @@ html, body {
   padding: 44px;
 }
 
-h3 {
-  color: #FFF;
+
+.container {
+  display: flex;
+  flex-direction: column;
 }
+
+.banner {
+  order: 1;
+  display: flex;
+  height: 30%;
+  background-color: #654173;
+}
+
+#title {
+  flex-direction: row;
+  order: 2;
+  color: #FFF;
+  padding-left: 21px;
+  padding-top: 16px;
+}
+
+#title2 {
+  flex-direction: row;
+  order: 3;
+  color: #1D929E;
+  padding-top: 16px;
+}
+
+
+#picture {
+  flex-direction: row;
+  order: 1;
+}
+
+#logo {
+  display: flex;
+}
+
+
+
+
+
 

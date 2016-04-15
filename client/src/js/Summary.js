@@ -202,27 +202,7 @@ var Summary = React.createClass({
       var districtInfo = this.getDistrictInfo(this.props.districtNumber);
       return (
         <div id="summary">
-          <LineChart
-            data={this.state.lines}
-            interpolate="linear"
-            width={800}
-            height={400}
-            margin={{top: 10, bottom: 50, left: 50, right: 10}}
-            xScale={this.state.xScale}
-            xAxis={{tickValues: this.state.xScale.ticks(d3.time.month, 1), tickFormat: d3.time.format("%m/%d")}}
-            color={this.state.color}
-          />
-          <div className="brush" style={{float: 'none'}}>
-          <Brush
-            width={400}
-            height={50}
-            margin={{top: 0, bottom: 30, left: 50, right: 20}}
-            xScale={this.state.xScaleBrush}
-            extent={[new Date(2015, 8, 24), new Date(2015, 9, 24)]}
-            onChange={this._onChange}
-            xAxis={{tickValues: this.state.xScaleBrush.ticks(d3.time.month, 1), tickFormat: d3.time.format("%m/%d")}}
-          />
-          </div>
+
         </div>
       );
     }

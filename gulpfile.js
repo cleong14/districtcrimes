@@ -28,11 +28,13 @@ var path = {
   MINIFIED_OUT:   'js/build.min.js',
   OUT:            'js/build.js',
   DEST:           'public/',
+  DEST_ASSETS:    'public/img/', 
   DEST_BUILD:     'public/js/',
   DEST_SRC:       'public/src/',
   CSS_SRC:        'client/src/**/*.css',
   ENTRY_POINT:    'client/src/js/App.js',
-  DEPENDENCIES:   'node_modules/'
+  DEPENDENCIES:   'node_modules/',
+  ASSETS:         'client/src/assets/*.png'
 };
 
 gulp.task('clean', function () {
@@ -46,6 +48,12 @@ gulp.task('copy', function(){
     .pipe($.connect.reload());
 });
 
+gulp.task('assets', function () {
+  gulp.src([path.ASSETS])
+    .pipe(gulp.dest(path.DEST_ASSETS))
+    .pipe($.connect.reload());
+});
+
 gulp.task('connect', function() {
   $.connect.server({
     root: 'dist',
@@ -55,7 +63,7 @@ gulp.task('connect', function() {
 
 // watch: bundle everything and convert our JSX but don't minify or uglify it
 gulp.task('watch', function() {
-  gulp.watch(path.HTML, ['copy']);
+  gulp.watch(path.HTML, ['copy', 'assets']);
 
   var watcher  = watchify(
     browserify({
@@ -106,5 +114,5 @@ gulp.task('useref', function(){
 });
 
 // these are what get called when we do either `gulp` or `gulp production` on the CLI
-gulp.task('default', ['connect', 'watch', 'clean', 'copy', 'useref']);
+gulp.task('default', ['connect', 'watch', 'clean', 'copy', 'useref', 'assets']);
 gulp.task('production', ['useref', 'build']);
