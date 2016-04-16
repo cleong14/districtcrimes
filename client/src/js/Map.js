@@ -13,7 +13,7 @@ var map;
 var legend;
 var info;
 var geojsonLayer;
-var zoom;
+var theZoom;
 
 // map paramaters to pass to L.map when we instantiate it
 config.params = {
@@ -225,7 +225,7 @@ var Map = React.createClass({
   // Leaflet Control object - Map legend
   addLegendToMap: function (chamber) {
     // bottom right legend panel
-    if (legend){
+    if (legend) {
       map.removeControl(legend);
     }
     var _this = this;
@@ -246,25 +246,26 @@ var Map = React.createClass({
   },
 
   addZoomToMap: function () {
-    if (zoom) {
-      map.removeControl(zoom);
+    // debugger;
+    if (theZoom) {
+      map.removeControl(theZoom);
     }
 
     var _this = this;
-    zoom = L.Control({position: 'topleft'});
+    theZoom = L.control({position: 'topleft'});
 
-    zoom.onAdd = function (map) {
+    theZoom.onAdd = function (map) {
       var div = L.DomUtil.create('div', 'zoom');
       div.innerHTML = "<h3>Center Map</h3>" ;
       L.DomEvent.on(div, "click", this._click );
       return div;
     };
 
-    zoom._click = function () {
+    theZoom._click = function () {
       _this.zoomToCenter();
     };
 
-    zoom.addTo(map);
+    theZoom.addTo(map);
   },
 
   getNeighborhoods: function (districtNumber) {
@@ -325,7 +326,6 @@ var Map = React.createClass({
   },
 
   zoomToCenter: function (e) {
-    console.log("click");
     map.setView([21.477351, -157.962799], 10);
   },
 
