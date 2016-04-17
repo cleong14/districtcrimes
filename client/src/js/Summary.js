@@ -187,25 +187,23 @@ var Summary = React.createClass({
       if (this.state.lines.every(line => !line.values.length)) {
         return null;
       }
-
       var districtInfo = this.getDistrictInfo(this.props.districtNumber);
       return (
         <div id="summary">
 
         </div>
       );
+      if (this.state.lines.every(line => !line.values.length)) {
+        return null;
+      }
+      return (
+        <div id="summary">
 
-    if (this.state.lines.every(line => !line.values.length)) {
-      return null;
-
+        </div>
+      );
     }
-
-    return (
-      <div id="summary">
-
-      </div>
-    );
   },
+
 
   _onChange: function (extent) {
     this.setState({xScale: d3.time.scale().domain([extent[0], extent[1]]).range([0, 400-70])});
