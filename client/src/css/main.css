@@ -75,6 +75,7 @@ html, body {
   margin: 25px;
   padding: 10px;
   background: #fff;
+  height: 400px;
 }
 
 
@@ -185,5 +186,9 @@ html, body {
   height: 100%;
   order: 2;
   padding: 44px;
+}
+
+h3 {
+  color: #FFF;
 }
 

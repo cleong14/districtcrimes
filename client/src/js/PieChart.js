@@ -347,6 +347,7 @@ var PieChart = React.createClass({
                     senateCrimes={this.props.senateCrimes}
                     houseCrimes={this.props.houseCrimes}
                 />
+            <DonutChart id="bs_chart" padAngle={0.03}/>
           </div>
       </div>
     )
