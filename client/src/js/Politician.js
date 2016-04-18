@@ -33,11 +33,9 @@ var Politician = React.createClass({
   getDistrictInfo: function (districtNumber) {
     if (this.props.districtData) {
       var chamber = this.props.districtData[this.props.chamber];
-      // console.log(chamber);
       for (var i=0; i < chamber.length; i++) {
         if (chamber[i].district_name === districtNumber) {
           this.setState({districtInfo: chamber[i]});
-          // console.log(this.state);
         }
       }
     }
@@ -59,7 +57,6 @@ var Politician = React.createClass({
   render: function() {
     // return our JSX that is rendered to the DOM
     var districtInfo = this.state.districtInfo;
-    // console.log(districtInfo);
       return (
         <div id="politician">
           {this.buildTheDiv(this.state.districtInfo)}

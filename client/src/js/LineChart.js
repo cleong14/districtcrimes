@@ -5,10 +5,6 @@ var LineChart = ReactD3.LineChart;
 var Brush = ReactD3.Brush;
 var moment = require('moment');
 var range = require('moment-range');
-// moment().format();
-
-// var datesArr = [];
-// var objArr = [];
 
 var Summary = React.createClass({
   //this is the Summary module to be exported. Put all code in here.
@@ -70,7 +66,7 @@ var Summary = React.createClass({
   },
 
   componentDidUpdate: function () {
-    // this.drawLines();
+    // this.drawLines(this.props);
   },
 
   componentWillUnmount: function() {

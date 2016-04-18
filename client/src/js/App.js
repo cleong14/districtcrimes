@@ -29,7 +29,10 @@ var App = React.createClass({
       method: "GET",
       dataType: "json",
       success: (data) => {
-        this.setState({senateCrimes: data[0], filteredSenateCrimes: data[0]});
+        this.setState({
+          senateCrimes: data[0],
+          filteredSenateCrimes: data[0]
+        });
       },
       failure: function (err) {
         // console.log(err);
@@ -42,7 +45,10 @@ var App = React.createClass({
       method: "GET",
       dataType: "json",
       success: (data) => {
-        this.setState({houseCrimes: data[0], filteredHouseCrimes: data[0]});
+        this.setState({
+          houseCrimes: data[0],
+          filteredHouseCrimes: data[0]
+        });
       },
       failure: function (err) {
         // console.log(err);
@@ -100,9 +106,9 @@ var App = React.createClass({
 
       // this is the bottle neck!!!
       this.setState({
+        filter: filterArr,
         filteredSenateCrimes: senateFilteredCrimes,
-        filteredHouseCrimes: houseFilteredCrimes,
-        filter: filterArr
+        filteredHouseCrimes: houseFilteredCrimes
       }, () => {
         console.log(this.state);
       });
