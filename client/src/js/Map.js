@@ -221,6 +221,7 @@ var Map = React.createClass({
       map.removeControl(info);
     }
 
+    var districtInfo = this.state.districtdata;
     var _this = this;
     // Top right info panel
     info = this.info = L.control();
@@ -251,8 +252,15 @@ var Map = React.createClass({
     legend = L.control({position: 'bottomright'});
     legend.onAdd = function (map) {
       var div = L.DomUtil.create('div', 'legend'),
-        grades = [0, 1, 100, 250, 500, 1000, 2000],
-        labels = [];
+        grades = [
+          0,
+          config.crimeLevels[chamber].level1,
+          config.crimeLevels[chamber].level2,
+          config.crimeLevels[chamber].level3,
+          config.crimeLevels[chamber].level4,
+          config.crimeLevels[chamber].level5,
+          config.crimeLevels[chamber].level6
+        ];
       // loop through our density intervals and generate a label with a colored square for each interval
       for (var i = 0; i < grades.length; i++) {
         div.innerHTML +=
@@ -287,6 +295,7 @@ var Map = React.createClass({
     theZoom.addTo(map);
   },
 
+  // refactor this to get all district info, not just neighborhoods
   getNeighborhoods: function (districtNumber) {
     for (var i in this.props.districtData[this.props.chamber]) {
       if (this.props.districtData[this.props.chamber][i].district_name === districtNumber) {
