@@ -158,6 +158,7 @@ var App = React.createClass({
             senate={this.state.senate}
             districtData={this.state.districtData}
             updateDistrictNumber={this.updateDistrictNumber}
+            districtNumber={this.state.districtNumber}
             senateCrimes={this.state.filteredSenateCrimes}
             houseCrimes={this.state.filteredHouseCrimes}
           />

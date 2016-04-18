@@ -221,7 +221,7 @@ var Map = React.createClass({
       map.removeControl(info);
     }
 
-    var districtInfo = this.state.districtdata;
+    var districtInfo = this.getDistrictInfo(this.props.districtNumber);
     var _this = this;
     // Top right info panel
     info = this.info = L.control();
@@ -232,8 +232,8 @@ var Map = React.createClass({
     };
     // method that we will use to update the control based on feature properties passed
     info.update = function (props) {
-        this._div.innerHTML = '<h4>Hawaii '+ _this.capitalizeFirstLetter(_this.props.chamber) +' Districts</h4>' +  (props ?
-            '<b>'+ _this.capitalizeFirstLetter(_this.props.chamber) + ' District ' + props.objectid + '</b><br>' +
+        this._div.innerHTML = '<h4>Hawaii '+ districtInfo.politician_officetype +' Districts</h4>' +  (props ?
+            '<b>'+ districtInfo.politician_officetype + ' District ' + props.objectid + '</b><br>' +
             '<b>' + _this.getLegislator(props.objectid) + '</b>' +
             '<p>Neighborhoods: ' + _this.getNeighborhoods(props.objectid) + '</p>'
             : 'Hover over a district!');
@@ -313,6 +313,14 @@ var Map = React.createClass({
     return str;
   },
 
+  getDistrictInfo: function (districtNumber) {
+    for (var i in this.props.districtData[this.props.chamber]) {
+      if (this.props.districtData[this.props.chamber][i].district_name === districtNumber) {
+        return this.props.districtData[this.props.chamber][i];
+      }
+    }
+  },
+
   getLegislator: function (districtNumber) {
     var politician = "";
     for (var i in this.props.districtData[this.props.chamber]) {
@@ -387,7 +395,6 @@ var Map = React.createClass({
     return (
       <div id="mapUI">
         <div id="map"></div>
-        <button className="button" onClick={this.zoomToCenter}>Zoom Out</button>
       </div>
     );
 
