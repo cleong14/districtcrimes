@@ -301,7 +301,7 @@ var DonutChart=React.createClass({
         { name: 'BURGLARY', count: burglaryChart },
         { name: 'MOTOR VEHICLE THEFT', count: motorChart },
         { name: 'VANDALISM', count: vandalChart },
-        { name: 'VEHICLE BREAK-IN/THEFT', count: vehicleChart }
+        { name: 'VEHICLE BREAK-IN', count: vehicleChart }
       ];
       this.setState({ 'data':data });
     }
@@ -311,7 +311,7 @@ var DonutChart=React.createClass({
         { name: 'BURGLARY', count: houseBurglaryChart },
         { name: 'MOTOR VEHICLE THEFT', count: houseMotorChart },
         { name: 'VANDALISM', count: houseVandalChart },
-        { name: 'VEHICLE BREAK-IN/THEFT', count: houseVehicleChart }
+        { name: 'VEHICLE BREAK-IN', count: houseVehicleChart }
       ];
       this.setState({ 'data':data });
     }
@@ -319,7 +319,8 @@ var DonutChart=React.createClass({
   render:function(){
       
       return (
-          <div>
+          <div id="pie-chart">
+            <h3 id="total-crimes-header">Total Crimes</h3>
               <svg id={this.props.id} width={this.state.width}
                    height={this.props.height} className="shadow" onClick={this.updateData}>
                   <DonutChartPath width={this.state.width} height={this.props.height}
@@ -331,33 +332,6 @@ var DonutChart=React.createClass({
       );
   }
 });
-var crime_type_totals = {
-  theft_larceny: 0,
-  vehicle_breakIn_theft: 0,
-  vandalism: 0,
-  burglary: 0,
-  motor_vehicle_theft: 0
-}
-var currentlyDisplayed = {
-  total: 0
-}
-var PieChart = React.createClass({
-  render:function(){
-    return (
-      <div id="pie-chart">
-          <h3 id="total-crimes-header">Total Crimes</h3>
-          <div>
-                <DonutChart 
-                    id="bs_chart" 
-                    districtNumber={this.props.districtNumber}
-                    padAngle={0.03}
-                    senateCrimes={this.props.senateCrimes}
-                    houseCrimes={this.props.houseCrimes}
-                    chamber={this.props.chamber}
-                />
-          </div>
-      </div>
-    )
-  }
-});
-module.exports = PieChart;
+
+
+module.exports = DonutChart;

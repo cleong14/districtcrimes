@@ -5,7 +5,7 @@ var Map = require('./Map');
 var Filter = require('./Filter');
 var Summary = require('./Summary');
 var Politician = require('./Politician');
-var PieChart = require('./PieChart');
+var DonutChart = require('./PieChart');
 // where in the actual DOM to mount our App
 var mountNode = document.getElementById('app');
 // App component
@@ -183,12 +183,13 @@ var App = React.createClass({
             houseCrimes={this.state.filteredHouseCrimes}
             filter={this.state.filter}
           />
-          <PieChart
+          <DonutChart
             filter={this.state.filter}
             districtNumber={this.state.districtNumber}
             chamber={this.state.chamber}
             senateCrimes={this.state.filteredSenateCrimes}
             houseCrimes={this.state.filteredHouseCrimes}
+            padAngle={0.03}
           />
         </div>
       </div>
