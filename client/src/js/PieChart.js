@@ -223,7 +223,7 @@ var DonutChart=React.createClass({
      
     //state changes go here? when the state changes the chart should too
     var data = [
-        { name: 'THEFT/LARCENY', count: houseTheftChart},
+        { name: 'THEFT/LARCENY', count:  houseTheftChart},
         { name: 'BURGLARY', count: burglaryChart },
         { name: 'MOTOR VEHICLE THEFT', count: motorChart },
         { name: 'VANDALISM', count: vandalChart },
