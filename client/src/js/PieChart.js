@@ -138,27 +138,170 @@ var DonutChart=React.createClass({
         var data = [
             { name: 'THEFT/LARCENY', count: 8849 },
             { name: 'BURGLARY', count: 2054 },
-            { name: 'MOTOR-VEHICLE-THEFT', count: 1891 },
+            { name: 'MOTOR VEHICLE THEFT', count: 1891 },
             { name: 'VANDALISM', count: 242 },
-            { name: 'VEHICLE-BREAK-IN', count: 5128 }
+            { name: 'VEHICLE BREAK-IN/THEFT', count: 5128 }
         ];
 
         this.setState({'data':data,width:this.props.width});
     },
 
-    updateData:function(){//state changes go here? when the state changes the chart should too
+    updateData:function() {
+            //debugger;
+            // function getCrimeCount (crimeArray, crimeType) {
+
+            //     var crimeArray = ['BURGLARY','THEFT/LARCENY','MOTOR-VEHICLE-THEFT','VANDALISM','VEHICLE-BREAK-IN'];
+            // }
+
+    var senateCrime = this.props.senateCrimes;
+    // var houseCrime = this.props.houseCrimes;
+    var district = this.props.districtNumber;
+       
+    var burglaryCrime = 
+        senateCrime
+            .filter(function(crime) {
+                if (crime.district && crime.count) return true;
+            })
+            .filter(function(crime) {
+                return crime.type === 'BURGLARY' && crime.district === district; 
+            })
+            // .filter(function(crime) {
+            //     // console.log("This is a test " + crime.district);
+            //     // console.log("What " + this.props.districtNumber);
+            //     if (this.props.districtNumber) {
+            //         return crime.district === this.props.districtNumber;  
+            //     } else {
+            //         return true;
+            //     }
+            // })
+            .map(function(crime) {
+                return crime.count;
+            });
+                    
+    var burglaryChart = burglaryCrime.reduce(function(total, count) {
+        var number = parseInt(count);
+
+        return total + number;
+    }, 0);
+
+    var theftCrime = 
+        senateCrime
+            .filter(function(crime) {
+                if (crime.district && crime.count) return true;
+            })
+            .filter(function(crime) {
+                return crime.type === 'THEFT/LARCENY' && crime.district === district;  
+            })
+            // .filter(function(crime) {
+            // //     // console.log("This is a test " + crime.district);
+            //     if (this.props.districtNumber) {
+            //         return crime.district == this.props.districtNumber;  
+            //     } else {
+            //         return true;
+            //     }
+            // })
+            .map(function(crime) {
+                return crime.count;
+            });
+                    
+    var theftChart = theftCrime.reduce(function(total, count) {
+        var number = parseInt(count);
+
+        return total + number;
+    }, 0);
+
+    var motorCrime = 
+        senateCrime
+            .filter(function(crime) {
+                if (crime.district && crime.count) return true;
+            })
+            .filter(function(crime) {
+                return crime.type === 'MOTOR VEHICLE THEFT' && crime.district === district;  
+            })
+            // .filter(function(crime) {
+            //     // console.log("This is a test " + crime.district);
+            //     if (this.props.districtNumber) {
+            //         return crime.district == this.props.districtNumber;  
+            //     } else {
+            //         return true;
+            //     }
+            // })
+            .map(function(crime) {
+                return crime.count;
+            });
+                    
+    var motorChart = motorCrime.reduce(function(total, count) {
+        var number = parseInt(count);
+
+        return total + number;
+    }, 0);
+
+    var vandalCrime = 
+        senateCrime
+            .filter(function(crime) {
+                if (crime.district && crime.count) return true;
+            })
+            .filter(function(crime) {
+                return crime.type === 'VANDALISM' && crime.district === district;  
+            })
+            // .filter(function(crime) {
+            //     // console.log("This is a test " + crime.district);
+            //     if (this.props.districtNumber) {
+            //         return crime.district == this.props.districtNumber;  
+            //     } else {
+            //         return true;
+            //     }
+            // })
+            .map(function(crime) {
+                return crime.count;
+            });
+                    
+    var vandalChart = vandalCrime.reduce(function(total, count) {
+        var number = parseInt(count);
+
+        return total + number;
+    }, 0);
+
+    var vehicleCrime = 
+        senateCrime
+            .filter(function(crime) {
+                if (crime.district && crime.count) return true;
+            })
+            .filter(function(crime) {
+                // return crime.type === 'VEHICLE-BREAK-IN';
+                return crime.type === 'VEHICLE BREAK-IN/THEFT' && crime.district === district;
+            })
+            // .filter(function(crime) {
+            //     // console.log("This is a test " + crime.district);
+            //     if (this.props.districtNumber) {
+            //         return crime.district == this.props.districtNumber;  
+            //     } else {
+            //         return true;
+            //     }
+            // })
+            .map(function(crime) {
+                return crime.count;
+            });
+                    
+    var vehicleChart = vehicleCrime.reduce(function(total, count) {
+        var number = parseInt(count);
+
+        return total + number;
+    }, 0);
+       
+//state changes go here? when the state changes the chart should too
         var data = [
-            { name: 'THEFT/LARCENY', count: 10 },
-            { name: 'BURGLARY', count: 32 },
-            { name: 'MOTOR-VEHICLE-THEFT', count: 40 },
-            { name: 'VANDALISM', count: 50 },
-            { name: 'VEHICLE-BREAK-IN', count: 6 }
+            { name: 'THEFT/LARCENY', count: theftChart },
+            { name: 'BURGLARY', count: burglaryChart },
+            { name: 'MOTOR VEHICLE THEFT', count: motorChart },
+            { name: 'VANDALISM', count: vandalChart },
+            { name: 'VEHICLE BREAK-IN/THEFT', count: vehicleChart }
         ];
 
-        this.setState({'data':data });
+        this.setState({ 'data':data });
     },
     render:function(){
-
+        // console.log(this.props)
         return (
             <div>
                 <svg id={this.props.id} width={this.state.width}
@@ -191,10 +334,19 @@ var currentlyDisplayed = {
 
 var PieChart = React.createClass({
   render:function(){
+    // console.log(this.props);
+
     return (
       <div id="pie-chart">
           <h3>Total Crimes</h3>
           <div>
+                <DonutChart 
+                    id="bs_chart" 
+                    districtNumber={this.props.districtNumber}
+                    padAngle={0.03}
+                    senateCrimes={this.props.senateCrimes}
+                    houseCrimes={this.props.houseCrimes}
+                />
             <DonutChart id="bs_chart" padAngle={0.03}/>
           </div>
       </div>

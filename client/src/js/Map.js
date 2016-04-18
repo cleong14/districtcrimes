@@ -13,6 +13,7 @@ var map;
 var legend;
 var info;
 var geojsonLayer;
+var theZoom;
 
 // map paramaters to pass to L.map when we instantiate it
 config.params = {
@@ -95,6 +96,7 @@ var Map = React.createClass({
     this.addGeoJSON(this.props.chamber);
     this.addInfoToMap();
     this.addLegendToMap(this.props.chamber);
+    this.addZoomToMap();
   },
 
   // Adds a geojson overlay to map; default is Senate
@@ -223,7 +225,7 @@ var Map = React.createClass({
   // Leaflet Control object - Map legend
   addLegendToMap: function (chamber) {
     // bottom right legend panel
-    if (legend){
+    if (legend) {
       map.removeControl(legend);
     }
     var _this = this;
@@ -241,6 +243,29 @@ var Map = React.createClass({
       return div;
     };
     legend.addTo(map);
+  },
+
+  addZoomToMap: function () {
+    // debugger;
+    if (theZoom) {
+      map.removeControl(theZoom);
+    }
+
+    var _this = this;
+    theZoom = L.control({position: 'topleft'});
+
+    theZoom.onAdd = function (map) {
+      var div = L.DomUtil.create('div', 'zoom');
+      div.innerHTML = "<h3>Center Map</h3>" ;
+      L.DomEvent.on(div, "click", this._click );
+      return div;
+    };
+
+    theZoom._click = function () {
+      _this.zoomToCenter();
+    };
+
+    theZoom.addTo(map);
   },
 
   getNeighborhoods: function (districtNumber) {

@@ -66,7 +66,7 @@ var Summary = React.createClass({
   },
 
   componentDidUpdate: function () {
-    // this.drawLines(this.props);
+
   },
 
   componentWillUnmount: function() {
@@ -143,7 +143,7 @@ var Summary = React.createClass({
 
   drawLines: function (props, newProps) {
     if (this.props.senateCrimes) {
-      
+
       // this.runSort();
 
       var theftArr  = [];
