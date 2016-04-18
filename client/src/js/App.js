@@ -141,10 +141,10 @@ var App = React.createClass({
         <div className="banner">
           <div id="logo">
             <div id="title">
-              <h3>VISUAL</h3>
+              <h3>DISTRICT</h3>
             </div>
             <div id="title2">
-              <h3>VILLANY</h3>
+              <h3>CRIMES</h3>
             </div>
             <div id="picture">
               <img src="../../img/medical.png" height="70" width="70"></img>
