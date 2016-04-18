@@ -11,7 +11,7 @@ html, body {
   width: 100%;
   font: 300 14px/1.4 'Helvetica Neue', Helvetica, Arial, sans-serif;
   /*background-image: url("../../assets/gplay.png");*/
-  background-color: #0f7d9e;
+  background-color: #FFF;
 }
 
 /*#app, #mapUI {
@@ -148,6 +148,8 @@ html, body {
 #filter {
   order: 1;
   width: 20%;
+  padding-left: 18px;
+  padding-top: 63px;
 }
 
 #mapUI {
@@ -171,7 +173,7 @@ html, body {
   display: flex;
   flex-wrap: nowrap | wrap | wrap-reverse;
   flex-direction: row;
-  background-color: purple;
+  background-color: #372E3B;
   order: 3;
   height: 35%;
 }
@@ -179,7 +181,7 @@ html, body {
 #summary {
   width: 50%;
   height: 100%;
-  background-color: #654173;
+  background-color: #372E3B;
   order: 1;
   padding: 44px;
 }
@@ -188,7 +190,8 @@ html, body {
   width: 50%;
   height: 100%;
   order: 2;
-  padding: 44px;
+  padding: 2px;
+  /*padding: 44px;*/
 }
 
 
@@ -201,7 +204,7 @@ html, body {
   order: 1;
   display: flex;
   height: 30%;
-  background-color: #654173;
+  background-color: #372E3B;
 }
 
 #title {
@@ -227,6 +230,20 @@ html, body {
 
 #logo {
   display: flex;
+}
+
+.chamber-buttons {
+  padding-left: 20px;
+  padding-top: 56px;
+
+}
+
+.leaflet-zoom-animated {
+  background-image: url("http://www.motionbackgroundsforfree.com/wp-content/uploads/2012/02/Screen-shot-2012-02-16-at-10.00.01-AM.png");
+}
+
+#total-crimes-header {
+  color: #FFF;
 }
 
 

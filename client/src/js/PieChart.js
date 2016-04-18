@@ -110,7 +110,7 @@ var DonutChart=React.createClass({
           { name: 'BURGLARY', count: 2054 },
           { name: 'MOTOR VEHICLE THEFT', count: 1891 },
           { name: 'VANDALISM', count: 242 },
-          { name: 'VEHICLE BREAK-IN/THEFT', count: 5128 }
+          { name: 'VEHICLE BREAK-IN', count: 5128 }
       ];
       this.setState({'data':data,width:this.props.width});
   },
@@ -261,7 +261,7 @@ var PieChart = React.createClass({
     // console.log(this.props);
     return (
       <div id="pie-chart">
-          <h3>Total Crimes</h3>
+          <h3 id="total-crimes-header">Total Crimes</h3>
           <div>
                 <DonutChart 
                     id="bs_chart" 
