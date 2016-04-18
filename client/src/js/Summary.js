@@ -130,7 +130,7 @@ var Summary = React.createClass({
       this.setState({
         allCrimes: resultArr
       }, () => {
-        console.log(this.state);
+        // console.log(this.state);
       });
 
       // console.log(this.state.allCrimes);
