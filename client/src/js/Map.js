@@ -59,6 +59,25 @@ config.colors = {
   }
 };
 
+config.crimeLevels = {
+  house: {
+    level1: 1,
+    level2: 100,
+    level3: 250,
+    level4: 500,
+    level5: 800,
+    level6: 1500
+  },
+  senate: {
+    level1: 1,
+    level2: 100,
+    level3: 250,
+    level4: 500,
+    level5: 1000,
+    level6: 2500
+  }
+};
+
 // here's the actual component
 var Map = React.createClass({
 
@@ -152,12 +171,12 @@ var Map = React.createClass({
   },
 
   getColor: function (chamber, districtCrimes) {
-    return  districtCrimes > 2000  ? config.colors[chamber].level6 :
-            districtCrimes > 1000  ? config.colors[chamber].level5 :
-            districtCrimes > 500   ? config.colors[chamber].level4 :
-            districtCrimes > 250   ? config.colors[chamber].level3 :
-            districtCrimes > 100   ? config.colors[chamber].level2 :
-            districtCrimes > 1     ? config.colors[chamber].level1 :
+    return  districtCrimes > config.crimeLevels[chamber].level6  ? config.colors[chamber].level6 :
+            districtCrimes > config.crimeLevels[chamber].level5  ? config.colors[chamber].level5 :
+            districtCrimes > config.crimeLevels[chamber].level4   ? config.colors[chamber].level4 :
+            districtCrimes > config.crimeLevels[chamber].level3   ? config.colors[chamber].level3 :
+            districtCrimes > config.crimeLevels[chamber].level2   ? config.colors[chamber].level2 :
+            districtCrimes > config.crimeLevels[chamber].level1     ? config.colors[chamber].level1 :
                                                           '#707070';
   },
 
