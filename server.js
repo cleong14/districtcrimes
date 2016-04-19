@@ -113,7 +113,7 @@ app.get('/housecrimequery', function (req, res) {
     'GROUP BY ' +
       '"type", "district", "to_timestamp" ' +
     'ORDER BY ' +
-      'type'
+      'to_timestamp'
   )
   .then(function (results) {
     res.json(results);
