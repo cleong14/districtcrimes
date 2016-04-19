@@ -216,11 +216,11 @@ var Summary = React.createClass({
       var houseMotorArr  = [];
       var houseBurglaryArr  = [];
 
-      console.log(newProps);
+      // console.log(newProps);
 
       newProps.filter.filter(function (crime) {
 
-        console.log(crime);
+        // console.log(crime);
 
         var totalDailyTheft = 0;
         var totalDailyVehicle = 0;
