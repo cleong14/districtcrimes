@@ -15,7 +15,7 @@ var App = React.createClass({
       types: ['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY' ],
       filter: ['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY'],
       chamber: 'senate',
-      districtNumber: 23,
+      districtNumber: 0,
       senateCrimes: [],
       houseCrimes: [],
       filteredSenateCrimes: [],
@@ -149,6 +149,7 @@ var App = React.createClass({
             types={this.state.types}
             onChange={this.toggleFilter}
             updateChamber={this.updateChamber}
+            updateDistrictNumber={this.updateDistrictNumber}
             filter={this.state.filter}
             filterCrimes={this.filterCrimes}
           />

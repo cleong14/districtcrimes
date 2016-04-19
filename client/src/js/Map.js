@@ -362,6 +362,7 @@ var Map = React.createClass({
   },
 
   zoomToCenter: function (e) {
+    // this.props.updateDistrictNumber(0);
     map.setView([21.477351, -157.962799], 10);
   },
 
