@@ -122,24 +122,9 @@ var Summary = React.createClass({
       }, () => {
         // console.log(this.state);
       });
-
       // console.log(this.state.allCrimes);
     }
   },
-
-  // runSort: function () {
-  //   if (this.props.senateCrimes) {
-  //     this.state.allCrimes.sort(function (a, b) {
-  //       if (a.time > b.time) {
-  //         return 1;
-  //       }
-  //       if (a.time < b.time) {
-  //         return -1;
-  //       }
-  //       return 0;
-  //     });
-  //   }
-  // },
 
   drawLines: function (newProps) {
     if (newProps.chamber === 'senate') {
@@ -155,8 +140,6 @@ var Summary = React.createClass({
         senateDistrictArr.push(k + 1);
       }
 
-      console.log(senateDistrictArr);
-
       newProps.filter.filter(function (crime) {
 
         var totalDailyTheft = 0;
@@ -169,12 +152,9 @@ var Summary = React.createClass({
         if (newProps.districtNumber === 0) {
           for (var i = 0; i < newProps.senateCrimes.length; i++) {
             if (currentDateStr !== newProps.senateCrimes[i].to_timestamp) {
-              // console.log('old date', currentDateStr);
               currentDateStr = newProps.senateCrimes[i].to_timestamp;
-              // console.log('new date', currentDateStr);
 
               if (crime === 'THEFT/LARCENY' && newProps.senateCrimes[i].type === 'THEFT/LARCENY') {
-                // console.log(newProps.senateCrimes[i]);
                 totalDailyTheft += parseInt(newProps.senateCrimes[i].count);
                 senateTheftArr.push({x: new Date(currentDateStr), y: totalDailyTheft});
                 totalDailyTheft = 0;
@@ -266,13 +246,7 @@ var Summary = React.createClass({
         houseDistrictArr.push(m + 1);
       }
 
-      console.log(houseDistrictArr);
-
-      // console.log(newProps);
-
       newProps.filter.filter(function (crime) {
-
-        // console.log(crime);
 
         var totalDailyTheft = 0;
         var totalDailyVehicle = 0;
@@ -284,12 +258,9 @@ var Summary = React.createClass({
         if (newProps.districtNumber === 0) {
           for (var i = 0; i < newProps.houseCrimes.length; i++) {
             if (currentDateStr !== newProps.houseCrimes[i].to_timestamp) {
-              // console.log('old date', currentDateStr);
               currentDateStr = newProps.houseCrimes[i].to_timestamp;
-              // console.log('new date', currentDateStr);
 
               if (crime === 'THEFT/LARCENY' && newProps.houseCrimes[i].type === 'THEFT/LARCENY') {
-                // console.log(newProps.houseCrimes[i]);
                 totalDailyTheft += parseInt(newProps.houseCrimes[i].count);
                 houseTheftArr.push({x: new Date(currentDateStr), y: totalDailyTheft});
                 totalDailyTheft = 0;
@@ -329,7 +300,6 @@ var Summary = React.createClass({
                   currentDateStr = newProps.houseCrimes[i].to_timestamp;
 
                   if (crime === 'THEFT/LARCENY' && newProps.houseCrimes[i].type === 'THEFT/LARCENY') {
-                    // console.log(newProps.houseCrimes[i]);
                     totalDailyTheft += parseInt(newProps.houseCrimes[i].count);
                     houseTheftArr.push({x: new Date(currentDateStr), y: totalDailyTheft});
                     totalDailyTheft = 0;
