@@ -157,11 +157,8 @@ var Summary = React.createClass({
 
       console.log(senateDistrictArr);
 
-      console.log(newProps);
-
       newProps.filter.filter(function (crime) {
 
-        console.log(crime);
         var totalDailyTheft = 0;
         var totalDailyVehicle = 0;
         var totalDailyVandalism = 0;
@@ -271,11 +268,11 @@ var Summary = React.createClass({
 
       console.log(houseDistrictArr);
 
-      console.log(newProps);
+      // console.log(newProps);
 
       newProps.filter.filter(function (crime) {
 
-        console.log(crime);
+        // console.log(crime);
 
         var totalDailyTheft = 0;
         var totalDailyVehicle = 0;

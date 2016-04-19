@@ -50,7 +50,7 @@ var Politician = React.createClass({
       return (
         <div>
           <h4>{districtInfo.politician_position} {districtInfo.politician_firstname} {districtInfo.politician_lastname}</h4>
-          <img id="photo" src={districtInfo.politician_picture} />
+          <img id="photo" src={districtInfo.politician_picture} height="151" width="121" />
           <p>{districtInfo.politician_officetype} District {districtInfo.district_name}</p>
           <p>Contact your {districtInfo.politician_position} about crime in your district.</p>
           <p>TEL: {districtInfo.contact_phone}</p>
