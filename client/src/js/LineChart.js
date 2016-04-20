@@ -65,7 +65,7 @@ var Summary = React.createClass({
   componentWillReceiveProps: function(newProps) {
     this.totalCrimesPerWeek(newProps);
     this.totalCrimesPerDistrict(newProps);
-    this.drawLines(newProps);
+    this.drawLines(newProps, this.state.allCrimesDistrict);
   },
 
   componentDidUpdate: function () {
@@ -196,7 +196,9 @@ var Summary = React.createClass({
     }
   },
 
-  drawLines: function (newProps) {
+  drawLines: function (newProps, allCrimesDistrict) {
+    var _this = this;
+
     if (newProps.chamber === 'senate') {
 
       var senateTheftArr  = [];
@@ -255,11 +257,18 @@ var Summary = React.createClass({
           }
         }
 
-        senateDistrictArr.filter(function (districtNumber) {
-          if (districtNumber === newProps.districtNumber) { // district number related to map
+        allCrimesDistrict.filter(function (districtNumber) {
+          if (districtNumber.district === newProps.districtNumber) { // district number related to map
+
+            if (districtNumber.total === 0) { // if district selected has no crimes
+              for (var n = 0; n < newProps.senateCrimes.length; n++) {
+                
+              }
+            }
+
             for (var i = 0; i < newProps.senateCrimes.length; i++) {
 
-              if (districtNumber === newProps.senateCrimes[i].district) { // check if any crimes match district number
+              if (districtNumber.district === newProps.senateCrimes[i].district) { // check if any crimes match district number
                   
                 if (currentDateStr !== newProps.senateCrimes[i].to_timestamp) {
                   currentDateStr = newProps.senateCrimes[i].to_timestamp;
@@ -362,8 +371,9 @@ var Summary = React.createClass({
         }
 
         houseDistrictArr.filter(function (districtNumber) {
+          // console.log(allCrimesDistrict);
           if (districtNumber === newProps.districtNumber) {
-            console.log(districtNumber);
+            // console.log(districtNumber);
             for (var i = 0; i < newProps.houseCrimes.length; i++) {
 
               if (districtNumber === newProps.houseCrimes[i].district) {
