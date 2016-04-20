@@ -15,7 +15,7 @@ var App = React.createClass({
       types: ['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY' ],
       filter: ['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY'],
       chamber: 'senate',
-      districtNumber: 0,
+      districtNumber: 21,
       senateCrimes: [],
       houseCrimes: [],
       filteredSenateCrimes: [],

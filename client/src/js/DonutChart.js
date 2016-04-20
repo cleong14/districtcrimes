@@ -2,39 +2,44 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var DonutChartPath = React.createClass({
-    propTypes: {
-        width:React.PropTypes.number,
-        height:React.PropTypes.number,
-        data:React.PropTypes.array,
-        pie:React.PropTypes.func,
-        color:React.PropTypes.func
-    },
-    componentWillMount:function(){
-        var radius=this.props.height;
-        var outerRadius=radius/2;
-        var innerRadius=radius/3.3;
-        this.arc=d3.svg.arc()
-            .outerRadius(outerRadius)
-            .innerRadius(innerRadius);
-        this.transform='translate('+radius/2+','+radius/2+')';
-    },
-    createChart:function(_self){
-        var paths = (this.props.pie(this.props.data)).map(function(d, i) {
-            return (
-                <path fill={_self.props.color(i)} d={_self.arc(d)} key={i}/>
-            )
-        });
-        return paths;
-    },
-    render:function(){
-        var paths = this.createChart(this);
-        return(
-            <g transform={this.transform}>
-                {paths}
-            </g>
-        )
-    }
+  propTypes: {
+    width:React.PropTypes.number,
+    height:React.PropTypes.number,
+    data:React.PropTypes.array,
+    pie:React.PropTypes.func,
+    color:React.PropTypes.func
+  },
+  componentWillMount:function(){
+    var radius=this.props.height;
+    var outerRadius=radius/2;
+    var innerRadius=radius/3.3;
+    this
+      .arc=d3.svg.arc()
+      .outerRadius(outerRadius)
+      .innerRadius(innerRadius);
+    this
+      .transform='translate('+radius/2+','+radius/2+')';
+  },
+
+  createChart:function(_self){
+    var paths = (this.props.pie(this.props.data)).map(function(d, i) {
+      return (
+        <path fill={_self.props.color(i)} d={_self.arc(d)} key={i}/>
+      )
+    });
+    return paths;
+  },
+
+  render:function(){
+    var paths = this.createChart(this);
+    return(
+      <g transform={this.transform}>
+        {paths}
+      </g>
+    )
+  }
 });
+
 var DonutChartLegend=React.createClass({
     propTypes: {
         width:React.PropTypes.number,
@@ -78,244 +83,133 @@ var DonutChartLegend=React.createClass({
         )
     }
 });
+
 var DonutChart=React.createClass({
   propTypes: {
-      width:React.PropTypes.number,
-      height:React.PropTypes.number,
-      padAngle:React.PropTypes.number,
-      // id:React.PropTypes.string.isRequired
+    width:React.PropTypes.number,
+    height:React.PropTypes.number,
+    padAngle:React.PropTypes.number,
   },
   getDefaultProps: function() {
-      return {
-          width: 550,
-          height: 250,
-          padAngle:0
-      };
+    return {
+      width: 550,
+      height: 250,
+      padAngle:0
+    };
   },
   getInitialState:function(){
-      return {
-          data:[],
-          width:0
-      };
-  },
-  componentWillMount:function(){
-      this.pie=d3.layout.pie()
-          .value(function(d){return d.count})
-          .padAngle(this.props.padAngle)
-          .sort(null);
-      this.color = d3.scale.ordinal()
-          .range(['#68c8d7','#eccd63','#bb8cdd','#de6942','#52b36e','#bbc7d9']);
-      var data = [
-          { name: 'THEFT/LARCENY', count: 8849 },
-          { name: 'BURGLARY', count: 2054 },
-          { name: 'MOTOR VEHICLE THEFT', count: 1891 },
-          { name: 'VANDALISM', count: 242 },
-          { name: 'VEHICLE BREAK-IN', count: 5128 }
-      ];
-      this.setState({'data':data,width:this.props.width});
+    return {
+      data:[],
+      width:0
+    };
   },
 
-  updateData:function() {
-    var senateCrime = this.props.senateCrimes;
-    var houseCrime = this.props.houseCrimes;
-    var district = this.props.districtNumber;
+  componentWillMount: function() {
+    this.pie=d3.layout.pie()
+      .value(function(d){return d.count})
+      .padAngle(this.props.padAngle)
+      .sort(null);
+    this.color = d3.scale.ordinal()
+      .range(['#68c8d7','#eccd63','#bb8cdd','#de6942','#52b36e','#bbc7d9']);
+    var defaultData = [
+      { name: 'THEFT/LARCENY', count: 8849 },
+      { name: 'BURGLARY', count: 2054 },
+      { name: 'MOTOR VEHICLE THEFT', count: 1891 },
+      { name: 'VANDALISM', count: 242 },
+      { name: 'VEHICLE BREAK-IN', count: 5128 }
+    ];
+    this.setState({
+      data: defaultData,
+      width: this.props.width
+    });
+  },
 
-    var theftCrime = //senate
-      senateCrime
-        .filter(function(crime) {
-          if (crime.district && crime.count) return true;
-        })
-        .filter(function(crime) {
-          return crime.type === 'THEFT/LARCENY' && crime.district === district;
-        })
-        .map(function(crime) {
-          return crime.count;
-        });
+  componentWillReceiveProps: function (newProps) {
+    this.getCrimesPerDistrict(newProps);
+  },
 
-    var houseTheftCrime = //house
-      houseCrime
-        .filter(function(crime) {
-          if (crime.district && crime.count) return true;
-        })
-        .filter(function(crime) {
-          return crime.type === 'THEFT/LARCENY' && crime.district === district;
-        })
-        .map(function(crime) {
-          return crime.count;
-        });
+  componentDidUpdate: function () {
+    // this.createDonutDataArray(this.state.allCrimes)
+  },
 
-    var theftChart = theftCrime.reduce(function(total, count) {//senate
-        var number = parseInt(count);
-        return total + number;
-    }, 0);
+  // createDonutDataArray: function (allCrimesData) {
+  //   console.log(allCrimesData)
+  //   for (district in allCrimesData) {
+  //     console.log(Object.keys(district));
+  //   }
+  // },
 
-    var houseTheftChart = houseTheftCrime.reduce(function(total, count) {//house
-        var number = parseInt(count);
-        return total + number;
-    }, 0);
-
-    var burglaryCrime = //senate
-      senateCrime
-        .filter(function(crime) {
-          if (crime.district && crime.count) return true;
-        })
-        .filter(function(crime) {
-          return crime.type === 'BURGLARY' && crime.district === district;
-        })
-        .map(function(crime) {
-          return crime.count;
-        });
-
-    var houseBurglaryCrime = //house
-      houseCrime
-        .filter(function(crime) {
-          if (crime.district && crime.count) return true;
-        })
-        .filter(function(crime) {
-          return crime.type === 'BURGLARY' && crime.district === district;
-        })
-        .map(function(crime) {
-          return crime.count;
-        });
-
-    var burglaryChart = burglaryCrime.reduce(function(total, count) {//senate
-      var number = parseInt(count);
-      return total + number;
-    }, 0);
-
-    var houseBurglaryChart = houseBurglaryCrime.reduce(function(total, count) {//house
-      var number = parseInt(count);
-      return total + number;
-    }, 0);
-
-    var motorCrime = //senate
-      senateCrime
-        .filter(function(crime) {
-          if (crime.district && crime.count) return true;
-        })
-        .filter(function(crime) {
-          return crime.type === 'MOTOR VEHICLE THEFT' && crime.district === district;
-        })
-        .map(function(crime) {
-          return crime.count;
-        });
-
-    var houseMotorCrime = //house
-      houseCrime
-        .filter(function(crime) {
-          if (crime.district && crime.count) return true;
-        })
-        .filter(function(crime) {
-          return crime.type === 'MOTOR VEHICLE THEFT' && crime.district === district;
-        })
-        .map(function(crime) {
-          return crime.count;
-        });
-
-    var motorChart = motorCrime.reduce(function(total, count) {//senate
-      var number = parseInt(count);
-      return total + number;
-    }, 0);
-
-    var houseMotorChart = houseMotorCrime.reduce(function(total, count) {//house
-      var number = parseInt(count);
-      return total + number;
-    }, 0);
-
-    var vandalCrime = //senate
-      senateCrime
-        .filter(function(crime) {
-          if (crime.district && crime.count) return true;
-        })
-        .filter(function(crime) {
-          return crime.type === 'VANDALISM' && crime.district === district;
-        })
-        .map(function(crime) {
-          return crime.count;
-        });
-
-    var houseVandalCrime = //house
-      houseCrime
-        .filter(function(crime) {
-          if (crime.district && crime.count) return true;
-        })
-        .filter(function(crime) {
-          return crime.type === 'VANDALISM' && crime.district === district;
-        })
-        .map(function(crime) {
-          return crime.count;
-        });
-
-    var vandalChart = vandalCrime.reduce(function(total, count) {//senate
-        var number = parseInt(count);
-        return total + number;
-    }, 0);
-
-    var houseVandalChart = houseVandalCrime.reduce(function(total, count) {//senate
-        var number = parseInt(count);
-        return total + number;
-    }, 0);
-
-    var vehicleCrime =
-      senateCrime
-        .filter(function(crime) {
-          if (crime.district && crime.count) return true;
-        })
-        .filter(function(crime) {
-          // return crime.type === 'VEHICLE-BREAK-IN';
-          return crime.type === 'VEHICLE BREAK-IN/THEFT' && crime.district === district;
-        })
-        .map(function(crime) {
-          return crime.count;
-        });
-
-    var houseVehicleCrime =
-      houseCrime
-        .filter(function(crime) {
-          if (crime.district && crime.count) return true;
-        })
-        .filter(function(crime) {
-          // return crime.type === 'VEHICLE-BREAK-IN';
-          return crime.type === 'VEHICLE BREAK-IN/THEFT' && crime.district === district;
-        })
-        .map(function(crime) {
-          return crime.count;
-        });
-
-    var vehicleChart = vehicleCrime.reduce(function(total, count) {
-        var number = parseInt(count);
-        return total + number;
-    }, 0);
-
-    var houseVehicleChart = houseVehicleCrime.reduce(function(total, count) {
-        var number = parseInt(count);
-        return total + number;
-    }, 0);
-
-    console.log(this.props.chamber);
-
-    var data;
-
-    if (this.props.chamber === 'senate') {
-      data = [
-        { name: 'THEFT/LARCENY', count: theftChart},
-        { name: 'BURGLARY', count: burglaryChart },
-        { name: 'MOTOR VEHICLE THEFT', count: motorChart },
-        { name: 'VANDALISM', count: vandalChart },
-        { name: 'VEHICLE BREAK-IN', count: vehicleChart }
-      ];
-      this.setState({ 'data':data });
+  getCrimesPerDistrict:function(newProps) {
+    var allCrimes;
+    var _this = this;
+    var result = [];
+    switch (newProps.chamber) {
+      case 'house':
+        allCrimes = newProps.houseCrimes;
+        break;
+      case 'senate':
+        allCrimes = newProps.senateCrimes;
+        break;
     }
-    if (this.props.chamber === 'house') {
-      data = [
-        { name: 'THEFT/LARCENY', count: houseTheftChart},
-        { name: 'BURGLARY', count: houseBurglaryChart },
-        { name: 'MOTOR VEHICLE THEFT', count: houseMotorChart },
-        { name: 'VANDALISM', count: houseVandalChart },
-        { name: 'VEHICLE BREAK-IN', count: houseVehicleChart }
-      ];
-      this.setState({ 'data':data });
-    }
+
+    var filteredCrimes = allCrimes
+      .filter(function (glob) {
+        return glob.district === newProps.districtNumber;
+      });
+
+    var burglary =
+      filteredCrimes
+        .filter(function (glob) {
+          return glob.type === "BURGLARY";
+        })
+        .reduce(function (all, item, index) {
+          all.count += parseInt(item.count);
+          return all;
+        }, {name: "BURGLARY", count: 0});
+
+    var theft =
+      filteredCrimes
+        .filter(function (glob) {
+          return glob.type === "THEFT/LARCENY";
+        })
+        .reduce(function (all, item, index) {
+          all.count += parseInt(item.count);
+          return all;
+        }, {name: "THEFT/LARCENY", count: 0});
+
+    var vehicleBreakIn =
+      filteredCrimes
+        .filter(function (glob) {
+          return glob.type === "VEHICLE BREAK-IN";
+        })
+        .reduce(function (all, item, index) {
+          all.count += parseInt(item.count);
+          return all;
+        }, {name: "VEHICLE BREAK-IN", count: 0});
+
+    var motorVehicleTheft =
+      filteredCrimes
+        .filter(function (glob) {
+          return glob.type === "MOTOR VEHICLE THEFT";
+        })
+        .reduce(function (all, item, index) {
+          all.count += parseInt(item.count);
+          return all;
+        }, {name: "MOTOR VEHICLE THEFT", count: 0});
+
+    var vandalism =
+      filteredCrimes
+        .filter(function (glob) {
+          return glob.type === "VANDALISM";
+        })
+        .reduce(function (all, item, index) {
+          all.count += parseInt(item.count);
+          return all;
+        }, {name: "VANDALISM", count: 0});
+
+    result.push(burglary, theft, vehicleBreakIn, motorVehicleTheft, vandalism);
+    this.setState({data: result});
+
   },
 
   render:function(){
