@@ -141,6 +141,7 @@ var DonutChart=React.createClass({
 
   getCrimesPerDistrict:function(newProps) {
     var allCrimes;
+    var filteredCrimes;
     var _this = this;
     var result = [];
     switch (newProps.chamber) {
@@ -152,10 +153,14 @@ var DonutChart=React.createClass({
         break;
     }
 
-    var filteredCrimes = allCrimes
-      .filter(function (glob) {
-        return glob.district === newProps.districtNumber;
-      });
+    if (newProps.districtNumber === 0) {
+      filteredCrimes = allCrimes;
+    } else {
+      filteredCrimes = allCrimes
+        .filter(function (glob) {
+          return glob.district === newProps.districtNumber;
+        });
+    }
 
     var burglary =
       filteredCrimes
@@ -208,8 +213,20 @@ var DonutChart=React.createClass({
         }, {name: "VANDALISM", count: 0});
 
     result.push(burglary, theft, vehicleBreakIn, motorVehicleTheft, vandalism);
+    console.log(result);
     this.setState({data: result});
 
+  },
+
+  getCrimesByType: function (arr, type) {
+    arr
+      .filter(function (glob) {
+        return glob.type === type;
+      })
+      .reduce(function (all, item, index) {
+        all.count += parseInt(item.count);
+        return all;
+      }, {name: type, count: 0});
   },
 
   render:function(){
