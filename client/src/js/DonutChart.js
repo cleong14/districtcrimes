@@ -110,7 +110,7 @@ var DonutChart=React.createClass({
       .padAngle(this.props.padAngle)
       .sort(null);
     this.color = d3.scale.ordinal()
-      .range(['#68c8d7','#eccd63','#bb8cdd','#de6942','#52b36e','#bbc7d9']);
+      .range(['#fc9272','#3182bd','#fb6a4a','#9ecae1','#a50f15','#08519c']);
     var defaultData = [
       { name: 'THEFT/LARCENY', count: 8849 },
       { name: 'BURGLARY', count: 2054 },
@@ -185,12 +185,12 @@ var DonutChart=React.createClass({
     var vehicleBreakIn =
       filteredCrimes
         .filter(function (glob) {
-          return glob.type === "VEHICLE BREAK-IN";
+          return glob.type === "VEHICLE BREAK-IN/THEFT";
         })
         .reduce(function (all, item, index) {
           all.count += parseInt(item.count);
           return all;
-        }, {name: "VEHICLE BREAK-IN", count: 0});
+        }, {name: "VEHICLE BREAK-IN/THEFT", count: 0});
 
     var motorVehicleTheft =
       filteredCrimes
@@ -213,7 +213,6 @@ var DonutChart=React.createClass({
         }, {name: "VANDALISM", count: 0});
 
     result.push(burglary, theft, vehicleBreakIn, motorVehicleTheft, vandalism);
-    console.log(result);
     this.setState({data: result});
 
   },
