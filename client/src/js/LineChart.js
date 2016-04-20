@@ -62,7 +62,7 @@ var Summary = React.createClass({
 
   componentWillReceiveProps: function(newProps) {
     this.totalCrimesPerWeek(newProps);
-    this.drawLines(this.props, newProps);
+    this.drawLines(newProps);
   },
 
   componentDidUpdate: function () {
@@ -74,7 +74,7 @@ var Summary = React.createClass({
   },
 
   totalCrimesPerWeek: function (newProps) {
-    if (this.props.senateCrimes) {
+    if (newProps.senateCrimes) {
 
       var allCrimes;
       switch (newProps.chamber) {
@@ -141,16 +141,21 @@ var Summary = React.createClass({
   //   }
   // },
 
-  drawLines: function (props, newProps) {
+  drawLines: function (newProps) {
     if (newProps.chamber === 'senate') {
-
-      // this.runSort();
 
       var senateTheftArr  = [];
       var senateVehicleArr  = [];
       var senateVandalismArr  = [];
       var senateMotorArr  = [];
       var senateBurglaryArr  = [];
+      var senateDistrictArr = [];
+
+      for (var k = 0; k < 25; k++) {
+        senateDistrictArr.push(k + 1);
+      }
+
+      console.log(senateDistrictArr);
 
       newProps.filter.filter(function (crime) {
 
@@ -161,40 +166,82 @@ var Summary = React.createClass({
         var totalDailyBurglary = 0;
         var currentDateStr;
 
-        for (var i = 0; i < newProps.senateCrimes.length; i++) {
-          if (currentDateStr !== newProps.senateCrimes[i].to_timestamp) {
-            // console.log('old date', currentDateStr);
-            currentDateStr = newProps.senateCrimes[i].to_timestamp;
-            // console.log('new date', currentDateStr);
+        if (newProps.districtNumber === 0) {
+          for (var i = 0; i < newProps.senateCrimes.length; i++) {
+            if (currentDateStr !== newProps.senateCrimes[i].to_timestamp) {
+              // console.log('old date', currentDateStr);
+              currentDateStr = newProps.senateCrimes[i].to_timestamp;
+              // console.log('new date', currentDateStr);
 
-            if (crime === 'THEFT/LARCENY' && newProps.senateCrimes[i].type === 'THEFT/LARCENY') {
-              // console.log(newProps.senateCrimes[i]);
-              totalDailyTheft += parseInt(newProps.senateCrimes[i].count);
-              senateTheftArr.push({x: new Date(currentDateStr), y: totalDailyTheft});
-              totalDailyTheft = 0;
-            }
-            if (crime === 'VEHICLE BREAK-IN/THEFT' && newProps.senateCrimes[i].type === 'VEHICLE BREAK-IN/THEFT') {
-              totalDailyVehicle += parseInt(newProps.senateCrimes[i].count);
-              senateVehicleArr.push({x: new Date(currentDateStr), y: totalDailyVehicle});
-              totalDailyVehicle = 0;
-            }
-            if (crime === 'VANDALISM' && newProps.senateCrimes[i].type === 'VANDALISM') {
-              totalDailyVandalism += parseInt(newProps.senateCrimes[i].count);
-              senateVandalismArr.push({x: new Date(currentDateStr), y: totalDailyVandalism});
-              totalDailyVandalism = 0;
-            }
-            if (crime === 'MOTOR VEHICLE THEFT' && newProps.senateCrimes[i].type === 'MOTOR VEHICLE THEFT') {
-              totalDailyMotor += parseInt(newProps.senateCrimes[i].count);
-              senateMotorArr.push({x: new Date(currentDateStr), y: totalDailyMotor});
-              totalDailyMotor = 0;
-            }
-            if (crime === 'BURGLARY' && newProps.senateCrimes[i].type === 'BURGLARY') {
-              totalDailyBurglary += parseInt(newProps.senateCrimes[i].count);
-              senateBurglaryArr.push({x: new Date(currentDateStr), y: totalDailyBurglary});
-              totalDailyBurglary = 0;
+              if (crime === 'THEFT/LARCENY' && newProps.senateCrimes[i].type === 'THEFT/LARCENY') {
+                // console.log(newProps.senateCrimes[i]);
+                totalDailyTheft += parseInt(newProps.senateCrimes[i].count);
+                senateTheftArr.push({x: new Date(currentDateStr), y: totalDailyTheft});
+                totalDailyTheft = 0;
+              }
+              if (crime === 'VEHICLE BREAK-IN/THEFT' && newProps.senateCrimes[i].type === 'VEHICLE BREAK-IN/THEFT') {
+                totalDailyVehicle += parseInt(newProps.senateCrimes[i].count);
+                senateVehicleArr.push({x: new Date(currentDateStr), y: totalDailyVehicle});
+                totalDailyVehicle = 0;
+              }
+              if (crime === 'VANDALISM' && newProps.senateCrimes[i].type === 'VANDALISM') {
+                totalDailyVandalism += parseInt(newProps.senateCrimes[i].count);
+                senateVandalismArr.push({x: new Date(currentDateStr), y: totalDailyVandalism});
+                totalDailyVandalism = 0;
+              }
+              if (crime === 'MOTOR VEHICLE THEFT' && newProps.senateCrimes[i].type === 'MOTOR VEHICLE THEFT') {
+                totalDailyMotor += parseInt(newProps.senateCrimes[i].count);
+                senateMotorArr.push({x: new Date(currentDateStr), y: totalDailyMotor});
+                totalDailyMotor = 0;
+              }
+              if (crime === 'BURGLARY' && newProps.senateCrimes[i].type === 'BURGLARY') {
+                totalDailyBurglary += parseInt(newProps.senateCrimes[i].count);
+                senateBurglaryArr.push({x: new Date(currentDateStr), y: totalDailyBurglary});
+                totalDailyBurglary = 0;
+              }
             }
           }
         }
+
+        senateDistrictArr.filter(function (districtNumber) {
+          if (districtNumber === newProps.districtNumber) { // district number related to map
+            for (var i = 0; i < newProps.senateCrimes.length; i++) {
+
+              if (districtNumber === newProps.senateCrimes[i].district) { // check if any crimes match district number
+                  
+                if (currentDateStr !== newProps.senateCrimes[i].to_timestamp) {
+                  currentDateStr = newProps.senateCrimes[i].to_timestamp;
+                  
+                  if (crime === 'THEFT/LARCENY' && newProps.senateCrimes[i].type === 'THEFT/LARCENY') {
+                    totalDailyTheft += parseInt(newProps.senateCrimes[i].count);
+                    senateTheftArr.push({x: new Date(currentDateStr), y: totalDailyTheft});
+                    totalDailyTheft = 0;
+                  }
+                  if (crime === 'VEHICLE BREAK-IN/THEFT' && newProps.senateCrimes[i].type === 'VEHICLE BREAK-IN/THEFT') {
+                    totalDailyVehicle += parseInt(newProps.senateCrimes[i].count);
+                    senateVehicleArr.push({x: new Date(currentDateStr), y: totalDailyVehicle});
+                    totalDailyVehicle = 0;
+                  }
+                  if (crime === 'VANDALISM' && newProps.senateCrimes[i].type === 'VANDALISM') {
+                    totalDailyVandalism += parseInt(newProps.senateCrimes[i].count);
+                    senateVandalismArr.push({x: new Date(currentDateStr), y: totalDailyVandalism});
+                    totalDailyVandalism = 0;
+                  }
+                  if (crime === 'MOTOR VEHICLE THEFT' && newProps.senateCrimes[i].type === 'MOTOR VEHICLE THEFT') {
+                    totalDailyMotor += parseInt(newProps.senateCrimes[i].count);
+                    senateMotorArr.push({x: new Date(currentDateStr), y: totalDailyMotor});
+                    totalDailyMotor = 0;
+                  }
+                  if (crime === 'BURGLARY' && newProps.senateCrimes[i].type === 'BURGLARY') {
+                    totalDailyBurglary += parseInt(newProps.senateCrimes[i].count);
+                    senateBurglaryArr.push({x: new Date(currentDateStr), y: totalDailyBurglary});
+                    totalDailyBurglary = 0;
+                  }
+                }
+              }
+            }
+          }
+        });
       });
 
       this.setState({lines: [
@@ -208,13 +255,18 @@ var Summary = React.createClass({
 
     if (newProps.chamber === 'house') {
 
-      // this.runSort();
-
       var houseTheftArr  = [];
       var houseVehicleArr  = [];
       var houseVandalismArr  = [];
       var houseMotorArr  = [];
       var houseBurglaryArr  = [];
+      var houseDistrictArr = [];
+
+      for (var m = 0; m < 51; m++) {
+        houseDistrictArr.push(m + 1);
+      }
+
+      console.log(houseDistrictArr);
 
       // console.log(newProps);
 
@@ -229,40 +281,84 @@ var Summary = React.createClass({
         var totalDailyBurglary = 0;
         var currentDateStr;
 
-        for (var i = 0; i < newProps.houseCrimes.length; i++) {
-          if (currentDateStr !== newProps.houseCrimes[i].to_timestamp) {
-            // console.log('old date', currentDateStr);
-            currentDateStr = newProps.houseCrimes[i].to_timestamp;
-            // console.log('new date', currentDateStr);
+        if (newProps.districtNumber === 0) {
+          for (var i = 0; i < newProps.houseCrimes.length; i++) {
+            if (currentDateStr !== newProps.houseCrimes[i].to_timestamp) {
+              // console.log('old date', currentDateStr);
+              currentDateStr = newProps.houseCrimes[i].to_timestamp;
+              // console.log('new date', currentDateStr);
 
-            if (crime === 'THEFT/LARCENY' && newProps.houseCrimes[i].type === 'THEFT/LARCENY') {
-              // console.log(newProps.houseCrimes[i]);
-              totalDailyTheft += parseInt(newProps.houseCrimes[i].count);
-              houseTheftArr.push({x: new Date(currentDateStr), y: totalDailyTheft});
-              totalDailyTheft = 0;
+              if (crime === 'THEFT/LARCENY' && newProps.houseCrimes[i].type === 'THEFT/LARCENY') {
+                // console.log(newProps.houseCrimes[i]);
+                totalDailyTheft += parseInt(newProps.houseCrimes[i].count);
+                houseTheftArr.push({x: new Date(currentDateStr), y: totalDailyTheft});
+                totalDailyTheft = 0;
+              }
+              if (crime === 'VEHICLE BREAK-IN/THEFT' && newProps.houseCrimes[i].type === 'VEHICLE BREAK-IN/THEFT') {
+                totalDailyVehicle += parseInt(newProps.houseCrimes[i].count);
+                houseVehicleArr.push({x: new Date(currentDateStr), y: totalDailyVehicle});
+                totalDailyVehicle = 0;
+              }
+              if (crime === 'VANDALISM' && newProps.houseCrimes[i].type === 'VANDALISM') {
+                totalDailyVandalism += parseInt(newProps.houseCrimes[i].count);
+                houseVandalismArr.push({x: new Date(currentDateStr), y: totalDailyVandalism});
+                totalDailyVandalism = 0;
+              }
+              if (crime === 'MOTOR VEHICLE THEFT' && newProps.houseCrimes[i].type === 'MOTOR VEHICLE THEFT') {
+                totalDailyMotor += parseInt(newProps.houseCrimes[i].count);
+                houseMotorArr.push({x: new Date(currentDateStr), y: totalDailyMotor});
+                totalDailyMotor = 0;
+              }
+              if (crime === 'BURGLARY' && newProps.houseCrimes[i].type === 'BURGLARY') {
+                totalDailyBurglary += parseInt(newProps.houseCrimes[i].count);
+                houseBurglaryArr.push({x: new Date(currentDateStr), y: totalDailyBurglary});
+                totalDailyBurglary = 0;
+              }
             }
-            if (crime === 'VEHICLE BREAK-IN/THEFT' && newProps.houseCrimes[i].type === 'VEHICLE BREAK-IN/THEFT') {
-              totalDailyVehicle += parseInt(newProps.houseCrimes[i].count);
-              houseVehicleArr.push({x: new Date(currentDateStr), y: totalDailyVehicle});
-              totalDailyVehicle = 0;
-            }
-            if (crime === 'VANDALISM' && newProps.houseCrimes[i].type === 'VANDALISM') {
-              totalDailyVandalism += parseInt(newProps.houseCrimes[i].count);
-              houseVandalismArr.push({x: new Date(currentDateStr), y: totalDailyVandalism});
-              totalDailyVandalism = 0;
-            }
-            if (crime === 'MOTOR VEHICLE THEFT' && newProps.houseCrimes[i].type === 'MOTOR VEHICLE THEFT') {
-              totalDailyMotor += parseInt(newProps.houseCrimes[i].count);
-              houseMotorArr.push({x: new Date(currentDateStr), y: totalDailyMotor});
-              totalDailyMotor = 0;
-            }
-            if (crime === 'BURGLARY' && newProps.houseCrimes[i].type === 'BURGLARY') {
-              totalDailyBurglary += parseInt(newProps.houseCrimes[i].count);
-              houseBurglaryArr.push({x: new Date(currentDateStr), y: totalDailyBurglary});
-              totalDailyBurglary = 0;
+          }     
+        }
+
+        houseDistrictArr.filter(function (districtNumber) {
+          if (districtNumber === newProps.districtNumber) {
+            console.log(districtNumber);
+            for (var i = 0; i < newProps.houseCrimes.length; i++) {
+
+              if (districtNumber === newProps.houseCrimes[i].district) {
+
+                if (currentDateStr !== newProps.houseCrimes[i].to_timestamp) {
+                  currentDateStr = newProps.houseCrimes[i].to_timestamp;
+
+                  if (crime === 'THEFT/LARCENY' && newProps.houseCrimes[i].type === 'THEFT/LARCENY') {
+                    // console.log(newProps.houseCrimes[i]);
+                    totalDailyTheft += parseInt(newProps.houseCrimes[i].count);
+                    houseTheftArr.push({x: new Date(currentDateStr), y: totalDailyTheft});
+                    totalDailyTheft = 0;
+                  }
+                  if (crime === 'VEHICLE BREAK-IN/THEFT' && newProps.houseCrimes[i].type === 'VEHICLE BREAK-IN/THEFT') {
+                    totalDailyVehicle += parseInt(newProps.houseCrimes[i].count);
+                    houseVehicleArr.push({x: new Date(currentDateStr), y: totalDailyVehicle});
+                    totalDailyVehicle = 0;
+                  }
+                  if (crime === 'VANDALISM' && newProps.houseCrimes[i].type === 'VANDALISM') {
+                    totalDailyVandalism += parseInt(newProps.houseCrimes[i].count);
+                    houseVandalismArr.push({x: new Date(currentDateStr), y: totalDailyVandalism});
+                    totalDailyVandalism = 0;
+                  }
+                  if (crime === 'MOTOR VEHICLE THEFT' && newProps.houseCrimes[i].type === 'MOTOR VEHICLE THEFT') {
+                    totalDailyMotor += parseInt(newProps.houseCrimes[i].count);
+                    houseMotorArr.push({x: new Date(currentDateStr), y: totalDailyMotor});
+                    totalDailyMotor = 0;
+                  }
+                  if (crime === 'BURGLARY' && newProps.houseCrimes[i].type === 'BURGLARY') {
+                    totalDailyBurglary += parseInt(newProps.houseCrimes[i].count);
+                    houseBurglaryArr.push({x: new Date(currentDateStr), y: totalDailyBurglary});
+                    totalDailyBurglary = 0;
+                  }
+                }
+              }
             }
           }
-        }
+        });
       });
 
       this.setState({lines: [
