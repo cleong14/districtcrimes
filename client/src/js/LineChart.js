@@ -11,6 +11,7 @@ var Summary = React.createClass({
 
   getInitialState: function() {
     var allCrimes = [];
+    var allCrimesDistrict = [];
     var lines = [
       {
       label: 'THEFT/LARCENY',
@@ -46,7 +47,8 @@ var Summary = React.createClass({
       xScale: xScale,
       // xScaleBrush: xScaleBrush,
       color: color,
-      allCrimes: allCrimes
+      allCrimes: allCrimes,
+      allCrimesDistrict: allCrimesDistrict
     };
   },
 
@@ -62,6 +64,7 @@ var Summary = React.createClass({
 
   componentWillReceiveProps: function(newProps) {
     this.totalCrimesPerWeek(newProps);
+    this.totalCrimesPerDistrict(newProps);
     this.drawLines(newProps);
   },
 
@@ -71,6 +74,73 @@ var Summary = React.createClass({
 
   componentWillUnmount: function() {
 
+  },
+
+  totalCrimesPerDistrict: function (newProps) {
+
+    var allCrimesDistrict;
+    switch (newProps.chamber) {
+      case 'house':
+        allCrimesDistrict = newProps.houseCrimes;
+        break;
+      case 'senate':
+        allCrimesDistrict = newProps.senateCrimes;
+        break;
+    }
+
+    // sets up initial state of districts
+    var senateDistArr = [];
+    var senateDistObj = {};
+
+    for (var i = 1; i <= 25; i++) {
+      senateDistObj = {
+        district: i,
+        total: 0
+      };
+      senateDistArr.push(senateDistObj);
+    }
+
+    var houseDistArr = [];
+    var houseDistObj = {};
+
+    for (var p = 1; p <= 51; p++) {
+      houseDistObj = {
+        district: p,
+        total: 0
+      };
+      houseDistArr.push(houseDistObj);
+    }
+
+    var result;
+    
+    if (newProps.chamber === 'senate') {
+      for (var k = 0; k < senateDistArr.length; k++) {
+        // console.log(senateDistArr[k]);
+        for (var s = 0; s < newProps.senateCrimes.length; s++) {
+          if (senateDistArr[k].district === newProps.senateCrimes[s].district) {
+            senateDistArr[k].total += parseInt(newProps.senateCrimes[s].count);
+          }
+        }
+      }
+      result = senateDistArr;
+    }
+
+    if (newProps.chamber === 'house') {
+      for (var m = 0; m < houseDistArr.length; m++) {
+        // console.log(houseDistArr[m]);
+        for (var h = 0; h < newProps.houseCrimes.length; h++) {
+          if (houseDistArr[m].district === newProps.houseCrimes[h].district) {
+            houseDistArr[m].total += parseInt(newProps.houseCrimes[h].count);
+          }
+        }
+      }
+      result = houseDistArr;
+    }
+
+    this.setState({
+      allCrimesDistrict: result
+    });
+    // console.log(this.state.allCrimesDistrict);
   },
 
   totalCrimesPerWeek: function (newProps) {
@@ -140,6 +210,8 @@ var Summary = React.createClass({
         senateDistrictArr.push(k + 1);
       }
 
+      // console.log(newProps);
+
       newProps.filter.filter(function (crime) {
 
         var totalDailyTheft = 0;
@@ -149,7 +221,7 @@ var Summary = React.createClass({
         var totalDailyBurglary = 0;
         var currentDateStr;
 
-        if (newProps.districtNumber === 0) {
+        if (newProps.districtNumber === 0) { // total crimes for chamber on initial load
           for (var i = 0; i < newProps.senateCrimes.length; i++) {
             if (currentDateStr !== newProps.senateCrimes[i].to_timestamp) {
               currentDateStr = newProps.senateCrimes[i].to_timestamp;

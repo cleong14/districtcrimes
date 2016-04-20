@@ -212,6 +212,7 @@ var Map = React.createClass({
     this.setState({
       allCrimes: result
     });
+    // console.log(this.state.allCrimes);
   },
 
   // Leaflet Control object - District Information
