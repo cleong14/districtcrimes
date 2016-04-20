@@ -155,7 +155,7 @@ var Summary = React.createClass({
         senateDistrictArr.push(k + 1);
       }
 
-      console.log(senateDistrictArr);
+      // console.log(senateDistrictArr);
 
       newProps.filter.filter(function (crime) {
 
@@ -208,10 +208,10 @@ var Summary = React.createClass({
             for (var i = 0; i < newProps.senateCrimes.length; i++) {
 
               if (districtNumber === newProps.senateCrimes[i].district) { // check if any crimes match district number
-                  
+
                 if (currentDateStr !== newProps.senateCrimes[i].to_timestamp) {
                   currentDateStr = newProps.senateCrimes[i].to_timestamp;
-                  
+
                   if (crime === 'THEFT/LARCENY' && newProps.senateCrimes[i].type === 'THEFT/LARCENY') {
                     totalDailyTheft += parseInt(newProps.senateCrimes[i].count);
                     senateTheftArr.push({x: new Date(currentDateStr), y: totalDailyTheft});
@@ -266,7 +266,7 @@ var Summary = React.createClass({
         houseDistrictArr.push(m + 1);
       }
 
-      console.log(houseDistrictArr);
+      // console.log(houseDistrictArr);
 
       // console.log(newProps);
 
@@ -315,12 +315,12 @@ var Summary = React.createClass({
                 totalDailyBurglary = 0;
               }
             }
-          }     
+          }
         }
 
         houseDistrictArr.filter(function (districtNumber) {
           if (districtNumber === newProps.districtNumber) {
-            console.log(districtNumber);
+            // console.log(districtNumber);
             for (var i = 0; i < newProps.houseCrimes.length; i++) {
 
               if (districtNumber === newProps.houseCrimes[i].district) {
