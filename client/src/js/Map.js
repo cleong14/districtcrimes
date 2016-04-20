@@ -2,6 +2,7 @@
 // import some dependencies
 var React = require('react');
 var ReactDOM = require('react-dom');
+var Modal = require('react-modal');
 var L = require('leaflet');
 
 // let's store the map configuration properties,
@@ -77,6 +78,50 @@ config.crimeLevels = {
     level6: 2500
   }
 };
+
+var Popup = React.createClass({
+  getInitialState: function() {
+    return { modalIsOpen: false };
+  },
+
+  openModal: function() {
+    this.setState({modalIsOpen: true});
+  },
+
+  afterOpenModal: function() {
+    // references are now sync'd and can be accessed.
+    this.refs.subtitle.style.color = '#f00';
+  },
+
+  closeModal: function() {
+    this.setState({modalIsOpen: false});
+  },
+
+  render: function() {
+    return (
+      <div>
+        <button onClick={this.openModal}>Open Modal</button>
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+        >
+          <h2 ref="subtitle">Hello</h2>
+          <button onClick={this.closeModal}>close</button>
+          <div>I am a modal</div>
+          <form>
+            <input />
+            <button>tab navigation</button>
+            <button>stays</button>
+            <button>inside</button>
+            <button>the modal</button>
+          </form>
+        </Modal>
+      </div>
+    );
+  }
+});
+
 
 // here's the actual component
 var Map = React.createClass({
@@ -396,6 +441,7 @@ var Map = React.createClass({
     return (
       <div id="mapUI">
         <div id="map"></div>
+        <Popup></Popup>
       </div>
     );
 
