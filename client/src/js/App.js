@@ -3,9 +3,9 @@ var ReactDOM = require('react-dom');
 // require our Map React component
 var Map = require('./Map');
 var Filter = require('./Filter');
-var Summary = require('./LineChart');
+var LineChart = require('./LineChart');
 var Politician = require('./Politician');
-var PieChart = require('./PieChart');
+var DonutChart = require('./DonutChart');
 // where in the actual DOM to mount our App
 var mountNode = document.getElementById('app');
 // App component
@@ -15,7 +15,7 @@ var App = React.createClass({
       types: ['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY' ],
       filter: ['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY'],
       chamber: 'senate',
-      districtNumber: 0,
+      districtNumber: 21,
       senateCrimes: [],
       houseCrimes: [],
       filteredSenateCrimes: [],
@@ -170,7 +170,7 @@ var App = React.createClass({
           />
         </div>
         <div className="bottomLevel">
-          <Summary
+          <LineChart
             chamber={this.state.chamber}
             districtData={this.state.districtData}
             districtNumber={this.state.districtNumber}
@@ -178,7 +178,7 @@ var App = React.createClass({
             houseCrimes={this.state.filteredHouseCrimes}
             filter={this.state.filter}
           />
-          <PieChart
+          <DonutChart
             filter={this.state.filter}
             districtNumber={this.state.districtNumber}
             chamber={this.state.chamber}
