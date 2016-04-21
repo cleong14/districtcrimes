@@ -3,9 +3,11 @@ var ReactDOM = require('react-dom');
 // require our Map React component
 var Map = require('./Map');
 var Filter = require('./Filter');
-var Summary = require('./Summary');
+var LineChart = require('./LineChart');
 var Politician = require('./Politician');
-var DonutChart = require('./PieChart');
+
+var DonutChart = require('./DonutChart');
+
 // where in the actual DOM to mount our App
 var mountNode = document.getElementById('app');
 // App component
@@ -15,7 +17,7 @@ var App = React.createClass({
       types: ['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY' ],
       filter: ['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY'],
       chamber: 'senate',
-      districtNumber: 23,
+      districtNumber: 21,
       senateCrimes: [],
       houseCrimes: [],
       filteredSenateCrimes: [],
@@ -29,7 +31,10 @@ var App = React.createClass({
       method: "GET",
       dataType: "json",
       success: (data) => {
-        this.setState({senateCrimes: data[0], filteredSenateCrimes: data[0]});
+        this.setState({
+          senateCrimes: data[0],
+          filteredSenateCrimes: data[0]
+        });
       },
       failure: function (err) {
         // console.log(err);
@@ -42,7 +47,10 @@ var App = React.createClass({
       method: "GET",
       dataType: "json",
       success: (data) => {
-        this.setState({houseCrimes: data[0], filteredHouseCrimes: data[0]});
+        this.setState({
+          houseCrimes: data[0],
+          filteredHouseCrimes: data[0]
+        });
       },
       failure: function (err) {
         // console.log(err);
@@ -100,9 +108,9 @@ var App = React.createClass({
 
       // this is the bottle neck!!!
       this.setState({
+        filter: filterArr,
         filteredSenateCrimes: senateFilteredCrimes,
-        filteredHouseCrimes: houseFilteredCrimes,
-        filter: filterArr
+        filteredHouseCrimes: houseFilteredCrimes
       }, () => {
         console.log(this.state);
       });
@@ -156,6 +164,7 @@ var App = React.createClass({
             types={this.state.types}
             onChange={this.toggleFilter}
             updateChamber={this.updateChamber}
+            updateDistrictNumber={this.updateDistrictNumber}
             filter={this.state.filter}
             filterCrimes={this.filterCrimes}
           />
@@ -165,6 +174,7 @@ var App = React.createClass({
             senate={this.state.senate}
             districtData={this.state.districtData}
             updateDistrictNumber={this.updateDistrictNumber}
+            districtNumber={this.state.districtNumber}
             senateCrimes={this.state.filteredSenateCrimes}
             houseCrimes={this.state.filteredHouseCrimes}
           />
@@ -175,7 +185,7 @@ var App = React.createClass({
           />
         </div>
         <div className="bottomLevel">
-          <Summary
+          <LineChart
             chamber={this.state.chamber}
             districtData={this.state.districtData}
             districtNumber={this.state.districtNumber}

@@ -24,20 +24,22 @@ var Politician = React.createClass({
   },
 
   componentWillReceiveProps: function(newProps) {
-    this.getDistrictInfo(newProps.districtNumber);
+    this.getDistrictInfo(newProps);
   },
 
   componentWillUnmount: function() {
   },
 
-  getDistrictInfo: function (districtNumber) {
-    if (this.props.districtData) {
-      var chamber = this.props.districtData[this.props.chamber];
-      console.log(chamber);
+  componentDidUpdate: function () {
+
+  },
+
+  getDistrictInfo: function (newProps) {
+    if (newProps.districtData) {
+      var chamber = newProps.districtData[newProps.chamber];
       for (var i=0; i < chamber.length; i++) {
-        if (chamber[i].district_name === districtNumber) {
+        if (chamber[i].district_name === newProps.districtNumber) {
           this.setState({districtInfo: chamber[i]});
-          console.log(this.state);
         }
       }
     }
@@ -47,10 +49,13 @@ var Politician = React.createClass({
     if (districtInfo) {
       return (
         <div>
-          <img id="photo" src={districtInfo.politician_picture} />
-          <h4>{districtInfo.politician_firstname} {districtInfo.politician_lastname}</h4>
+          <h4>{districtInfo.politician_position} {districtInfo.politician_firstname} {districtInfo.politician_lastname}</h4>
+          <img id="photo" src={districtInfo.politician_picture} height="151" width="121" />
+          <p>{districtInfo.politician_officetype} District {districtInfo.district_name}</p>
+          <p>Contact your {districtInfo.politician_position} about crime in your district.</p>
           <p>TEL: {districtInfo.contact_phone}</p>
           <p>E-mail: <a href={districtInfo.contact_email}>{districtInfo.contact_email}</a></p>
+          <p>Party Affiliation: {districtInfo.politician_party}</p>
         </div>
       );
     }
@@ -58,8 +63,7 @@ var Politician = React.createClass({
 
   render: function() {
     // return our JSX that is rendered to the DOM
-    var districtInfo = this.state.districtInfo;
-    console.log(districtInfo);
+    // var districtInfo = this.state.districtInfo;
       return (
         <div id="politician">
           {this.buildTheDiv(this.state.districtInfo)}

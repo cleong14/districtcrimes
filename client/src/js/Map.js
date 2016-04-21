@@ -10,6 +10,10 @@ var config = {};
 
 // a local variable to store our instance of L.map
 var map;
+var legend;
+var info;
+var geojsonLayer;
+var theZoom;
 
 // map paramaters to pass to L.map when we instantiate it
 config.params = {
@@ -55,21 +59,42 @@ config.colors = {
   }
 };
 
+config.crimeLevels = {
+  house: {
+    level1: 1,
+    level2: 100,
+    level3: 250,
+    level4: 500,
+    level5: 800,
+    level6: 1500
+  },
+  senate: {
+    level1: 1,
+    level2: 100,
+    level3: 250,
+    level4: 500,
+    level5: 1000,
+    level6: 2500
+  }
+};
+
 // here's the actual component
 var Map = React.createClass({
 
   getInitialState: function() {
     // TODO: if we wanted an initial "state" for our map component we could add it here
     return {
-      allCrimes: []
+      allCrimes: [],
+      senateCrimes: [],
+      houseCrimes: []
     };
   },
 
-  componentWillMount: function() {
+  // componentWillMount: function() {
 
-    // code to run just before adding the map
+  //   // code to run just before adding the map
 
-  },
+  // },
 
   componentDidMount: function() {
     // code to run just after adding the map to the DOM
@@ -79,21 +104,26 @@ var Map = React.createClass({
 
   // After App loads jsons, they are passed to Map as props; then we can run functions based upon those loaded props
   componentWillReceiveProps: function(newProps) {
-    this.totalCrimesPerDistrict(newProps.chamber);
-    this.addGeoJSON(newProps.chamber);
-    this.addInfoToMap();
-    this.addLegendToMap(newProps.chamber);
+    this.totalCrimesPerDistrict(newProps);
   },
 
   componentWillUnmount: function() {
     // code to run just before removing the map
   },
 
+  componentDidUpdate: function() {
+    this.addGeoJSON(this.props.chamber);
+    this.addInfoToMap();
+    this.addLegendToMap(this.props.chamber);
+    this.addZoomToMap();
+  },
+
   // Adds a geojson overlay to map; default is Senate
   addGeoJSON: function(chamber) {
-    // if there is a current layer, remove it
-    if (this.state.geojsonLayer){
-      this.state.geojsonLayer.clearLayers();
+
+    // remove layers without using states
+    if (geojsonLayer) {
+      geojsonLayer.clearLayers();
     }
 
     //return map to center
@@ -111,16 +141,12 @@ var Map = React.createClass({
     }
 
     // add new layer
-    var geojsonLayer = L
+    geojsonLayer = L
       .geoJson(data, {
         onEachFeature: this.onEachFeature,
         style: this.style.bind(null, chamber)
       })
       .addTo(map);
-
-    this.setState({
-      geojsonLayer: geojsonLayer
-    });
   },
 
   // style object for Leaflet map
@@ -134,9 +160,9 @@ var Map = React.createClass({
         "fillOpacity": 0.7
       };
     }
-    var district = this.state.allCrimes["district"+feature.properties.objectid].total;
+    var districtCrimes = this.state.allCrimes["district"+feature.properties.objectid].total;
     return {
-      "fillColor": this.getColor(chamber, district),
+      "fillColor": this.getColor(chamber, districtCrimes),
       "color": "#ffffff",
       "opacity": 1,
       "weight": 1,
@@ -144,70 +170,62 @@ var Map = React.createClass({
     };
   },
 
-  getColor: function (chamber, d) {
-    return  d > 2000  ? config.colors[chamber].level6 :
-            d > 1000  ? config.colors[chamber].level5 :
-            d > 500  ? config.colors[chamber].level4 :
-            d > 250  ? config.colors[chamber].level3 :
-            d > 100   ? config.colors[chamber].level2 :
-            d > 1   ?     config.colors[chamber].level1 :
-                      '#707070';
+  getColor: function (chamber, districtCrimes) {
+    return  districtCrimes > config.crimeLevels[chamber].level6  ? config.colors[chamber].level6 :
+            districtCrimes > config.crimeLevels[chamber].level5  ? config.colors[chamber].level5 :
+            districtCrimes > config.crimeLevels[chamber].level4   ? config.colors[chamber].level4 :
+            districtCrimes > config.crimeLevels[chamber].level3   ? config.colors[chamber].level3 :
+            districtCrimes > config.crimeLevels[chamber].level2   ? config.colors[chamber].level2 :
+            districtCrimes > config.crimeLevels[chamber].level1     ? config.colors[chamber].level1 :
+                                                          '#707070';
   },
 
-  totalCrimesPerDistrict: function (chamber) {
-    if (this.props.senateCrimes) {
+  totalCrimesPerDistrict: function (newProps) {
 
-      var allCrimes;
-      switch (chamber) {
-        case 'house':
-          allCrimes = this.props.houseCrimes;
-          break;
-        case 'senate':
-          allCrimes = this.props.senateCrimes;
-          break;
-      }
-
-      var initialValue = {};
-
-      var reducer = function(newObj, crimeGlob) {
-        // total crimes
-        if (!newObj["district"+crimeGlob.district]) {
-          newObj["district"+crimeGlob.district] = {
-            total: parseInt(crimeGlob.count)
-          };
-          // newObj["district"+crimeGlob.district][crimeGlob.type] = parseInt(crimeGlob.count);
-        } else {
-          newObj["district"+crimeGlob.district].total += parseInt(crimeGlob.count);
-          // if (!newObj["district"+crimeGlob.district][crimeGlob.type]) {
-          //   newObj["district"+crimeGlob.district][crimeGlob.type] = parseInt(crimeGlob.count);
-          // } else {
-          //   newObj["district"+crimeGlob.district][crimeGlob.type] += parseInt(crimeGlob.count);
-          // }
-        }
-        return newObj;
-      };
-      // debugger;
-      var result = allCrimes.reduce(reducer, initialValue);
-
-      this.setState({
-        allCrimes: result
-      }, () => {
-        this.addGeoJSON(this.props.chamber);
-      });
-
+    var allCrimes;
+    switch (newProps.chamber) {
+      case 'house':
+        allCrimes = newProps.houseCrimes;
+        break;
+      case 'senate':
+        allCrimes = newProps.senateCrimes;
+        break;
     }
+
+    var initialValue = {};
+
+    var reducer = function(newObj, crimeGlob) {
+      // total crimes
+      if (!newObj["district"+crimeGlob.district]) {
+        newObj["district"+crimeGlob.district] = {
+          total: parseInt(crimeGlob.count)
+        };
+      } else {
+        newObj["district"+crimeGlob.district].total += parseInt(crimeGlob.count);
+      }
+      return newObj;
+    };
+    // debugger;
+    var result = allCrimes.reduce(reducer, initialValue);
+
+
+    this.setState({
+      allCrimes: result
+    });
+    // console.log(this.state.allCrimes);
   },
 
   // Leaflet Control object - District Information
   addInfoToMap: function () {
     // remove the data from the geojson layer
-    if (this.state.info){
-      map.removeControl(this.state.info);
+    if (info){
+      map.removeControl(info);
     }
 
+    var districtInfo = this.getDistrictInfo(this.props.districtNumber);
     var _this = this;
     // Top right info panel
-    var info = this.info = L.control();
+    info = this.info = L.control();
     info.onAdd = function (map) {
         this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
         this.update();
@@ -215,32 +233,35 @@ var Map = React.createClass({
     };
     // method that we will use to update the control based on feature properties passed
     info.update = function (props) {
-        this._div.innerHTML = '<h4>Hawaii '+ _this.capitalizeFirstLetter(_this.props.chamber) +' Districts</h4>' +  (props ?
-            '<b>'+ _this.capitalizeFirstLetter(_this.props.chamber) + ' District ' + props.objectid + '</b><br>' +
+        this._div.innerHTML = '<h4>Hawaii '+ districtInfo.politician_officetype +' Districts</h4>' +  (props ?
+            '<b>'+ districtInfo.politician_officetype + ' District ' + props.objectid + '</b><br>' +
             '<b>' + _this.getLegislator(props.objectid) + '</b>' +
             '<p>Neighborhoods: ' + _this.getNeighborhoods(props.objectid) + '</p>'
             : 'Hover over a district!');
     };
     info.addTo(map);
 
-    this.setState({
-      info: info
-    });
   },
 
   // Leaflet Control object - Map legend
   addLegendToMap: function (chamber) {
     // bottom right legend panel
-    if (this.state.legend){
-      // remove the data from the geojson layer
-      map.removeControl(this.state.legend);
+    if (legend) {
+      map.removeControl(legend);
     }
     var _this = this;
-    var legend = L.control({position: 'bottomright'});
+    legend = L.control({position: 'bottomright'});
     legend.onAdd = function (map) {
       var div = L.DomUtil.create('div', 'legend'),
-        grades = [0, 1, 100, 250, 500, 1000, 2000],
-        labels = [];
+        grades = [
+          0,
+          config.crimeLevels[chamber].level1,
+          config.crimeLevels[chamber].level2,
+          config.crimeLevels[chamber].level3,
+          config.crimeLevels[chamber].level4,
+          config.crimeLevels[chamber].level5,
+          config.crimeLevels[chamber].level6
+        ];
       // loop through our density intervals and generate a label with a colored square for each interval
       for (var i = 0; i < grades.length; i++) {
         div.innerHTML +=
@@ -250,11 +271,32 @@ var Map = React.createClass({
       return div;
     };
     legend.addTo(map);
-    this.setState({
-      legend: legend
-    });
   },
 
+  addZoomToMap: function () {
+    // debugger;
+    if (theZoom) {
+      map.removeControl(theZoom);
+    }
+
+    var _this = this;
+    theZoom = L.control({position: 'topleft'});
+
+    theZoom.onAdd = function (map) {
+      var div = L.DomUtil.create('div', 'zoom');
+      div.innerHTML = "<h3>Center Map</h3>" ;
+      L.DomEvent.on(div, "click", this._click );
+      return div;
+    };
+
+    theZoom._click = function () {
+      _this.zoomToCenter();
+    };
+
+    theZoom.addTo(map);
+  },
+
+  // refactor this to get all district info, not just neighborhoods
   getNeighborhoods: function (districtNumber) {
     for (var i in this.props.districtData[this.props.chamber]) {
       if (this.props.districtData[this.props.chamber][i].district_name === districtNumber) {
@@ -270,6 +312,14 @@ var Map = React.createClass({
     }
     str+= neighborhoodList[neighborhoodList.length-1] +".";
     return str;
+  },
+
+  getDistrictInfo: function (districtNumber) {
+    for (var i in this.props.districtData[this.props.chamber]) {
+      if (this.props.districtData[this.props.chamber][i].district_name === districtNumber) {
+        return this.props.districtData[this.props.chamber][i];
+      }
+    }
   },
 
   getLegislator: function (districtNumber) {
@@ -301,7 +351,7 @@ var Map = React.createClass({
   },
 
   resetHighlight: function (e) {
-    this.state.geojsonLayer.resetStyle(e.target);
+    geojsonLayer.resetStyle(e.target);
 
     this.info.update();
   },
@@ -313,6 +363,7 @@ var Map = React.createClass({
   },
 
   zoomToCenter: function (e) {
+    // this.props.updateDistrictNumber(0);
     map.setView([21.477351, -157.962799], 10);
   },
 
@@ -346,7 +397,6 @@ var Map = React.createClass({
     return (
       <div id="mapUI">
         <div id="map"></div>
-        <button className="button" onClick={this.zoomToCenter}>Zoom Out</button>
       </div>
     );
 

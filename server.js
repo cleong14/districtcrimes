@@ -1,40 +1,12 @@
 var express = require('express');
 var crime = require('./crime-dataset');
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
 var methodOverride = require('method-override');
 var path = require('path');
 var db = require('./models');
 var sequelize = require('sequelize');
 
 var app = express();
-
-mongoose.connect('mongodb://localhost/mongoose-demo');
-
-var poliSchema = mongoose.Schema({
-	legislator_number: String,
-	legislator_year: String,
-	legislator_type: String,
-	politician_officetype: String,
-	politician_position: String,
-	politician_party: String,
-	politician_picture: String,
-	politician_firstname: String,
-	politician_lastname: String,
-	address_street: String,
-	address_room: String,
-	contact_phone: String,
-	contact_fax: String,
-	contact_email: String,
-	contact_links: String,
-	district_name: String,
-	district_area: [String],
-	politician_committee: [String],
-	politician_measures: [String]
-});
-
-// collection name will get pluralized by mongoose
-var Politician = mongoose.model('Politician', poliSchema);
 
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -76,25 +48,6 @@ app.get('/senatecrimequery', function (req, res) {
     'GROUP BY ' +
       '"type", "district", "to_timestamp" ' +
     'ORDER BY ' +
-      'type'
-  )
-  .then(function (results) {
-    res.json(results);
-  });
-});
-
-app.get('/senatecrimequerytest', function (req, res) {
-
-  db.crime.sequelize.query(
-    'SELECT ' +
-      '"type", "senateDistrict", COUNT("crime"."type") AS "count", ' +
-      'to_timestamp(floor((extract("epoch" from date) / 604800 )) * 604800) ' +
-      // 'AT TIME ZONE "UTC" as "interval_alias" ' +
-    'FROM ' +
-      '"crimes" AS "crime" ' +
-    'GROUP BY ' +
-      '"type", "senateDistrict", "to_timestamp" ' +
-    'ORDER BY ' +
       'to_timestamp'
   )
   .then(function (results) {
@@ -113,7 +66,7 @@ app.get('/housecrimequery', function (req, res) {
     'GROUP BY ' +
       '"type", "district", "to_timestamp" ' +
     'ORDER BY ' +
-      'type'
+      'to_timestamp'
   )
   .then(function (results) {
     res.json(results);
@@ -181,11 +134,6 @@ app.get('/file/:name', function (req, res, next) {
 db.sequelize
   .sync();
 
-var mongo = mongoose.connection;
-mongo.on('error', console.error.bind(console, 'connection error:'));
-mongo.once('open', function () {
-	var server = app.listen(3000, function () {
-		console.log('Listening on port', 3000);
-	});
-
+var server = app.listen(3000, function() {
+  console.log('Listening to port', server.address().port);
 });

@@ -58,6 +58,7 @@ var CheckBox = React.createClass({
 var Filter = React.createClass({
   update: function(event) {
     var value = event.target.getAttribute('value');
+    this.props.updateDistrictNumber(0);
     this.props.updateChamber(value);
   },
   render: function () {
