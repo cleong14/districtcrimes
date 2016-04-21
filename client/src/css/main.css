@@ -46,6 +46,7 @@ html, body {
   width: 120px;
   line-height: 18px;
   color: #555;
+  z-index: 999;
 }
 
 .legend i {
@@ -193,11 +194,14 @@ h3 {
 }
 
 .ReactModal__Content {
+  width: 60%;
   -webkit-transform: scale(0.5) rotateX(-30deg);
   transform: scale(0.5) rotateX(-30deg);
 }
 
 .ReactModal__Content--after-open {
+  background-color: #474747;
+  color: #F2F2F2;
   -webkit-transform: scale(1) rotateX(0deg);
   transform: scale(1) rotateX(0deg);
   transition: all 150ms ease-in;

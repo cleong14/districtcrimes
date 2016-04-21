@@ -463,16 +463,18 @@ var Map = React.createClass({
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
         >
-          <h2 ref="subtitle">Oh Noes!</h2>
-          <h5>You've reached a district with no data.  Why is there no data?  Great question!  HPD's crime data API is somewhat... inconsistent...</h5>
-          <h5>Help us provide you with better data by contacting the legislator for this district! Let him or her know that you want the State of Hawaii to provide quality data for public consumption!  Huzzah!</h5>
-          <h3>Senate District 23</h3>
-          <img src="http://www.capitol.hawaii.gov/Members/Images/RepSenPhotos/riviere.jpg" height="151" width="121" />
-          <h5>Gil Riviere</h5>
-          <h5>TEL: 808-586-7330</h5>
-          <h5>E-mail: senriviere@capitol.hawaii.gov</h5>
-          <h5>Party Affiliation: Democrat</h5>
-          <button onClick={this.closeModal}><strong>Close</strong></button>
+          <div>
+            <h2 ref="subtitle">Oh Noes!</h2>
+            <h5>You've reached a district with no data.  Why is there no data?  Great question!  HPD's crime data API is somewhat... inconsistent...</h5>
+            <h5>Help us provide you with better data by contacting the legislator for this district! Let him or her know that you want the State of Hawaii to provide quality data for public consumption!  Huzzah!</h5>
+            <h3>Senate District 23</h3>
+            <img src="http://www.capitol.hawaii.gov/Members/Images/RepSenPhotos/riviere.jpg" height="151" width="121" />
+            <h5>Gil Riviere</h5>
+            <h5>TEL: 808-586-7330</h5>
+            <h5>E-mail: senriviere@capitol.hawaii.gov</h5>
+            <h5>Party Affiliation: Democrat</h5>
+            <button onClick={this.closeModal}><strong>Close</strong></button>
+          </div>
         </Modal>
       </div>
     );
