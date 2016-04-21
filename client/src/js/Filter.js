@@ -73,7 +73,7 @@ var Filter = React.createClass({
     })
     return (
       <div id="filter">
-        SELECT YO CRIME, CRACKA HAOLE
+        SELECT A CRIME
           {typeNodes}
           <div className="chamber-buttons">
             <button className="button success" onClick={this.update} value="house">House</button>
