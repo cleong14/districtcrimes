@@ -143,12 +143,13 @@ html, body {
   background-color: #FFF;
   order: 2;
   height: 35%;
+  background-color: #345762;
 }
 
 #filter {
   order: 1;
   width: 20%;
-  padding-left: 18px;
+  padding-left: 60px;
   padding-top: 63px;
 }
 
@@ -156,6 +157,8 @@ html, body {
   order: 2;
   width: 60%;
   display:inline-block;
+  padding: 23px;
+  background-color: #345762;
 }
 
 #map {
@@ -165,7 +168,7 @@ html, body {
 
 #politician {
   width: 20%;
-  background-color: #FFF;
+  background-color: #345762;
   order: 3;
 }
 
@@ -184,7 +187,7 @@ html, body {
   height: 100%;
   background-color: #372E3B;
   order: 1;
-  padding: 44px;
+  padding-left: 94px;
 }
 
 #pie-chart {
@@ -250,6 +253,10 @@ html, body {
 
 p {
   margin-bottom: 0em;
+}
+
+span, p {
+  color: #FFF;
 }
 
 

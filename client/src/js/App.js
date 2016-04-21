@@ -155,7 +155,7 @@ var App = React.createClass({
               <h3>CRIMES</h3>
             </div>
             <div id="picture">
-              <img src="../../img/medical.png" height="70" width="70"></img>
+              <img id="eye-logo" src="../../img/medical.png" height="70" width="70"></img>
             </div>
           </div>
         </div>

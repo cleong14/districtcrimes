@@ -109,8 +109,7 @@ var DonutChart=React.createClass({
       .value(function(d){return d.count})
       .padAngle(this.props.padAngle)
       .sort(null);
-    this.color = d3.scale.ordinal()
-      .range(['#fc9272','#3182bd','#fb6a4a','#9ecae1','#a50f15','#08519c']);
+    this.color = d3.scale.category20();
     var defaultData = [
       { name: 'THEFT/LARCENY', count: 8849 },
       { name: 'BURGLARY', count: 2054 },
@@ -232,7 +231,7 @@ var DonutChart=React.createClass({
   render:function(){
     return (
       <div id="pie-chart">
-        <h3 id="total-crimes-header">Total Crimes</h3>
+        <h3 id="total-crimes-header">TOTAL CRIMES</h3>
           <svg
             id={this.props.id}
             width={this.state.width}
