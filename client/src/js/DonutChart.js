@@ -140,6 +140,7 @@ var DonutChart=React.createClass({
   // },
 
   getCrimesPerDistrict:function(newProps) {
+    console.log(newProps);
     var allCrimes;
     var filteredCrimes;
     var _this = this;

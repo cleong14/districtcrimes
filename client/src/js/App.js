@@ -5,7 +5,9 @@ var Map = require('./Map');
 var Filter = require('./Filter');
 var LineChart = require('./LineChart');
 var Politician = require('./Politician');
+
 var DonutChart = require('./DonutChart');
+
 // where in the actual DOM to mount our App
 var mountNode = document.getElementById('app');
 // App component
@@ -143,7 +145,20 @@ var App = React.createClass({
   },
   render: function() {
     return (
-      <div>
+      <div class="container">
+        <div className="banner">
+          <div id="logo">
+            <div id="title">
+              <h3>DISTRICT</h3>
+            </div>
+            <div id="title2">
+              <h3>CRIMES</h3>
+            </div>
+            <div id="picture">
+              <img src="../../img/medical.png" height="70" width="70"></img>
+            </div>
+          </div>
+        </div>
         <div className="topLevel">
           <Filter
             types={this.state.types}
@@ -184,6 +199,7 @@ var App = React.createClass({
             chamber={this.state.chamber}
             senateCrimes={this.state.filteredSenateCrimes}
             houseCrimes={this.state.filteredHouseCrimes}
+            padAngle={0.03}
           />
         </div>
       </div>

@@ -1,5 +1,22 @@
 var React = require('react');
 
+
+    // return (
+    //   <div className="checkboxTwo">
+    //     <label for="checkboxTwoInput">
+    //       <input
+    //         id="checkboxTwoInput"
+    //         type="checkbox"
+    //         onChange={this.handleChange}
+    //         disabled={this.state.disabled}
+    //         defaultChecked={true}
+    //       />
+    //       &nbsp; {this.props.type}
+    //     </label>
+    //   </div>
+    // );
+
+
 var CheckBox = React.createClass({
 
   getInitialState() {
@@ -58,7 +75,7 @@ var Filter = React.createClass({
       <div id="filter">
         SELECT YO CRIME, CRACKA HAOLE
           {typeNodes}
-          <div>
+          <div className="chamber-buttons">
             <button className="button success" onClick={this.update} value="house">House</button>
             <button className="button warning" onClick={this.update} value="senate">Senate</button>
           </div>
