@@ -260,6 +260,10 @@ html, body {
   transform: scale(0.5) rotateX(30deg);
   transition: all 150ms ease-in;
 }
+
+#close-button {
+  color: #345762;
+}
 /******END Popup*******/
 
 #title2 {
@@ -297,19 +301,17 @@ html, body {
 p {
   margin-bottom: 0em;
 }
-<<<<<<< HEAD
+
 
 span, p {
   color: #FFF;
 }
 
+#eye-logo {
+  padding-left: 10px;
+}
 
+h4 {
+  color: #FFF;
+}
 
-
-
-
-
-
-
-=======
->>>>>>> development
