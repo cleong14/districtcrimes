@@ -2,6 +2,7 @@
 // import some dependencies
 var React = require('react');
 var ReactDOM = require('react-dom');
+var Modal = require('react-modal');
 var L = require('leaflet');
 
 // let's store the map configuration properties,
@@ -84,12 +85,24 @@ var Map = React.createClass({
   getInitialState: function() {
     // TODO: if we wanted an initial "state" for our map component we could add it here
     return {
+      modalIsOpen: false,
       allCrimes: [],
       senateCrimes: [],
       houseCrimes: []
     };
   },
 
+  openModal: function() {
+    this.setState({modalIsOpen: true});
+  },
+
+  afterOpenModal: function() {
+    // references are now sync'd and can be accessed.
+  },
+
+  closeModal: function() {
+    this.setState({modalIsOpen: false});
+  },
   // componentWillMount: function() {
 
   //   // code to run just before adding the map
@@ -315,6 +328,7 @@ var Map = React.createClass({
   },
 
   getDistrictInfo: function (districtNumber) {
+    var districtInfo;
     for (var i in this.props.districtData[this.props.chamber]) {
       if (this.props.districtData[this.props.chamber][i].district_name === districtNumber) {
         return this.props.districtData[this.props.chamber][i];
@@ -360,6 +374,9 @@ var Map = React.createClass({
     map.fitBounds(e.target.getBounds());
     var districtNumber = e.target.feature.properties.objectid;
     this.props.updateDistrictNumber(districtNumber);
+    if (districtNumber === 23) {
+      this.openModal();
+    }
   },
 
   zoomToCenter: function (e) {
@@ -396,6 +413,31 @@ var Map = React.createClass({
   render : function() {
     return (
       <div id="mapUI">
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          style={{
+            content: {
+              background: "#666",
+              color: "#ccc",
+              margin: "auto"
+            }
+          }}
+        >
+          <div>
+            <h1>Oh Noes!</h1>
+            <h5>You've reached a district with no data.  Why is there no data?  Great question!  HPD's crime data API is somewhat... inconsistent...</h5>
+            <h5>Help us provide you with better data by contacting the legislator for this district! Let him or her know that you want the State of Hawaii to provide quality data for public consumption!  Huzzah!</h5>
+            <h3>Senate District 23</h3>
+            <img src="http://www.capitol.hawaii.gov/Members/Images/RepSenPhotos/riviere.jpg" height="151" width="121" />
+            <h3>Gil Riviere</h3>
+            <h5>TEL: 808-586-7330</h5>
+            <h5>E-mail: senriviere@capitol.hawaii.gov</h5>
+            <h5>Party Affiliation: Democrat</h5>
+            <button onClick={this.closeModal}><strong>Close</strong></button>
+          </div>
+        </Modal>
         <div id="map"></div>
       </div>
     );

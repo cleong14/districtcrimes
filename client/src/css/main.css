@@ -46,6 +46,7 @@ html, body {
   width: 120px;
   line-height: 18px;
   color: #555;
+  z-index: 999;
 }
 
 .legend i {
@@ -219,6 +220,48 @@ html, body {
   padding-top: 16px;
 }
 
+/*This is for the popup*/
+.ReactModal__Overlay.ReactModal__Overlay--after-open {
+  z-index: 2000;
+
+}
+
+.ReactModal__Content.ReactModal__Content--after-open {
+  width:60%;
+}
+
+.ReactModal__Content {
+  -webkit-transform: scale(0.5) rotateX(-30deg);
+  transform: scale(0.5) rotateX(-30deg);
+}
+
+.ReactModal__Content h1 {
+  color: #ae2020;
+  font-weight: bold;
+}
+
+.ReactModal__Content h3 {
+  font-weight: bold;
+}
+
+.ReactModal__Content button {
+  color: #1D929E;
+  font-size: 48px;
+}
+
+.ReactModal__Content--after-open {
+  -webkit-transform: scale(1) rotateX(0deg);
+  transform: scale(1) rotateX(0deg);
+  transition: all 150ms ease-in;
+}
+
+.ReactModal__Content--before-close {
+  -webkit-transform: scale(0.5) rotateX(30deg);
+  transform: scale(0.5) rotateX(30deg);
+  transition: all 150ms ease-in;
+}
+/******END Popup*******/
+
 #title2 {
   flex-direction: row;
   order: 3;
@@ -255,15 +298,8 @@ p {
   margin-bottom: 0em;
 }
 
+
 span, p {
   color: #FFF;
 }
-
-
-
-
-
-
-
-
 
