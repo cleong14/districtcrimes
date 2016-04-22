@@ -8,12 +8,7 @@ var Politician = require('./Politician');
 
 var DonutChart = require('./DonutChart');
 
-var env = process.env.NODE_ENV || 'development';
-var host = 'localhost:3000';
-
-if (env !== 'development') {
-  host = '159.203.210.99';
-}
+var host = require('./host');
 
 // where in the actual DOM to mount our App
 var mountNode = document.getElementById('app');
@@ -34,7 +29,7 @@ var App = React.createClass({
 
   loadSenateCrimes: function () {//added
     $.ajax({
-      url: 'http://' + host + '/senatecrimequery',
+      url: host + '/senatecrimequery',
       method: "GET",
       dataType: "json",
       success: (data) => {
@@ -50,7 +45,7 @@ var App = React.createClass({
   },
   loadHouseCrimes: function () {//added
     $.ajax({
-      url: 'http://' + host + '/housecrimequery',
+      url: host + '/housecrimequery',
       method: "GET",
       dataType: "json",
       success: (data) => {
@@ -67,7 +62,7 @@ var App = React.createClass({
   loadFile: function (fileName, label) {
     var newState = {};
     $.ajax({
-      url: 'http://' + host + '/file/'+fileName,
+      url: host + '/file/'+fileName,
       method: "GET",
       dataType: "json",
       success: (data) => {
