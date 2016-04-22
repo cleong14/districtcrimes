@@ -516,6 +516,7 @@ var Summary = React.createClass({
 
     return (
       <div id="summary">
+        <p className="count">COUNT</p>
         <LineChart
           data={this.state.lines}
           interpolate="linear"
@@ -526,6 +527,7 @@ var Summary = React.createClass({
           xAxis={{tickValues: this.state.xScale.ticks(d3.time.month, 1), tickFormat: d3.time.format("%m/%d")}}
           color={this.state.color}
         />
+        <p className="date">DATE</p>
       </div>
     );
     return null;
