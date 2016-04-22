@@ -250,10 +250,10 @@ var Map = React.createClass({
     // method that we will use to update the control based on feature properties passed
     info.update = function (props) {
         this._div.innerHTML = '<h4>Hawaii '+ districtInfo.politician_officetype +' Districts</h4>' +  (props ?
-            '<b>'+ districtInfo.politician_officetype + ' District ' + props.objectid + '</b><br>' +
+            '<p>'+ districtInfo.politician_officetype + ' District ' + props.objectid + '</p><br>' +
             '<b>' + _this.getLegislator(props.objectid) + '</b>' +
             '<p>Neighborhoods: ' + _this.getNeighborhoods(props.objectid) + '</p>'
-            : 'Hover over a district!');
+            : '<p>Hover over a district!</p>');
     };
     info.addTo(map);
 
@@ -300,7 +300,7 @@ var Map = React.createClass({
 
     theZoom.onAdd = function (map) {
       var div = L.DomUtil.create('div', 'zoom');
-      div.innerHTML = "<h3>Center Map</h3>" ;
+      div.innerHTML = "<h4>Center Map</h4>" ;
       L.DomEvent.on(div, "click", this._click );
       return div;
     };
@@ -422,9 +422,12 @@ var Map = React.createClass({
           onRequestClose={this.closeModal}
           style={{
             content: {
-              background: "#666",
-              color: "#ccc",
+              background: "#FFF",
+              color: "black",
               margin: "auto"
+            },
+            overlay: {
+              backgroundColor: '#372E3B',
             }
           }}
         >
@@ -438,7 +441,7 @@ var Map = React.createClass({
             <h5>TEL: 808-586-0034</h5>
             <h5>E-mail: gov@gov.state.hi.us</h5>
             <h5>Party Affiliation: Democrat</h5>
-            <button onClick={this.closeModal}><strong>Close</strong></button>
+            <button id="close-button" onClick={this.closeModal}><strong>Close</strong></button>
           </div>
         </Modal>
         <div id="map"></div>

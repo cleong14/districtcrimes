@@ -68,19 +68,19 @@ var DonutChartLegend=React.createClass({
         return texts;
     },
     render:function(){
-        var style={
-            visibility:'visible'
-        };
-        if(this.props.width<=this.props.height+70){
-            style.visibility='hidden';
-        }
-        var texts = this.createChart(this);
-        var transform="translate("+(this.props.width/2+80)+",55)";
-        return(
-            <g is transform={transform} style={style}>
-                {texts}
-            </g>
-        )
+      var style={
+          visibility:'visible'
+      };
+      if(this.props.width<=this.props.height+70){
+          style.visibility='hidden';
+      }
+      var texts = this.createChart(this);
+      var transform="translate("+(this.props.width/2+80)+",55)";
+      return(
+          <g is transform={transform} style={style}>
+              {texts}
+          </g>
+      )
     }
 });
 
@@ -92,7 +92,7 @@ var DonutChart=React.createClass({
   },
   getDefaultProps: function() {
     return {
-      width: 550,
+      width: 650,
       height: 250,
       padAngle:0
     };
@@ -109,8 +109,7 @@ var DonutChart=React.createClass({
       .value(function(d){return d.count})
       .padAngle(this.props.padAngle)
       .sort(null);
-    this.color = d3.scale.ordinal()
-      .range(['#fc9272','#3182bd','#fb6a4a','#9ecae1','#a50f15','#08519c']);
+    this.color = d3.scale.category20();
     var defaultData = [
       { name: 'THEFT/LARCENY', count: 8849 },
       { name: 'BURGLARY', count: 2054 },
@@ -213,7 +212,7 @@ var DonutChart=React.createClass({
           return all;
         }, {name: "VANDALISM", count: 0});
 
-    result.push(burglary, theft, vehicleBreakIn, motorVehicleTheft, vandalism);
+    result.push(theft, vehicleBreakIn, vandalism, motorVehicleTheft, burglary);
     this.setState({data: result});
 
   },
@@ -232,7 +231,7 @@ var DonutChart=React.createClass({
   render:function(){
     return (
       <div id="pie-chart">
-        <h3 id="total-crimes-header">Total Crimes</h3>
+        <h4 id="total-crimes-header">TOTAL CRIMES FOR DISTRICT: {this.props.districtNumber}</h4>
           <svg
             id={this.props.id}
             width={this.state.width}

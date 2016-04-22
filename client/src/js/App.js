@@ -8,6 +8,8 @@ var Politician = require('./Politician');
 
 var DonutChart = require('./DonutChart');
 
+var host = require('./host');
+
 // where in the actual DOM to mount our App
 var mountNode = document.getElementById('app');
 // App component
@@ -27,7 +29,7 @@ var App = React.createClass({
 
   loadSenateCrimes: function () {//added
     $.ajax({
-      url: 'http://localhost:3000/senatecrimequery',
+      url: host + '/senatecrimequery',
       method: "GET",
       dataType: "json",
       success: (data) => {
@@ -43,7 +45,7 @@ var App = React.createClass({
   },
   loadHouseCrimes: function () {//added
     $.ajax({
-      url: 'http://localhost:3000/housecrimequery',
+      url: host + '/housecrimequery',
       method: "GET",
       dataType: "json",
       success: (data) => {
@@ -60,7 +62,7 @@ var App = React.createClass({
   loadFile: function (fileName, label) {
     var newState = {};
     $.ajax({
-      url: 'http://localhost:3000/file/'+fileName,
+      url: host + '/file/'+fileName,
       method: "GET",
       dataType: "json",
       success: (data) => {
@@ -155,7 +157,7 @@ var App = React.createClass({
               <h3>CRIMES</h3>
             </div>
             <div id="picture">
-              <img src="../../img/medical.png" height="70" width="70"></img>
+              <img id="eye-logo" src="../../img/medical.png" height="70" width="70"></img>
             </div>
           </div>
         </div>

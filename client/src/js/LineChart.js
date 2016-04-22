@@ -39,7 +39,7 @@ var Summary = React.createClass({
 
     var xScale = d3.time.scale().domain([new Date(2015, 8, 24), new Date(2016, 2, 29)]).range([0, 400 - 70]);
     // var xScaleBrush = d3.time.scale().domain([new Date(2015, 8, 24), new Date(2016, 2, 29)]).range([0, 400 - 70]);
-    var color = d3.scale.ordinal().domain(['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY']).range(['#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff']);
+    var color = d3.scale.ordinal().domain(['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY']);
 
     // TODO: if we wanted an initial "state" for our map component we could add it here
     return {
@@ -516,6 +516,7 @@ var Summary = React.createClass({
 
     return (
       <div id="summary">
+        <p className="count">COUNT</p>
         <LineChart
           data={this.state.lines}
           interpolate="linear"
@@ -526,6 +527,7 @@ var Summary = React.createClass({
           xAxis={{tickValues: this.state.xScale.ticks(d3.time.month, 1), tickFormat: d3.time.format("%m/%d")}}
           color={this.state.color}
         />
+        <p className="date">DATE</p>
       </div>
     );
     return null;
