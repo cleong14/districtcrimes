@@ -68,19 +68,19 @@ var DonutChartLegend=React.createClass({
         return texts;
     },
     render:function(){
-        var style={
-            visibility:'visible'
-        };
-        if(this.props.width<=this.props.height+70){
-            style.visibility='hidden';
-        }
-        var texts = this.createChart(this);
-        var transform="translate("+(this.props.width/2+80)+",55)";
-        return(
-            <g is transform={transform} style={style}>
-                {texts}
-            </g>
-        )
+      var style={
+          visibility:'visible'
+      };
+      if(this.props.width<=this.props.height+70){
+          style.visibility='hidden';
+      }
+      var texts = this.createChart(this);
+      var transform="translate("+(this.props.width/2+80)+",55)";
+      return(
+          <g is transform={transform} style={style}>
+              {texts}
+          </g>
+      )
     }
 });
 
@@ -212,7 +212,7 @@ var DonutChart=React.createClass({
           return all;
         }, {name: "VANDALISM", count: 0});
 
-    result.push(burglary, theft, vehicleBreakIn, motorVehicleTheft, vandalism);
+    result.push(theft, vehicleBreakIn, vandalism, motorVehicleTheft, burglary);
     this.setState({data: result});
 
   },
@@ -231,7 +231,7 @@ var DonutChart=React.createClass({
   render:function(){
     return (
       <div id="pie-chart">
-        <h3 id="total-crimes-header">TOTAL CRIMES</h3>
+        <h4 id="total-crimes-header">TOTAL CRIMES FOR DISTRICT: {this.props.districtNumber}</h4>
           <svg
             id={this.props.id}
             width={this.state.width}
