@@ -98,6 +98,7 @@ var Map = React.createClass({
 
   afterOpenModal: function() {
     // references are now sync'd and can be accessed.
+    this.refs.districtInfo = this.getDistrictInfo(this.props.districtNumber);
   },
 
   closeModal: function() {
@@ -165,6 +166,7 @@ var Map = React.createClass({
   // style object for Leaflet map
   style: function (chamber, feature) {
     if (!this.state.allCrimes["district"+feature.properties.objectid]) {
+      feature.isEmpty = true;
       return {
         "fillColor": "#707070",
         "color": "#ffffff",
@@ -174,6 +176,7 @@ var Map = React.createClass({
       };
     }
     var districtCrimes = this.state.allCrimes["district"+feature.properties.objectid].total;
+    feature.isEmpty = false;
     return {
       "fillColor": this.getColor(chamber, districtCrimes),
       "color": "#ffffff",
@@ -366,7 +369,6 @@ var Map = React.createClass({
 
   resetHighlight: function (e) {
     geojsonLayer.resetStyle(e.target);
-
     this.info.update();
   },
 
@@ -374,7 +376,7 @@ var Map = React.createClass({
     map.fitBounds(e.target.getBounds());
     var districtNumber = e.target.feature.properties.objectid;
     this.props.updateDistrictNumber(districtNumber);
-    if (districtNumber === 23) {
+    if (e.target.feature.isEmpty === true) {
       this.openModal();
     }
   },
@@ -414,6 +416,7 @@ var Map = React.createClass({
     return (
       <div id="mapUI">
         <Modal
+
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
@@ -428,12 +431,12 @@ var Map = React.createClass({
           <div>
             <h1>Oh Noes!</h1>
             <h5>You've reached a district with no data.  Why is there no data?  Great question!  HPD's crime data API is somewhat... inconsistent...</h5>
-            <h5>Help us provide you with better data by contacting the legislator for this district! Let him or her know that you want the State of Hawaii to provide quality data for public consumption!  Huzzah!</h5>
-            <h3>Senate District 23</h3>
-            <img src="http://www.capitol.hawaii.gov/Members/Images/RepSenPhotos/riviere.jpg" height="151" width="121" />
-            <h3>Gil Riviere</h3>
-            <h5>TEL: 808-586-7330</h5>
-            <h5>E-mail: senriviere@capitol.hawaii.gov</h5>
+            <h5>Help us provide you with better data by contacting the legislator for this district! Let him or her know that you want the State of Hawaii to provide quality data for public consumption!  Start with the Guvna!  Huzzah!</h5>
+            <h3>State of Hawaii</h3>
+            <img src="http://www.civilbeat.com/wp-content/uploads/2014/07/53cbafec50b27-640x960.jpg" height="151" width="121" />
+            <h3>Governor David Ige</h3>
+            <h5>TEL: 808-586-0034</h5>
+            <h5>E-mail: gov@gov.state.hi.us</h5>
             <h5>Party Affiliation: Democrat</h5>
             <button onClick={this.closeModal}><strong>Close</strong></button>
           </div>
