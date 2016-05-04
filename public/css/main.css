@@ -323,3 +323,15 @@ text {
   padding-left: 159px;
 }
 
+p, h3, h4, span {
+  font-family: 'Maven Pro', sans-serif;
+}
+
+span {
+  font-size: large;
+}
+
+.browser-legend {
+  font-size: medium;
+}
+

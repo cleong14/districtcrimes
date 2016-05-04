@@ -92,7 +92,7 @@ var DonutChart=React.createClass({
   },
   getDefaultProps: function() {
     return {
-      width: 600,
+      width: 650,
       height: 250,
       padAngle:0
     };
