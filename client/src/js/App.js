@@ -8,6 +8,8 @@ var Politician = require('./Politician');
 
 var DonutChart = require('./DonutChart');
 
+// var host = 'localhost:3000';
+
 // where in the actual DOM to mount our App
 var mountNode = document.getElementById('app');
 // App component
