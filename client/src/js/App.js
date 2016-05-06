@@ -122,10 +122,10 @@ var App = React.createClass({
 
   toggleFilter: function (type) {
     var newArr = this.state.filter.slice();//copy array
-    if (newArr.indexOf(type) === -1) {
+    if (newArr.indexOf(type) === -1) {//checking to see if in array
       newArr = newArr.concat(type);//concat state filter with types
     } else {
-      for (var i = 0; i < newArr.length; i++) {
+      for (var i = 0; i < newArr.length; i++) {//else then remove it once clicked again
         if (newArr[i] == type) {
           newArr.splice(i, 1);
         }

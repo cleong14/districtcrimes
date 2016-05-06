@@ -1,20 +1,6 @@
 var React = require('react');
 
 
-    // return (
-    //   <div className="checkboxTwo">
-    //     <label for="checkboxTwoInput">
-    //       <input
-    //         id="checkboxTwoInput"
-    //         type="checkbox"
-    //         onChange={this.handleChange}
-    //         disabled={this.state.disabled}
-    //         defaultChecked={true}
-    //       />
-    //       &nbsp; {this.props.type}
-    //     </label>
-    //   </div>
-    // );
 
 
 var CheckBox = React.createClass({
