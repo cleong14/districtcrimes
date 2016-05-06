@@ -17,7 +17,7 @@ var Summary = React.createClass({
       label: 'THEFT/LARCENY',
       values: [{
         x: new Date(2015, 8, 17),
-        y: null
+        y: 0
       }]
       },
 
@@ -25,7 +25,7 @@ var Summary = React.createClass({
       label: 'VEHICLE BREAK-IN/THEFT',
       values: [{
         x: new Date(2015, 8, 17),
-        y: null
+        y: 0
       }]
       },
 
@@ -33,7 +33,7 @@ var Summary = React.createClass({
       label: 'VANDALISM',
       values: [{
         x: new Date(2015, 8, 17),
-        y: null
+        y: 0
       }]
       },
 
@@ -41,7 +41,7 @@ var Summary = React.createClass({
       label: 'MOTOR VEHICLE THEFT',
       values: [{
         x: new Date(2015, 8, 17),
-        y: null
+        y: 0
       }]
       },
       
@@ -49,7 +49,7 @@ var Summary = React.createClass({
       label: 'BURGLARY',
       values: [{
         x: new Date(2015, 8, 17),
-        y: null
+        y: 0
       }]
       }
     ];
