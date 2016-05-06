@@ -15,23 +15,42 @@ var Summary = React.createClass({
     var lines = [
       {
       label: 'THEFT/LARCENY',
-      values: []
+      values: [{
+        x: new Date(2015, 8, 17),
+        y: null
+      }]
       },
+
       {
       label: 'VEHICLE BREAK-IN/THEFT',
-      values: []
+      values: [{
+        x: new Date(2015, 8, 17),
+        y: null
+      }]
       },
+
       {
       label: 'VANDALISM',
-      values: []
+      values: [{
+        x: new Date(2015, 8, 17),
+        y: null
+      }]
       },
+
       {
       label: 'MOTOR VEHICLE THEFT',
-      values: []
+      values: [{
+        x: new Date(2015, 8, 17),
+        y: null
+      }]
       },
+      
       {
       label: 'BURGLARY',
-      values: []
+      values: [{
+        x: new Date(2015, 8, 17),
+        y: null
+      }]
       }
     ];
     // TODO:
