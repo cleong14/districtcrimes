@@ -14,7 +14,6 @@ var NoDataModal = React.createClass({
 
   afterOpenModal: function() {
     // references are now sync'd and can be accessed.
-    this.refs.subtitle.style.color = '#f00';
   },
 
   closeModal: function() {
@@ -22,40 +21,43 @@ var NoDataModal = React.createClass({
   },
 
   render: function() {
-    return (
-      <div>
-        <button onClick={this.openModal}>Open Modal</button>
-        <Modal
-          isOpen={this.state.modalIsOpen}
-          onAfterOpen={this.afterOpenModal}
-          onRequestClose={this.closeModal}
-          style={{
-            content: {
-              background: "#FFF",
-              color: "black",
-              margin: "auto"
-            },
-            overlay: {
-              backgroundColor: '#372E3B',
-            }
-          }}
-        >
+    // if (this.props.districtInfo) {
+      return (
+        <div>
+          <Modal
+            districtInfo={this.props.districtInfo}
+            isOpen={this.state.modalIsOpen}
+            onAfterOpen={this.afterOpenModal}
+            onRequestClose={this.closeModal}
+            style={{
+              content: {
+                background: "#FFF",
+                color: "black",
+                margin: "auto"
+              },
+              overlay: {
+                backgroundColor: '#372E3B',
+              }
+            }}
+          >
 
-          <div>
-            <h1>Oh Noes!</h1>
-            <h5>You've reached a district with no data.  Why is there no data?  Great question!  HPD's crime data API is somewhat... inconsistent...</h5>
-            <h5>Help us provide you with better data by contacting the legislator for this district! Let him or her know that you want the State of Hawaii to provide quality data for public consumption!  Start with the Guvna!  Huzzah!</h5>
-            <h3>State of Hawaii</h3>
-            <img src="http://www.civilbeat.com/wp-content/uploads/2014/07/53cbafec50b27-640x960.jpg" height="151" width="121" />
-            <h3>Governor David Ige</h3>
-            <h5>TEL: 808-586-0034</h5>
-            <h5>E-mail: gov@gov.state.hi.us</h5>
-            <h5>Party Affiliation: Democrat</h5>
-            <button id="close-button" onClick={this.closeModal}><strong>Close</strong></button>
-          </div>
-        </Modal>
-      </div>
-    );
+            <div>
+              <h1>Oh Noes!</h1>
+              <h5>You've reached a district with no data.  Why is there no data?  Great question!  HPD's crime data API is somewhat... inconsistent...</h5>
+              <h5>Help us provide you with better data by contacting the legislator for this district! Let him or her know that you want the State of Hawaii to provide quality data for public consumption!  Start with the Guvna!  Huzzah!</h5>
+              <h3>State of Hawaii</h3>
+              <img src={this.props.districtInfo.politician_picture} height="151" width="121" />
+              <h3>Governor David Ige</h3>
+              <h5>TEL: 808-586-0034</h5>
+              <h5>E-mail: gov@gov.state.hi.us</h5>
+              <h5>Party Affiliation: Democrat</h5>
+              <button id="close-button" onClick={this.closeModal}><strong>Close</strong></button>
+            </div>
+          </Modal>
+        </div>
+      );
+
+    // }
   }
 });
 

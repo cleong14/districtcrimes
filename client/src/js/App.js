@@ -22,7 +22,25 @@ var App = React.createClass({
       senateCrimes: [],
       houseCrimes: [],
       filteredSenateCrimes: [],
-      filteredHouseCrimes: []
+      filteredHouseCrimes: [],
+      districtInfo: {
+        "legislator_number": 28,
+        "legislator_year": "2016",
+        "legislator_type": "State",
+        "politician_officetype": "State",
+        "politician_position": "Governor",
+        "politician_party": "Democrat",
+        "politician_picture": "http://www.civilbeat.com/wp-content/uploads/2014/07/53cbafec50b27-640x960.jpg",
+        "politician_firstname": "David",
+        "politician_lastname": "Ige",
+        "address_street": "Hawaii State Capitol",
+        "address_room": "Executive Chambers",
+        "contact_phone": "808-586-0034",
+        "contact_fax": "808-586-0006",
+        "contact_email": "gov@gov.state.hi.us",
+        "contact_links": "http://governor.hawaii.gov/contact-us/contact-the-governor/",
+        "district_name": 0
+      }
     };
   },
 
