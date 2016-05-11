@@ -5,7 +5,6 @@ var Map = require('./Map');
 var Filter = require('./Filter');
 var LineChart = require('./LineChart');
 var Politician = require('./Politician');
-
 var DonutChart = require('./DonutChart');
 
 // var host = require('./host');
@@ -83,12 +82,11 @@ var App = React.createClass({
     this.loadFile('hshd.geo.json', 'house');
   },
 
-  componentWillReceiveProps: function() {
-    // this.filterCrimes(this.state.senateCrimes);
-  },
+  // componentWillReceiveProps: function() {
+  //   // this.filterCrimes(this.state.senateCrimes);
+  // },
 
-  componentWillUpdate: function () {
-    // this.filterCrimes(this.state.senateCrimes);
+  componentWillUpdate: function (newProps) {
   },
 
   componentDidUpdate: function () {
@@ -114,9 +112,21 @@ var App = React.createClass({
         filteredSenateCrimes: senateFilteredCrimes,
         filteredHouseCrimes: houseFilteredCrimes
       }, () => {
-        console.log(this.state);
+        // console.log(this.state);
       });
 
+    }
+  },
+
+  getDistrictInfo: function (districtNumber) {
+    if (this.state.districtData) {
+      for (var i in this.state.districtData[this.state.chamber]) {
+        if (this.state.districtData[this.state.chamber][i].district_name === districtNumber) {
+          this.setState({
+            districtInfo: this.state.districtData[this.state.chamber][i]
+          });
+        }
+      }
     }
   },
 
@@ -145,6 +155,19 @@ var App = React.createClass({
       districtNumber: number
     });
   },
+
+  updateDistrictInfo: function (number) {
+    var districtInfo;
+    for (var i in this.state.districtData[this.state.chamber]) {
+      if (this.state.districtData[this.state.chamber][i].district_name === number) {
+        districtInfo = this.state.districtData[this.state.chamber][i];
+      }
+    }
+    this.setState({
+      districtInfo: districtInfo
+    });
+  },
+
   render: function() {
     return (
       <div class="container">
@@ -175,7 +198,9 @@ var App = React.createClass({
             house={this.state.house}
             senate={this.state.senate}
             districtData={this.state.districtData}
+            districtInfo={this.state.districtInfo}
             updateDistrictNumber={this.updateDistrictNumber}
+            updateDistrictInfo={this.updateDistrictInfo}
             districtNumber={this.state.districtNumber}
             senateCrimes={this.state.filteredSenateCrimes}
             houseCrimes={this.state.filteredHouseCrimes}
@@ -183,6 +208,7 @@ var App = React.createClass({
           <Politician
             chamber={this.state.chamber}
             districtData={this.state.districtData}
+            districtInfo={this.state.districtInfo}
             districtNumber={this.state.districtNumber}
           />
         </div>

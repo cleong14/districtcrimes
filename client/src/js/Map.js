@@ -5,6 +5,8 @@ var ReactDOM = require('react-dom');
 var Modal = require('react-modal');
 var L = require('leaflet');
 
+var NoDataModal = require('./NoDataModal');
+
 // let's store the map configuration properties,
 // we could also move this to a separate file & require it
 var config = {};
@@ -119,6 +121,7 @@ var Map = React.createClass({
   // After App loads jsons, they are passed to Map as props; then we can run functions based upon those loaded props
   componentWillReceiveProps: function(newProps) {
     this.totalCrimesPerDistrict(newProps);
+    console.log(newProps);
   },
 
   componentWillUnmount: function() {
@@ -376,9 +379,15 @@ var Map = React.createClass({
     map.fitBounds(e.target.getBounds());
     var districtNumber = e.target.feature.properties.objectid;
     this.props.updateDistrictNumber(districtNumber);
+    this.props.updateDistrictInfo(districtNumber);
     if (e.target.feature.isEmpty === true) {
-      this.openModal();
+      console.log(this.refs);
+      this.refs['child'].openModal();
     }
+  },
+
+  toggleModal: function () {
+
   },
 
   zoomToCenter: function (e) {
@@ -415,7 +424,21 @@ var Map = React.createClass({
   render : function() {
     return (
       <div id="mapUI">
-        <Modal
+        <NoDataModal
+          ref="child"
+        ></NoDataModal>
+        <div id="map"></div>
+      </div>
+    );
+
+  }
+});
+
+// export our Map component so that Browserify can include it with other components that require it
+module.exports = Map;
+
+/*
+<Modal
 
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
@@ -444,13 +467,4 @@ var Map = React.createClass({
             <button id="close-button" onClick={this.closeModal}><strong>Close</strong></button>
           </div>
         </Modal>
-        <div id="map"></div>
-      </div>
-    );
-
-  }
-});
-
-// export our Map component so that Browserify can include it with other components that require it
-module.exports = Map;
-
+*/
