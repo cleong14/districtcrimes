@@ -190,6 +190,7 @@ var App = React.createClass({
   },
 
   openAboutModal: function() {
+    console.log("Why you no open?");
     this.refs['about'].openModal();
   },
 
@@ -208,7 +209,7 @@ var App = React.createClass({
               <img id="eye-logo" src="../../img/medical.png" height="70" width="70"></img>
             </div>
             <div>
-              <button onclick="openAboutModal()">ABOUT</button>
+              <button onClick={this.openAboutModal}>ABOUT</button>
             </div>
           </div>
         </div>
