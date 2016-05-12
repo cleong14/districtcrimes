@@ -103,7 +103,6 @@ var Map = React.createClass({
   // After App loads jsons, they are passed to Map as props; then we can run functions based upon those loaded props
   componentWillReceiveProps: function(newProps) {
     this.totalCrimesPerDistrict(newProps);
-    console.log(newProps);
   },
 
   componentWillUnmount: function() {
@@ -236,7 +235,7 @@ var Map = React.createClass({
     info.update = function (props) {
         this._div.innerHTML = '<h4>Hawaii '+ districtInfo.politician_officetype +' Districts</h4>' +  (props ?
             '<p>'+ districtInfo.politician_officetype + ' District ' + props.objectid + '</p><br>' +
-            '<b>' + _this.getLegislator(props.objectid) + '</b>' +
+            // '<b>' + _this.getLegislator(props.objectid) + '</b>' +
             '<p>Neighborhoods: ' + _this.getNeighborhoods(props.objectid) + '</p>'
             : '<p>Hover over a district!</p>');
     };

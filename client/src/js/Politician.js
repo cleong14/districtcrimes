@@ -24,7 +24,7 @@ var Politician = React.createClass({
   },
 
   componentWillReceiveProps: function(newProps) {
-    this.getDistrictInfo(newProps);
+    // this.getDistrictInfo(newProps);
   },
 
   componentWillUnmount: function() {
@@ -34,39 +34,20 @@ var Politician = React.createClass({
 
   },
 
-  getDistrictInfo: function (newProps) {
-    if (newProps.districtData) {
-      var chamber = newProps.districtData[newProps.chamber];
-      for (var i=0; i < chamber.length; i++) {
-        if (chamber[i].district_name === newProps.districtNumber) {
-          this.setState({districtInfo: chamber[i]});
-        }
-      }
-    }
-  },
-
-  buildTheDiv: function (districtInfo) {
-    if (districtInfo) {
-      return (
-        <div>
-          <h4>{districtInfo.politician_position} {districtInfo.politician_firstname} {districtInfo.politician_lastname}</h4>
-          <img id="photo" src={districtInfo.politician_picture} height="151" width="121" />
-          <p><strong>{districtInfo.politician_officetype} District {districtInfo.district_name}</strong></p>
-          <p>Contact your {districtInfo.politician_position} about crime in your district.</p>
-          <p>TEL: {districtInfo.contact_phone}</p>
-          <p>E-mail: <a href={districtInfo.contact_email}>{districtInfo.contact_email}</a></p>
-          <p>Party Affiliation: {districtInfo.politician_party}</p>
-        </div>
-      );
-    }
-  },
-
   render: function() {
     // return our JSX that is rendered to the DOM
     // var districtInfo = this.state.districtInfo;
       return (
         <div id="politician">
-          {this.buildTheDiv(this.state.districtInfo)}
+          <div>
+            <h4>{this.props.districtInfo.politician_position} {this.props.districtInfo.politician_firstname} {this.props.districtInfo.politician_lastname}</h4>
+            <img id="photo" src={this.props.districtInfo.politician_picture} height="151" width="121" />
+            <p><strong>{this.props.districtInfo.politician_officetype} District {this.props.districtInfo.district_name}</strong></p>
+            <p>Contact your {this.props.districtInfo.politician_position} about crime in your district.</p>
+            <p>TEL: {this.props.districtInfo.contact_phone}</p>
+            <p>E-mail: <a href={this.props.districtInfo.contact_email}>{this.props.districtInfo.contact_email}</a></p>
+            <p>Party Affiliation: {this.props.districtInfo.politician_party}</p>
+          </div>
         </div>
       );
   }

@@ -1,11 +1,13 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var Modal = require('react-modal');
 // require our Map React component
 var Map = require('./Map');
 var Filter = require('./Filter');
 var LineChart = require('./LineChart');
 var Politician = require('./Politician');
 var DonutChart = require('./DonutChart');
+var AboutModal = require('./AboutModal');
 
 // var host = require('./host');
 
@@ -98,6 +100,7 @@ var App = React.createClass({
     this.loadSenateCrimes();
     this.loadHouseCrimes();
     this.loadFile('hshd.geo.json', 'house');
+    console.log(this.refs);
   },
 
   // componentWillReceiveProps: function() {
@@ -186,6 +189,10 @@ var App = React.createClass({
     });
   },
 
+  openAboutModal: function() {
+    this.refs['about'].openModal();
+  },
+
   render: function() {
     return (
       <div class="container">
@@ -200,9 +207,15 @@ var App = React.createClass({
             <div id="picture">
               <img id="eye-logo" src="../../img/medical.png" height="70" width="70"></img>
             </div>
+            <div>
+              <button onclick="openAboutModal()">ABOUT</button>
+            </div>
           </div>
         </div>
         <div className="topLevel">
+          <AboutModal
+            ref="about"
+          ></AboutModal>
           <Filter
             types={this.state.types}
             onChange={this.toggleFilter}

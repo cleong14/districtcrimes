@@ -2,7 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var Modal = require('react-modal');
 
-var NoDataModal = React.createClass({
+var AboutModal = React.createClass({
 
   getInitialState: function() {
     return { modalIsOpen: false };
@@ -25,7 +25,6 @@ var NoDataModal = React.createClass({
       return (
         <div>
           <Modal
-            districtInfo={this.props.districtInfo}
             isOpen={this.state.modalIsOpen}
             onAfterOpen={this.afterOpenModal}
             onRequestClose={this.closeModal}
@@ -42,15 +41,9 @@ var NoDataModal = React.createClass({
           >
 
             <div class="modal">
-              <h1>Oh Noes!</h1>
-              <h5>You've reached a district with no data.  Why is there no data?  Great question!  HPD's crime data API is somewhat... inconsistent...</h5>
-              <h5>Help us provide you with better data by contacting the legislator for this district! Let him or her know that you want the State of Hawaii to provide quality data for public consumption!  Start with the Guvna!  Huzzah!</h5>
-              <h3>State of Hawaii</h3>
-              <img src={this.props.districtInfo.politician_picture} height="151" width="121" />
-              <h3>{this.props.districtInfo.politician_position} {this.props.districtInfo.politician_firstname} {this.props.districtInfo.politician_lastname}</h3>
-              <h5>TEL: {this.props.districtInfo.contact_phone}</h5>
-              <h5>E-mail: {this.props.districtInfo.contact_email}</h5>
-              <h5>Party Affiliation: {this.props.districtInfo.politician_party}</h5>
+              <h1>Welcome to District Crimes!</h1>
+              <img src="../assets/team_3973x2347.jpg" height="151" width="121" />
+              <h5>This is a modal about our team.</h5>
               <button id="close-button" onClick={this.closeModal}><strong>Close</strong></button>
             </div>
           </Modal>
@@ -61,4 +54,4 @@ var NoDataModal = React.createClass({
   }
 });
 
-module.exports = NoDataModal;
+module.exports = AboutModal;
