@@ -205,12 +205,3 @@ ReactDOM.render(
   <App />,
   mountNode
 );
-
-// <LineChart
-//             chamber={this.state.chamber}
-//             districtData={this.state.districtData}
-//             districtNumber={this.state.districtNumber}
-//             senateCrimes={this.state.filteredSenateCrimes}
-//             houseCrimes={this.state.filteredHouseCrimes}
-//             filter={this.state.filter}
-//           />
