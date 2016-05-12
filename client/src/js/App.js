@@ -187,14 +187,6 @@ var App = React.createClass({
           />
         </div>
         <div className="bottomLevel">
-          <LineChart
-            chamber={this.state.chamber}
-            districtData={this.state.districtData}
-            districtNumber={this.state.districtNumber}
-            senateCrimes={this.state.filteredSenateCrimes}
-            houseCrimes={this.state.filteredHouseCrimes}
-            filter={this.state.filter}
-          />
           <DonutChart
             filter={this.state.filter}
             districtNumber={this.state.districtNumber}
@@ -213,3 +205,12 @@ ReactDOM.render(
   <App />,
   mountNode
 );
+
+// <LineChart
+//             chamber={this.state.chamber}
+//             districtData={this.state.districtData}
+//             districtNumber={this.state.districtNumber}
+//             senateCrimes={this.state.filteredSenateCrimes}
+//             houseCrimes={this.state.filteredHouseCrimes}
+//             filter={this.state.filter}
+//           />
