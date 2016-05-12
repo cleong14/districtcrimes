@@ -3,7 +3,7 @@ var ReactDOM = require('react-dom');
 // require our Map React component
 var Map = require('./Map');
 var Filter = require('./Filter');
-var LineChart = require('./LineChart');
+// var LineChart = require('./LineChart');
 var Politician = require('./Politician');
 
 var DonutChart = require('./DonutChart');
