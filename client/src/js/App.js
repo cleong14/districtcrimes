@@ -1,12 +1,15 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var Modal = require('react-modal');
 // require our Map React component
 var Map = require('./Map');
 var Filter = require('./Filter');
 // var LineChart = require('./LineChart');
 var Politician = require('./Politician');
-
 var DonutChart = require('./DonutChart');
+var AboutModal = require('./AboutModal');
+
+// var host = require('./host');
 
 // var host = 'localhost:3000';
 
@@ -23,7 +26,25 @@ var App = React.createClass({
       senateCrimes: [],
       houseCrimes: [],
       filteredSenateCrimes: [],
-      filteredHouseCrimes: []
+      filteredHouseCrimes: [],
+      districtInfo: {
+        "legislator_number": 28,
+        "legislator_year": "2016",
+        "legislator_type": "State",
+        "politician_officetype": "State",
+        "politician_position": "Governor",
+        "politician_party": "Democrat",
+        "politician_picture": "http://www.civilbeat.com/wp-content/uploads/2014/07/53cbafec50b27-640x960.jpg",
+        "politician_firstname": "David",
+        "politician_lastname": "Ige",
+        "address_street": "Hawaii State Capitol",
+        "address_room": "Executive Chambers",
+        "contact_phone": "808-586-0034",
+        "contact_fax": "808-586-0006",
+        "contact_email": "gov@gov.state.hi.us",
+        "contact_links": "http://governor.hawaii.gov/contact-us/contact-the-governor/",
+        "district_name": 0
+      }
     };
   },
 
@@ -81,14 +102,14 @@ var App = React.createClass({
     this.loadSenateCrimes();
     this.loadHouseCrimes();
     this.loadFile('hshd.geo.json', 'house');
+    console.log(this.refs);
   },
 
-  componentWillReceiveProps: function() {
-    // this.filterCrimes(this.state.senateCrimes);
-  },
+  // componentWillReceiveProps: function() {
+  //   // this.filterCrimes(this.state.senateCrimes);
+  // },
 
-  componentWillUpdate: function () {
-    // this.filterCrimes(this.state.senateCrimes);
+  componentWillUpdate: function (newProps) {
   },
 
   componentDidUpdate: function () {
@@ -114,9 +135,21 @@ var App = React.createClass({
         filteredSenateCrimes: senateFilteredCrimes,
         filteredHouseCrimes: houseFilteredCrimes
       }, () => {
-        console.log(this.state);
+        // console.log(this.state);
       });
 
+    }
+  },
+
+  getDistrictInfo: function (districtNumber) {
+    if (this.state.districtData) {
+      for (var i in this.state.districtData[this.state.chamber]) {
+        if (this.state.districtData[this.state.chamber][i].district_name === districtNumber) {
+          this.setState({
+            districtInfo: this.state.districtData[this.state.chamber][i]
+          });
+        }
+      }
     }
   },
 
@@ -145,6 +178,24 @@ var App = React.createClass({
       districtNumber: number
     });
   },
+
+  updateDistrictInfo: function (number) {
+    var districtInfo;
+    for (var i in this.state.districtData[this.state.chamber]) {
+      if (this.state.districtData[this.state.chamber][i].district_name === number) {
+        districtInfo = this.state.districtData[this.state.chamber][i];
+      }
+    }
+    this.setState({
+      districtInfo: districtInfo
+    });
+  },
+
+  openAboutModal: function() {
+    console.log("Why you no open?");
+    this.refs['about'].openModal();
+  },
+
   render: function() {
     return (
       <div class="container">
@@ -159,9 +210,15 @@ var App = React.createClass({
             <div id="picture">
               <img id="eye-logo" src="../../img/medical.png" height="70" width="70"></img>
             </div>
+            <div>
+              <button onClick={this.openAboutModal}>ABOUT</button>
+            </div>
           </div>
         </div>
         <div className="topLevel">
+          <AboutModal
+            ref="about"
+          ></AboutModal>
           <Filter
             types={this.state.types}
             onChange={this.toggleFilter}
@@ -175,7 +232,9 @@ var App = React.createClass({
             house={this.state.house}
             senate={this.state.senate}
             districtData={this.state.districtData}
+            districtInfo={this.state.districtInfo}
             updateDistrictNumber={this.updateDistrictNumber}
+            updateDistrictInfo={this.updateDistrictInfo}
             districtNumber={this.state.districtNumber}
             senateCrimes={this.state.filteredSenateCrimes}
             houseCrimes={this.state.filteredHouseCrimes}
@@ -183,6 +242,7 @@ var App = React.createClass({
           <Politician
             chamber={this.state.chamber}
             districtData={this.state.districtData}
+            districtInfo={this.state.districtInfo}
             districtNumber={this.state.districtNumber}
           />
         </div>

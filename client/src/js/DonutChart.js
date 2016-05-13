@@ -139,7 +139,7 @@ var DonutChart=React.createClass({
   // },
 
   getCrimesPerDistrict:function(newProps) {
-    console.log(newProps);
+    // console.log(newProps);
     var allCrimes;
     var filteredCrimes;
     var _this = this;
@@ -231,7 +231,7 @@ var DonutChart=React.createClass({
   render:function(){
     return (
       <div id="pie-chart">
-        <h4 id="total-crimes-header">TOTAL CRIMES FOR DISTRICT: {this.props.districtNumber}</h4>
+        <h4 id="total-crimes-header">TOTAL CRIMES FOR DISTRICT {this.props.districtNumber}</h4>
           <svg
             id={this.props.id}
             width={this.state.width}

@@ -28,13 +28,13 @@ var path = {
   MINIFIED_OUT:   'js/build.min.js',
   OUT:            'js/build.js',
   DEST:           'public/',
-  DEST_ASSETS:    'public/img/', 
+  DEST_ASSETS:    'public/img/',
   DEST_BUILD:     'public/js/',
   DEST_SRC:       'public/src/',
   CSS_SRC:        'client/src/**/*.css',
   ENTRY_POINT:    'client/src/js/App.js',
   DEPENDENCIES:   'node_modules/',
-  ASSETS:         'client/src/assets/*.png'
+  ASSETS:         'client/src/assets/*'
 };
 
 gulp.task('clean', function () {
