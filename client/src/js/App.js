@@ -29,7 +29,7 @@ var App = React.createClass({
 
   loadSenateCrimes: function () {//added
     $.ajax({
-      url: 'http://districtcrimes.com/senatecrimequery',
+      url: '/senatecrimequery',
       method: "GET",
       dataType: "json",
       success: (data) => {
@@ -45,7 +45,7 @@ var App = React.createClass({
   },
   loadHouseCrimes: function () {//added
     $.ajax({
-      url: 'http://districtcrimes.com/housecrimequery',
+      url: '/housecrimequery',
       method: "GET",
       dataType: "json",
       success: (data) => {
@@ -62,7 +62,7 @@ var App = React.createClass({
   loadFile: function (fileName, label) {
     var newState = {};
     $.ajax({
-      url: 'http://districtcrimes.com/file/'+fileName,
+      url: '/file/'+fileName,
       method: "GET",
       dataType: "json",
       success: (data) => {
