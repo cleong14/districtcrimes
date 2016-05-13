@@ -242,6 +242,19 @@ html, body {
 
 .ReactModal__Content h3 {
   font-weight: bold;
+  color: black;
+}
+
+.ReactModal__Content span {
+  color: black;
+}
+
+.ReactModal__Content h5 {
+  color: black;
+}
+
+.ReactModal__Content p {
+  color: black;
 }
 
 .ReactModal__Content button {

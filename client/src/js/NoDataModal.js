@@ -36,7 +36,7 @@ var NoDataModal = React.createClass({
                 margin: "auto"
               },
               overlay: {
-                backgroundColor: '#372E3B',
+                backgroundColor: 'rgba(55,46,59, 0.75)',
               }
             }}
           >

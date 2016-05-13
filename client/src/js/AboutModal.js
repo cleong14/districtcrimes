@@ -30,12 +30,12 @@ var AboutModal = React.createClass({
             onRequestClose={this.closeModal}
             style={{
               content: {
-                background: "#FFF",
-                color: "black",
-                margin: "auto"
+                background: '#FFF',
+                color: 'black',
+                margin: 'auto'
               },
               overlay: {
-                backgroundColor: '#372E3B',
+                backgroundColor: 'rgba(55,46,59, 0.75)' //rgb version of #372E3B, with half opacity
               }
             }}
           >
@@ -43,7 +43,8 @@ var AboutModal = React.createClass({
             <div class="modal">
               <h1>Welcome to District Crimes!</h1>
               <img src="../../img/team_3973x2347.jpg" />
-              <h5>This is a modal about our team.</h5>
+              <p>Left to right: Chaz Leong, Theo Tran, Kevin White, Jesse Copeland (instructor)</p>
+              <h5>Chaz, Theo, and Kevin graduated from DevLeague Coding Bootcamp in April, 2016.  Their capstone project, Disctrict Crimes, is intended to visualize public data in order to help the citizens of Hawaii understand troubled areas and to reach the local legislators who are best placed to effect change.</h5>
               <button id="close-button" onClick={this.closeModal}><strong>Close</strong></button>
             </div>
           </Modal>
