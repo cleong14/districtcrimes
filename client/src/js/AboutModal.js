@@ -42,7 +42,7 @@ var AboutModal = React.createClass({
 
             <div class="modal">
               <h1>Welcome to District Crimes!</h1>
-              <img src="../assets/team_3973x2347.jpg" height="151" width="121" />
+              <img src="../../img/team_3973x2347.jpg" />
               <h5>This is a modal about our team.</h5>
               <button id="close-button" onClick={this.closeModal}><strong>Close</strong></button>
             </div>
