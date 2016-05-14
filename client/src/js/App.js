@@ -214,7 +214,7 @@ var App = React.createClass({
           </div>
         </div>
         <div className="topLevel">
-          <AboutModal
+          <AboutModal 
             ref="about"
           ></AboutModal>
           <Filter
