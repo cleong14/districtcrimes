@@ -5,6 +5,8 @@ var ReactDOM = require('react-dom');
 var Modal = require('react-modal');
 var L = require('leaflet');
 
+var NoDataModal = require('./NoDataModal');
+
 // let's store the map configuration properties,
 // we could also move this to a separate file & require it
 var config = {};
@@ -91,24 +93,6 @@ var Map = React.createClass({
       houseCrimes: []
     };
   },
-
-  openModal: function() {
-    this.setState({modalIsOpen: true});
-  },
-
-  afterOpenModal: function() {
-    // references are now sync'd and can be accessed.
-    this.refs.districtInfo = this.getDistrictInfo(this.props.districtNumber);
-  },
-
-  closeModal: function() {
-    this.setState({modalIsOpen: false});
-  },
-  // componentWillMount: function() {
-
-  //   // code to run just before adding the map
-
-  // },
 
   componentDidMount: function() {
     // code to run just after adding the map to the DOM
@@ -251,7 +235,7 @@ var Map = React.createClass({
     info.update = function (props) {
         this._div.innerHTML = '<h4>Hawaii '+ districtInfo.politician_officetype +' Districts</h4>' +  (props ?
             '<p>'+ districtInfo.politician_officetype + ' District ' + props.objectid + '</p><br>' +
-            '<b>' + _this.getLegislator(props.objectid) + '</b>' +
+            // '<b>' + _this.getLegislator(props.objectid) + '</b>' +
             '<p>Neighborhoods: ' + _this.getNeighborhoods(props.objectid) + '</p>'
             : '<p>Hover over a district!</p>');
     };
@@ -376,9 +360,14 @@ var Map = React.createClass({
     map.fitBounds(e.target.getBounds());
     var districtNumber = e.target.feature.properties.objectid;
     this.props.updateDistrictNumber(districtNumber);
+    this.props.updateDistrictInfo(districtNumber);
     if (e.target.feature.isEmpty === true) {
-      this.openModal();
+      this.refs['child'].openModal();
     }
+  },
+
+  toggleModal: function () {
+
   },
 
   zoomToCenter: function (e) {
@@ -415,35 +404,10 @@ var Map = React.createClass({
   render : function() {
     return (
       <div id="mapUI">
-        <Modal
-
-          isOpen={this.state.modalIsOpen}
-          onAfterOpen={this.afterOpenModal}
-          onRequestClose={this.closeModal}
-          style={{
-            content: {
-              background: "#FFF",
-              color: "black",
-              margin: "auto"
-            },
-            overlay: {
-              backgroundColor: '#372E3B',
-            }
-          }}
-        >
-          <div>
-            <h1>Oh Noes!</h1>
-            <h5>You've reached a district with no data.  Why is there no data?  Great question!  HPD's crime data API is somewhat... inconsistent...</h5>
-            <h5>Help us provide you with better data by contacting the legislator for this district! Let him or her know that you want the State of Hawaii to provide quality data for public consumption!  Start with the Guvna!  Huzzah!</h5>
-            <h3>State of Hawaii</h3>
-            <img src="http://www.civilbeat.com/wp-content/uploads/2014/07/53cbafec50b27-640x960.jpg" height="151" width="121" />
-            <h3>Governor David Ige</h3>
-            <h5>TEL: 808-586-0034</h5>
-            <h5>E-mail: gov@gov.state.hi.us</h5>
-            <h5>Party Affiliation: Democrat</h5>
-            <button id="close-button" onClick={this.closeModal}><strong>Close</strong></button>
-          </div>
-        </Modal>
+        <NoDataModal
+          districtInfo={this.props.districtInfo}
+          ref="child"
+        ></NoDataModal>
         <div id="map"></div>
       </div>
     );
