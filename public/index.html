@@ -17,36 +17,41 @@
       });
     </script> -->
     <style>
-      body{
+/*      body{
       margin:0;
       padding:0;
       text-align:center;
       background-color:#FEB41C;
-      }
+      }*/
        
-      body h1{
+/*      body h1{
       color:#363F45;
       font-family:Arial, Helvetica, sans-serif;
       font-size:3em;
-      }
+      }*/
        
       #loader{
       position:fixed;
       top:0;
       width:100%;
-      background-color:white;
+      background-color:#345762;
       height:100%;
       text-align:center;
       margin:0;
       padding:0;
       overflow:hidden;
+      z-index: 2001;
       }
     </style> 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>  
     <script>
-      $(window).load(function() {
-        $("#loader").delay(3000).fadeOut("fast");
-      });
+    $(window).load(function() {
+        $("#loader").delay(3000).animate({
+            opacity:0,
+            width: 0,
+            height:0
+        }, 500);
+    });
     </script>
 
 
