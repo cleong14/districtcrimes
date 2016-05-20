@@ -9,70 +9,13 @@
     <link rel="stylesheet" href="/css/leaflet.css" />
     <link rel="stylesheet" href="/css/main.css" />
 
-<style type="text/css">
-    /*
- *  Usage:
- *
-      <div class="sk-wave">
-        <div class="sk-rect sk-rect1"></div>
-        <div class="sk-rect sk-rect2"></div>
-        <div class="sk-rect sk-rect3"></div>
-        <div class="sk-rect sk-rect4"></div>
-        <div class="sk-rect sk-rect5"></div>
-      </div>
- *
- */
-  .sk-wave {
-    margin: 40px auto;
-    width: 70px;
-    height: 60px;
-    text-align: center;
-    font-size: 10px; 
-  }
-  .sk-wave .sk-rect {
-    background-color: #FFF;
-    height: 100%;
-    width: 6px;
-    display: inline-block;
-    -webkit-animation: sk-waveStretchDelay 1.2s infinite ease-in-out;
-            animation: sk-waveStretchDelay 1.2s infinite ease-in-out; }
-  .sk-wave .sk-rect1 {
-    -webkit-animation-delay: -1.2s;
-            animation-delay: -1.2s; }
-  .sk-wave .sk-rect2 {
-    -webkit-animation-delay: -1.1s;
-            animation-delay: -1.1s; }
-  .sk-wave .sk-rect3 {
-    -webkit-animation-delay: -1s;
-            animation-delay: -1s; }
-  .sk-wave .sk-rect4 {
-    -webkit-animation-delay: -0.9s;
-            animation-delay: -0.9s; }
-  .sk-wave .sk-rect5 {
-    -webkit-animation-delay: -0.8s;
-            animation-delay: -0.8s; }
-@-webkit-keyframes sk-waveStretchDelay {
-  0%, 40%, 100% {
-    -webkit-transform: scaleY(0.4);
-            transform: scaleY(0.4); }
-  20% {
-    -webkit-transform: scaleY(1);
-            transform: scaleY(1); } }
-@keyframes sk-waveStretchDelay {
-  0%, 40%, 100% {
-    -webkit-transform: scaleY(0.4);
-            transform: scaleY(0.4); }
-  20% {
-    -webkit-transform: scaleY(1);
-            transform: scaleY(1); } }
-  </style>
 
     <style>       
       #loader{
       position:fixed;
       top:0;
       width:100%;
-      background-color:#345762;
+      background-color:#FFF;
       height:100%;
       text-align:center;
       margin:0;
@@ -84,7 +27,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>  
     <script>
     $(window).load(function() {
-        $("#loader").delay(3000).animate({
+        $("#loader").delay(1000).animate({
             opacity:0,
             width: 0,
             height:0
@@ -97,6 +40,23 @@
     <script src="//d3js.org/d3.v3.min.js"></script>
   </head>
   <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">DISTRICT CRIMES</a>
+            </div>
+        </div>
+    </nav>
+
     <div id="loader">
       <div class="sk-wave">
         <div class="sk-rect sk-rect1"></div>
@@ -110,6 +70,20 @@
     <div id="app"></div>
     <script src="js/build.js"></script>
     <div id="location"></div>
+
+        <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="js/classie.js"></script>
+    <script src="js/cbpAnimatedHeader.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/agency.js"></script>
 
   </body>
 </html>
