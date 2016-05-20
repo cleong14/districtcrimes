@@ -3,6 +3,6 @@ node_modules
 
 leaflet-dev
 leaflet-test
-config.json
+
 api-keys.md
 host.js
