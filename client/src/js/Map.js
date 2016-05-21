@@ -217,29 +217,32 @@ var Map = React.createClass({
 
   // Leaflet Control object - District Information
   addInfoToMap: function () {
-    // remove the data from the geojson layer
-    if (info){
-      map.removeControl(info);
-    }
+    if (this.props.districtData){
+      // remove the data from the geojson layer
+      if (info){
+        map.removeControl(info);
+      }
 
-    var districtInfo = this.getDistrictInfo(this.props.districtNumber);
-    var _this = this;
-    // Top right info panel
-    info = this.info = L.control();
-    info.onAdd = function (map) {
-        this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-        this.update();
-        return this._div;
-    };
-    // method that we will use to update the control based on feature properties passed
-    info.update = function (props) {
-        this._div.innerHTML = '<h4>Hawaii '+ districtInfo.politician_officetype +' Districts</h4>' +  (props ?
-            '<p>'+ districtInfo.politician_officetype + ' District ' + props.objectid + '</p><br>' +
-            // '<b>' + _this.getLegislator(props.objectid) + '</b>' +
-            '<p>Neighborhoods: ' + _this.getNeighborhoods(props.objectid) + '</p>'
-            : '<p>Hover over a district!</p>');
-    };
-    info.addTo(map);
+      var districtInfo = this.getDistrictInfo(this.props.districtNumber);
+      var _this = this;
+      // Top right info panel
+      info = this.info = L.control();
+      info.onAdd = function (map) {
+          this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+          this.update();
+          return this._div;
+      };
+      // method that we will use to update the control based on feature properties passed
+      info.update = function (props) {
+          this._div.innerHTML = '<h4>Hawaii '+ districtInfo.politician_officetype +' Districts</h4>' +  (props ?
+              '<p>'+ districtInfo.politician_officetype + ' District ' + props.objectid + '</p><br>' +
+              // '<b>' + _this.getLegislator(props.objectid) + '</b>' +
+              '<p>Neighborhoods: ' + _this.getNeighborhoods(props.objectid) + '</p>'
+              : '<p>Hover over a district!</p>');
+      };
+      info.addTo(map);
+
+    }
 
   },
 
