@@ -162,6 +162,7 @@ var Map = React.createClass({
     }
     var districtCrimes = this.state.allCrimes["district"+feature.properties.objectid].total;
     feature.isEmpty = false;
+    console.log("this is the color: ", this.getColor(chamber, districtCrimes));
     return {
       "fillColor": this.getColor(chamber, districtCrimes),
       "color": "#ffffff",
