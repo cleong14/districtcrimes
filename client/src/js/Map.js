@@ -149,6 +149,7 @@ var Map = React.createClass({
 
   // style object for Leaflet map
   style: function (chamber, feature) {
+    console.log('begin styling: ', chamber, feature.properties.objectid);
     if (!this.state.allCrimes["district"+feature.properties.objectid]) {
       feature.isEmpty = true;
       return {

@@ -101,7 +101,6 @@ var App = React.createClass({
     this.loadSenateCrimes();
     this.loadHouseCrimes();
     this.loadFile('hshd.geo.json', 'house');
-    console.log(this.refs);
   },
 
   // componentWillReceiveProps: function() {

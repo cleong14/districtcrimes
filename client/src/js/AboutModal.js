@@ -40,7 +40,7 @@ var AboutModal = React.createClass({
             }}
           >
 
-            <div class="modal">
+            <div className="modal">
               <h1>Welcome to District Crimes!</h1>
               <img src="../../img/team_3973x2347.jpg" />
               <p>Left to right: Chaz Leong, Theo Tran, Kevin White, Jesse Copeland (instructor)</p>
