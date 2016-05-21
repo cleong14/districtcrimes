@@ -42,7 +42,8 @@ var App = React.createClass({
         "contact_email": "gov@gov.state.hi.us",
         "contact_links": "http://governor.hawaii.gov/contact-us/contact-the-governor/",
         "district_name": 0
-      }
+      },
+      districtData: []
     };
   },
 
@@ -214,7 +215,7 @@ var App = React.createClass({
           </div>
         </div>
         <div className="topLevel">
-          <AboutModal 
+          <AboutModal
             ref="about"
           ></AboutModal>
           <Filter
