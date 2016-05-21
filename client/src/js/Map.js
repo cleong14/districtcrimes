@@ -315,10 +315,12 @@ var Map = React.createClass({
   },
 
   getDistrictInfo: function (districtNumber) {
-    var districtInfo;
-    for (var i in this.props.districtData[this.props.chamber]) {
-      if (this.props.districtData[this.props.chamber][i].district_name === districtNumber) {
-        return this.props.districtData[this.props.chamber][i];
+    if (this.props.districtData) {
+      var districtInfo;
+      for (var i in this.props.districtData[this.props.chamber]) {
+        if (this.props.districtData[this.props.chamber][i].district_name === districtNumber) {
+          return this.props.districtData[this.props.chamber][i];
+        }
       }
     }
   },
