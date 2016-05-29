@@ -185,6 +185,7 @@ var Map = React.createClass({
 
   totalCrimesPerDistrict: function (newProps) {
 
+    console.log("begin crime calculations");
     var allCrimes;
     switch (newProps.chamber) {
       case 'house':
@@ -194,7 +195,7 @@ var Map = React.createClass({
         allCrimes = newProps.senateCrimes;
         break;
     }
-
+    console.log(allCrimes);
     var initialValue = {};
 
     var reducer = function(newObj, crimeGlob) {
