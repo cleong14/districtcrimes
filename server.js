@@ -134,6 +134,6 @@ app.get('/file/:name', function (req, res, next) {
 db.sequelize
   .sync();
 
-var server = app.listen(3000, function() {
+var server = app.listen(8010, function() {
   console.log('Listening to port', server.address().port);
 });
