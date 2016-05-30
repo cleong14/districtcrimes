@@ -7,79 +7,12 @@ var L = require('leaflet');
 
 var NoDataModal = require('./NoDataModal');
 
-// let's store the map configuration properties,
-// we could also move this to a separate file & require it
-var config = {};
-
 // a local variable to store our instance of L.map
 var map;
 var legend;
 var info;
 var geojsonLayer;
 var theZoom;
-
-// map paramaters to pass to L.map when we instantiate it
-config.params = {
-  center: [21.477351, -157.962799],
-  zoomControl: false,
-  zoom: 10,
-  // maxZoom: 19,
-  // minZoom: 11,
-  scrollWheelZoom: false,
-  legends: true,
-  infoControl: false,
-  attributionControl: true
-};
-
-// params for the L.tileLayer (aka basemap)
-config.tileLayer = {
-  url: 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
-  params: {
-    minZoom: 5,
-    attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-    id: 'mapbox.light',
-    accessToken: 'pk.eyJ1Ijoia3doaXRlanIiLCJhIjoiY2ltNXdqdGFwMDFzanRzbTRwOW52N2syZCJ9.8tgIWcf7d9ZyJ3gjtOssaQ'
-  }
-};
-
-// Map gradient colors alternate for House and Senate
-config.colors = {
-  house: {
-    level1: '#eff3ff',
-    level2: '#c6dbef',
-    level3: '#9ecae1',
-    level4: '#6baed6',
-    level5: '#3182bd',
-    level6: '#08519c'
-  },
-  senate: {
-    level1: '#fee5d9',
-    level2: '#fcbba1',
-    level3: '#fc9272',
-    level4: '#fb6a4a',
-    level5: '#de2d26',
-    level6: '#a50f15'
-  }
-};
-
-config.crimeLevels = {
-  house: {
-    level1: 1,
-    level2: 100,
-    level3: 250,
-    level4: 500,
-    level5: 800,
-    level6: 1500
-  },
-  senate: {
-    level1: 1,
-    level2: 100,
-    level3: 250,
-    level4: 500,
-    level5: 1000,
-    level6: 2500
-  }
-};
 
 // here's the actual component
 var Map = React.createClass({
@@ -149,8 +82,6 @@ var Map = React.createClass({
 
   // style object for Leaflet map
   style: function (chamber, feature) {
-    console.log('begin styling: ', chamber, feature.properties.objectid);
-    console.log(this.state.allCrimes);
     if (!this.state.allCrimes["district"+feature.properties.objectid]) {
       feature.isEmpty = true;
       return {
@@ -163,7 +94,6 @@ var Map = React.createClass({
     }
     var districtCrimes = this.state.allCrimes["district"+feature.properties.objectid].total;
     feature.isEmpty = false;
-    console.log("this is the color: ", this.getColor(chamber, districtCrimes));
     return {
       "fillColor": this.getColor(chamber, districtCrimes),
       "color": "#ffffff",
@@ -174,18 +104,17 @@ var Map = React.createClass({
   },
 
   getColor: function (chamber, districtCrimes) {
-    return  districtCrimes > config.crimeLevels[chamber].level6  ? config.colors[chamber].level6 :
-            districtCrimes > config.crimeLevels[chamber].level5  ? config.colors[chamber].level5 :
-            districtCrimes > config.crimeLevels[chamber].level4   ? config.colors[chamber].level4 :
-            districtCrimes > config.crimeLevels[chamber].level3   ? config.colors[chamber].level3 :
-            districtCrimes > config.crimeLevels[chamber].level2   ? config.colors[chamber].level2 :
-            districtCrimes > config.crimeLevels[chamber].level1     ? config.colors[chamber].level1 :
+    return  districtCrimes > this.props.config.crimeLevels[chamber].level6  ? this.props.config.colors[chamber].level6 :
+            districtCrimes > this.props.config.crimeLevels[chamber].level5  ? this.props.config.colors[chamber].level5 :
+            districtCrimes > this.props.config.crimeLevels[chamber].level4   ? this.props.config.colors[chamber].level4 :
+            districtCrimes > this.props.config.crimeLevels[chamber].level3   ? this.props.config.colors[chamber].level3 :
+            districtCrimes > this.props.config.crimeLevels[chamber].level2   ? this.props.config.colors[chamber].level2 :
+            districtCrimes > this.props.config.crimeLevels[chamber].level1     ? this.props.config.colors[chamber].level1 :
                                                           '#707070';
   },
 
   totalCrimesPerDistrict: function (newProps) {
 
-    console.log("begin crime calculations");
     var allCrimes;
     switch (newProps.chamber) {
       case 'house':
@@ -195,7 +124,6 @@ var Map = React.createClass({
         allCrimes = newProps.senateCrimes;
         break;
     }
-    console.log(allCrimes);
     var initialValue = {};
 
     var reducer = function(newObj, crimeGlob) {
@@ -209,14 +137,12 @@ var Map = React.createClass({
       }
       return newObj;
     };
-    // debugger;
     var result = allCrimes.reduce(reducer, initialValue);
 
 
     this.setState({
       allCrimes: result
     });
-    // console.log(this.state.allCrimes);
   },
 
   // Leaflet Control object - District Information
@@ -262,12 +188,12 @@ var Map = React.createClass({
       var div = L.DomUtil.create('div', 'legend'),
         grades = [
           0,
-          config.crimeLevels[chamber].level1,
-          config.crimeLevels[chamber].level2,
-          config.crimeLevels[chamber].level3,
-          config.crimeLevels[chamber].level4,
-          config.crimeLevels[chamber].level5,
-          config.crimeLevels[chamber].level6
+          _this.props.config.crimeLevels[chamber].level1,
+          _this.props.config.crimeLevels[chamber].level2,
+          _this.props.config.crimeLevels[chamber].level3,
+          _this.props.config.crimeLevels[chamber].level4,
+          _this.props.config.crimeLevels[chamber].level5,
+          _this.props.config.crimeLevels[chamber].level6
         ];
       // loop through our density intervals and generate a label with a colored square for each interval
       for (var i = 0; i < grades.length; i++) {
@@ -404,10 +330,10 @@ var Map = React.createClass({
   createMap: function(mapElement) {
     var _this = this;
     // this function creates the Leaflet map object and is called after the Map component mounts
-    map = L.map(mapElement, config.params);
+    map = L.map(mapElement, this.props.config.params);
 
     // set our state to include the tile layer
-    this.state.tileLayer = L.tileLayer(config.tileLayer.url, config.tileLayer.params).addTo(map);
+    this.state.tileLayer = L.tileLayer(this.props.config.tileLayer.url, this.props.config.tileLayer.params).addTo(map);
   },
 
   render : function() {

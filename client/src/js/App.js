@@ -1,10 +1,9 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Modal = require('react-modal');
-// require our Map React component
 var Map = require('./Map');
 var Filter = require('./Filter');
-var LineChart = require('./LineChart');
+// var LineChart = require('./LineChart');
 var Politician = require('./Politician');
 var DonutChart = require('./DonutChart');
 var AboutModal = require('./AboutModal');
@@ -19,13 +18,13 @@ var App = React.createClass({
     return {
       types: ['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY' ],
       filter: ['THEFT/LARCENY', 'VEHICLE BREAK-IN/THEFT', 'VANDALISM', 'MOTOR VEHICLE THEFT', 'BURGLARY'],
-      chamber: 'senate',
+      currentlySelectedChamber: 'senate',
       districtNumber: 0,
       senateCrimes: [],
       houseCrimes: [],
       filteredSenateCrimes: [],
       filteredHouseCrimes: [],
-      districtInfo: {
+      currentlySelectedDistrictInfo: {
         "legislator_number": 28,
         "legislator_year": "2016",
         "legislator_type": "State",
@@ -42,8 +41,65 @@ var App = React.createClass({
         "contact_email": "gov@gov.state.hi.us",
         "contact_links": "http://governor.hawaii.gov/contact-us/contact-the-governor/",
         "district_name": 0
+      },
+      config: {
+        params: {
+          center: [21.477351, -157.962799],
+          zoomControl: false,
+          zoom: 10,
+          // maxZoom: 19,
+          // minZoom: 11,
+          scrollWheelZoom: false,
+          legends: true,
+          infoControl: false,
+          attributionControl: true
+        },
+        tileLayer: {
+          url: 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
+          params: {
+            minZoom: 5,
+            attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+            id: 'mapbox.light',
+            accessToken: 'pk.eyJ1Ijoia3doaXRlanIiLCJhIjoiY2ltNXdqdGFwMDFzanRzbTRwOW52N2syZCJ9.8tgIWcf7d9ZyJ3gjtOssaQ'
+          }
+        },
+        colors: {
+          house: {
+            level1: '#eff3ff',
+            level2: '#c6dbef',
+            level3: '#9ecae1',
+            level4: '#6baed6',
+            level5: '#3182bd',
+            level6: '#08519c'
+          },
+          senate: {
+            level1: '#fee5d9',
+            level2: '#fcbba1',
+            level3: '#fc9272',
+            level4: '#fb6a4a',
+            level5: '#de2d26',
+            level6: '#a50f15'
+          }
+        },
+        crimeLevels: {
+          house: {
+            level1: 1,
+            level2: 100,
+            level3: 250,
+            level4: 500,
+            level5: 800,
+            level6: 1500
+          },
+          senate: {
+            level1: 1,
+            level2: 100,
+            level3: 250,
+            level4: 500,
+            level5: 1000,
+            level6: 2500
+          }
+        }
       }
-      // districtData: []
     };
   },
 
@@ -96,11 +152,11 @@ var App = React.createClass({
     });
   },
   componentDidMount: function () {//added
-    this.loadFile('hssd.geo.json', 'senate');
+    this.loadFile('hssd.geo.json', 'senateGEOJSON');
     this.loadFile('district-data.json', 'districtData');
     this.loadSenateCrimes();
     this.loadHouseCrimes();
-    this.loadFile('hshd.geo.json', 'house');
+    this.loadFile('hshd.geo.json', 'houseGEOJSON');
   },
 
   // componentWillReceiveProps: function() {
@@ -139,18 +195,6 @@ var App = React.createClass({
     }
   },
 
-  getDistrictInfo: function (districtNumber) {
-    if (this.state.districtData) {
-      for (var i in this.state.districtData[this.state.chamber]) {
-        if (this.state.districtData[this.state.chamber][i].district_name === districtNumber) {
-          this.setState({
-            districtInfo: this.state.districtData[this.state.chamber][i]
-          });
-        }
-      }
-    }
-  },
-
   toggleFilter: function (type) {
     var newArr = this.state.filter.slice();//copy array
     if (newArr.indexOf(type) === -1) {//checking to see if in array
@@ -168,7 +212,7 @@ var App = React.createClass({
 
   updateChamber: function (val) {
     this.setState({
-      chamber: val
+      currentlySelectedChamber: val
     });
   },
   updateDistrictNumber: function (number) {
@@ -178,25 +222,24 @@ var App = React.createClass({
   },
 
   updateDistrictInfo: function (number) {
-    var districtInfo;
-    for (var i in this.state.districtData[this.state.chamber]) {
-      if (this.state.districtData[this.state.chamber][i].district_name === number) {
-        districtInfo = this.state.districtData[this.state.chamber][i];
+    var currentlySelectedDistrictInfo;
+    for (var i in this.state.districtData[this.state.currentlySelectedChamber]) {
+      if (this.state.districtData[this.state.currentlySelectedChamber][i].district_name === number) {
+        currentlySelectedDistrictInfo = this.state.districtData[this.state.currentlySelectedChamber][i];
       }
     }
     this.setState({
-      districtInfo: districtInfo
+      currentlySelectedDistrictInfo: currentlySelectedDistrictInfo
     });
   },
 
   openAboutModal: function() {
-    console.log("Why you no open?");
     this.refs['about'].openModal();
   },
 
   render: function() {
     return (
-      <div class="container">
+      <div className="container">
         <div className="banner">
           <div id="logo">
             <div id="title">
@@ -226,11 +269,12 @@ var App = React.createClass({
             filterCrimes={this.filterCrimes}
           />
           <Map
-            chamber={this.state.chamber}
-            house={this.state.house}
-            senate={this.state.senate}
+            config={this.state.config}
+            chamber={this.state.currentlySelectedChamber}
+            house={this.state.houseGEOJSON}
+            senate={this.state.senateGEOJSON}
             districtData={this.state.districtData}
-            districtInfo={this.state.districtInfo}
+            districtInfo={this.state.currentlySelectedDistrictInfo}
             updateDistrictNumber={this.updateDistrictNumber}
             updateDistrictInfo={this.updateDistrictInfo}
             districtNumber={this.state.districtNumber}
@@ -238,25 +282,18 @@ var App = React.createClass({
             houseCrimes={this.state.filteredHouseCrimes}
           />
           <Politician
-            chamber={this.state.chamber}
+            chamber={this.state.currentlySelectedChamber}
             districtData={this.state.districtData}
-            districtInfo={this.state.districtInfo}
+            districtInfo={this.state.currentlySelectedDistrictInfo}
             districtNumber={this.state.districtNumber}
           />
         </div>
         <div className="bottomLevel">
-          <LineChart
-            chamber={this.state.chamber}
-            districtData={this.state.districtData}
-            districtNumber={this.state.districtNumber}
-            senateCrimes={this.state.filteredSenateCrimes}
-            houseCrimes={this.state.filteredHouseCrimes}
-            filter={this.state.filter}
-          />
+
           <DonutChart
             filter={this.state.filter}
             districtNumber={this.state.districtNumber}
-            chamber={this.state.chamber}
+            chamber={this.state.currentlySelectedChamber}
             senateCrimes={this.state.filteredSenateCrimes}
             houseCrimes={this.state.filteredHouseCrimes}
             padAngle={0.03}
@@ -271,3 +308,14 @@ ReactDOM.render(
   <App />,
   mountNode
 );
+
+/**
+ <LineChart
+  chamber={this.state.chamber}
+  districtData={this.state.districtData}
+  districtNumber={this.state.districtNumber}
+  senateCrimes={this.state.filteredSenateCrimes}
+  houseCrimes={this.state.filteredHouseCrimes}
+  filter={this.state.filter}
+/>
+**/
